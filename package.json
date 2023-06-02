@@ -1,0 +1,33 @@
+{
+  "name": "redtron_api",
+  "version": "1.0.0",
+  "description": "api rest para la aplicacion redtron",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/desasur-2023/REDTRON_API.git"
+  },
+  "author": "DESASUR-2023",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/desasur-2023/REDTRON_API/issues"
+  },
+  "homepage": "https://github.com/desasur-2023/REDTRON_API#readme",
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.11.0",
+    "typeorm": "^0.3.16"
+  }
+}
