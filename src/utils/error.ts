@@ -2,13 +2,13 @@
 import { StatusCodes } from 'http-status-codes';
 export class BaseError extends Error{
 
-  public readonly code: StatusCodes;
+  public readonly statusCode: StatusCodes;
 
   public readonly description: string | undefined;
 
   constructor(message: string, code: StatusCodes, description?: string) {
     super(message)
-    this.code = code;
+    this.statusCode = code;
     this.description = description;
     Error.captureStackTrace(this);
   }
@@ -17,7 +17,7 @@ export class BaseError extends Error{
   public toJSON() {
     return {
       message: this.message,
-      code: this.code,
+      code: this.statusCode,
       description: this.description,
       stack: this.stack,
     };

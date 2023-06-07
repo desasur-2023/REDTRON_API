@@ -64,8 +64,18 @@ export async function createApp() : Promise<Express.Application> {
       res.status(StatusCodes.OK).json(health);
     })
     
-    app.use("*",(_req: Request, res: Response) => {
-      res.status(StatusCodes.NOT_FOUND).send("Not found");
+    app.use((_req: Request, _res: Response, next: NextFunction) => {
+      next(new BaseError('Not found', StatusCodes.NOT_FOUND));
+    });
+  
+    // Error handler middleware
+    app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+      if (err instanceof BaseError) {
+        res.status(err.statusCode).json({ error: err.message });
+      } else {
+        console.error(err);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
+      }
     });
 
   return app;
