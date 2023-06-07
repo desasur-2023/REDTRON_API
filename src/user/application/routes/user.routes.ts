@@ -1,11 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { UserService } from '../services/user.service';
 
-
-
-
-
-
 export default function usersRouter(service: UserService): Router {
   return Router()
 
@@ -28,6 +23,5 @@ export default function usersRouter(service: UserService): Router {
       const { id } = req.params;
       return await service.delete(id);
     })
-   
-
+  
 }
