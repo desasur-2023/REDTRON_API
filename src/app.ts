@@ -64,8 +64,8 @@ export async function createApp() : Promise<Express.Application> {
       res.status(StatusCodes.OK).json(health);
     })
     
-    app.use((error: BaseError, _req: Request, res: Response) => {
-      res.status(error.code).send({ message: error.message });
+    app.use("*",(_req: Request, res: Response) => {
+      res.status(StatusCodes.NOT_FOUND).send("Not found");
     });
 
   return app;
