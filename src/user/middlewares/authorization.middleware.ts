@@ -1,12 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-
-import { logger } from '../../../logger';
-import { UserRole } from '../../domain/user.entity';
-import { TokenPayload } from '../../domain/authentication';
-
-
+import { logger } from '../../logger';
+import { UserRole } from '../domain/user';
+import { TokenPayload } from '../domain/authentication';
 
 
 export const authorize = (req: Request, res: Response, next: NextFunction) => {

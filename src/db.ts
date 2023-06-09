@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { DataSource } from "typeorm";
 
 import { logger } from "./logger";
-import { UserModel } from "./user/infrastructure/db/models/user.model";
+import { UserEntity } from "./user/db/models/user.model";
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const PostgresDataSource = new DataSource({
   username: process.env.PG_USER,
   password: process.env.PG_PASSWORD,
   database: process.env.PG_DATABASE,
-  entities: [UserModel],
+  entities: [UserEntity],
 });
 
 export async function getConnection(): Promise<DataSource> {

@@ -5,13 +5,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-
-
-import { User, UserRole, UserStatus } from "../../../domain/user.entity";
+import { User, UserRole, UserStatus } from "../../domain/user";
 
 
 @Entity({ name: "users" })
-export class UserModel implements User {
+export class UserEntity implements User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 

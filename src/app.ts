@@ -1,30 +1,19 @@
 import express, {NextFunction, Request, Response} from 'express'
 
 
-import { getConnection } from "./connectionManager";
+import { getConnection } from "./db";
 
 import { UserRepository } from "./user/domain/repositories/user.repository";
-import { UserDAO } from "./user/infrastructure/db/user.dao";
 import morgan from "morgan";
 
 import { StatusCodes } from "http-status-codes";
 import { BaseError } from "./utils/error";
-import { UserService } from "./user/application/services/user.service";
-import usersRouter from "./user/application/routes/user.routes";
+import usersRouter from './user/routes/user.routes';
 
 
 export async function createApp() : Promise<Express.Application> {
     const connection = await getConnection();
-  
-    // Repositories/DAOs
-  
-    const userRepo: UserRepository = new UserDAO();
-  
-    // Services
-  
-    const userService: UserService = new UserService(userRepo);
-  
-    
+
     const app = express();
 
     app.use(express.json())
@@ -43,15 +32,8 @@ export async function createApp() : Promise<Express.Application> {
         next();
     })
       
-    app.use("/users", usersRouter(userService))
+    app.use("/users", usersRouter())
   
-    app.get("/", (_, res: Response) => {
-      res.send("Hello World!");
-    })
-      
-    app.get("/test", (_, res: Response) => {
-      res.send("deploy OK!");
-    })
     
     app.get("/health", async (_, res: Response) => {
       const isDbConnected = connection.isInitialized;

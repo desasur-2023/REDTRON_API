@@ -1,4 +1,4 @@
-import { UserRole } from "./user.entity";
+import { UserRole } from "./user";
 
 
 export interface TokenPayload {

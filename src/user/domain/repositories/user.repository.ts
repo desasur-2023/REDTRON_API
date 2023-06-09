@@ -1,6 +1,6 @@
 import { ICRUD } from "../../../utils/interfaces/ICRUD";
 import { ISearch } from "../../../utils/interfaces/ISearch";
-import { User } from "../user.entity";
+import { User } from "../user";
 
 
 export interface UserRepository extends ICRUD<User>, ISearch<User> {
