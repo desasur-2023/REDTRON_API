@@ -11,7 +11,7 @@ dotenv.config();
 const PostgresDataSource = new DataSource({
   type: "postgres",
   synchronize: true,
-  logging: true,
+  logging: false,
   host: process.env.PG_HOST,
   port: Number(process.env.PG_PORT),
   username: process.env.PG_USER,

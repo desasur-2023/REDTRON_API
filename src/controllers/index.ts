@@ -1,4 +1,4 @@
-import { findOneById, create, getAll } from "./user.controller";
+import { findOneById, create, getAll, del } from "./user.controller";
 
 
-export default  { getAll , findOneById, create}
+export default  { getAll , findOneById, create, delete: del}

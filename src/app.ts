@@ -51,11 +51,11 @@ export async function createApp() : Promise<Express.Application> {
     });
   
     // Error handler middleware
-    app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    app.use((err: BaseError | Error, _req: Request, res: Response, _next: NextFunction) => {
       if (err instanceof BaseError) {
         res.status(err.statusCode).json({ error: err.message });
       } else {
-        console.error(err);
+        console.error(err.message);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
       }
     });

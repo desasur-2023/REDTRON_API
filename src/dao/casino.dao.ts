@@ -1,7 +1,7 @@
 import { DataSource, EntityManager } from "typeorm";
 import { getConnection } from "../db";
 
-import { CasinoRepository } from "../domain/casino.repository";
+import { CasinoRepository } from "../domain/repositories/casino.repository";
 import { CasinoEntity } from "../models/casino.model";
 import {} from "../domain/casino"
 
