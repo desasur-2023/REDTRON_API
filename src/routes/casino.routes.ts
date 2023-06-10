@@ -6,7 +6,7 @@ export default function casinoRouter(): Router {
   return Router()
 
     // .get('/:id', controllers.findOneById)
-    // .get("/", controllers.getAll)
+    .get("/", casinoHandllers.searchCasino)
     .post("/", casinoHandllers.crearCasino)
     // .delete("/:id", controllers.delete)
   

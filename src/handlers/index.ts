@@ -1,3 +1,3 @@
-import {create} from "./casino.handllers"
+import {create, getAll} from "./casino.handllers"
 
-export default {crearCasino: create}
+export default {crearCasino: create, searchCasino: getAll}

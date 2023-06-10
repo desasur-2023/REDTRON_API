@@ -28,6 +28,9 @@ export class CasinoDAO implements CasinoRepository{
         throw new Error("Method not implemented.");
     }
     async search(query?: string | undefined): Promise<Casino[]>{
-        return await this.repository.find() as Casino[]; 
+        if (!query) {
+            return await this.repository.find() as Casino[];
+          }
+          return await this.repository.find({ where: { name: query } }) as Casino[];
     }
 }
