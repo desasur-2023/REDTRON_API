@@ -3,6 +3,6 @@ import { Base } from "../utils/common";
 
 export interface Casino extends Base{
     name: string,
-    profits: string,
-    losses: string
+    profits: number,
+    losses: number,
 }

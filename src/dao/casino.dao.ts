@@ -1,25 +1,22 @@
-import { DataSource, EntityManager } from "typeorm";
+import { DataSource, EntityManager, Repository } from "typeorm";
 import { getConnection } from "../db";
 
 import { CasinoRepository } from "../domain/repositories/casino.repository";
 import { CasinoEntity } from "../models/casino.model";
-import {} from "../domain/casino"
+import { Casino } from "../domain/casino"
 
 export class CasinoDAO implements CasinoRepository{
 
-    conn : DataSource
-    entityManager: EntityManager;
+    repository: Repository<CasinoEntity>
 
     constructor(){
         getConnection().then(connection => {
-            this.conn = connection;
+            this.repository = connection.getRepository(CasinoEntity)
         })
-        this.entityManager = this.conn.createEntityManager()
     }
 
     async create(item: Casino): Promise<Casino | undefined> {
-        return await this.entityManager.create(CasinoEntity, item) as Casino;
-        throw new Error("Method not implemented.");
+        return await this.repository.save(item) as Casino;
     }
     read(id: string): Promise<Casino | undefined> {
         throw new Error("Method not implemented.");
@@ -31,6 +28,6 @@ export class CasinoDAO implements CasinoRepository{
         throw new Error("Method not implemented.");
     }
     async search(query?: string | undefined): Promise<Casino[]>{
-        return await this.entityManager.find(CasinoEntity) as Casino[]; 
+        return await this.repository.find() as Casino[]; 
     }
 }

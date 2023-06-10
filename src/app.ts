@@ -8,6 +8,7 @@ import morgan from "morgan";
 import { StatusCodes } from "http-status-codes";
 import { BaseError } from "./utils/error";
 import usersRouter from './routes/user.routes';
+import casinoRouter from './routes/casino.routes';
 
 
 
@@ -33,6 +34,7 @@ export async function createApp() : Promise<Express.Application> {
     })
       
     app.use("/users", usersRouter())
+    app.use("/casino", casinoRouter())
   
     
     app.get("/health", async (_, res: Response) => {

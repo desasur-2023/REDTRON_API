@@ -10,10 +10,10 @@ export class CasinoEntity implements Casino{
     name: string;
     
     @Column({name: "profits",type: "decimal", precision: 10, scale: 2,nullable: false})
-    profits: string;
+    profits: number;
 
     @Column({name: "losses",type: "decimal", precision: 10, scale: 2, nullable: false})
-    losses: string;
+    losses: number;
     
     @Column({name: "created_at",type: "timestamp",nullable: false,default: () => "now()",})
     createdAt: Date;
