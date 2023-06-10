@@ -1,13 +1,13 @@
-import { NextFunction, Request, Response, Router } from 'express';
-import controllers from '../controllers';
+import { Router } from 'express';
+import {userHandler as handler} from '../handlers';
 
 
 export default function usersRouter(): Router {
   return Router()
 
-    .get('/:id', controllers.findOneById)
-    .get("/", controllers.getAll)
-    .post("/", controllers.create)
-    .delete("/:id", controllers.delete)
+    .get('/:id', handler.findOneById)
+    .get("/", handler.getAll)
+    .post("/", handler.create)
+    .delete("/:id", handler.delete)
   
 }

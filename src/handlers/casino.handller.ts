@@ -1,20 +1,21 @@
 import { NextFunction, Request, Response } from "express";
-import { crearCasinoController, getAllCasinoControllers } from "../controllers/casino.controller";
+import controller from "../controllers/casino.controller";
 import { BaseError } from "../utils/error";
 import { StatusCodes } from "http-status-codes";
+import { Casino } from "../domain/casino";
 
-
-
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+const create = async (req: Request, res: Response, next: NextFunction) => {
     const casino = req.body
-    const result = await crearCasinoController(casino)
+    const result = await controller.create(casino as Casino)
     if(result instanceof BaseError) return next(result);
     return res.status(StatusCodes.CREATED).json(result);
   }
 
-  export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+const getAll = async (req: Request, res: Response, next: NextFunction) => {
     const name = req.query.name as string;
-    const result = await getAllCasinoControllers(name)
+    const result = await controller.getAll(name)
     if(result instanceof BaseError) return next(result);
     return res.status(StatusCodes.OK).json(result);
   }
+
+export default {create, getAll}

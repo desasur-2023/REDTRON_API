@@ -2,33 +2,27 @@ import { NextFunction, Request, Response } from "express";
 import { UserDAO } from "../dao/user.dao";
 import { BaseError } from "../utils/error";
 import { StatusCodes } from "http-status-codes";
+import { User } from "../domain/user";
 
-export const findOneById = async (req: Request, res: Response, next: NextFunction) => {
+const findOneById = async (id: string) => {
   const userDAO = await new UserDAO();
-  const { id } = req.params;
-  const result =  await userDAO.read(id).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
-  if(result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+  return await userDAO.read(id).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
+
 }
 
-export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+const getAll = async (name?:string) => {
   const userDAO = await new UserDAO();
-  const result =  await userDAO.search().catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
-  if(result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+  return await userDAO.search(name).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
 }
 
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+const create = async (user: User) => {
   const userDAO = await new UserDAO();
-  const result =  await userDAO.create(req.body).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
-  if(result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+  return await userDAO.create(user).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
 }
 
-export const del = async (req: Request, res: Response, next: NextFunction) => {
+const del = async (id:string) => {
   const userDAO = await new UserDAO();
-  const { id } = req.params;
-  const result =  await userDAO.delete(id).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
-  if(result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+  return await userDAO.delete(id).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
 }
+
+export default {findOneById, getAll, create, delete: del}
