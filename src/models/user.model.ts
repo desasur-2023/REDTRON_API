@@ -1,12 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { User, UserRole, UserStatus } from "../../domain/user";
-
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User, UserRole, UserStatus } from "../domain/user";
 
 @Entity({ name: "users" })
 export class UserEntity implements User {
@@ -39,6 +32,5 @@ export class UserEntity implements User {
     default: () => "now()",
   })
   createdAt: Date;
-
 
 }

@@ -1,5 +1,6 @@
-import { ICRUD } from "../../../utils/interfaces/ICRUD";
-import { ISearch } from "../../../utils/interfaces/ISearch";
+
+import { ICRUD } from "../../utils/interfaces/ICRUD";
+import { ISearch } from "../../utils/interfaces/ISearch";
 import { User } from "../user";
 
 

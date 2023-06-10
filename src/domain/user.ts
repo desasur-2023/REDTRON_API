@@ -1,7 +1,6 @@
-import { BaseEntity } from "../../utils/common"
+import { Base } from "../utils/common"
 
-
-export interface User extends BaseEntity {
+export interface User extends Base {
   username: string
   phone: string
   email?: string

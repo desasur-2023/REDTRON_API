@@ -3,12 +3,12 @@ import express, {NextFunction, Request, Response} from 'express'
 
 import { getConnection } from "./db";
 
-import { UserRepository } from "./user/domain/repositories/user.repository";
 import morgan from "morgan";
 
 import { StatusCodes } from "http-status-codes";
 import { BaseError } from "./utils/error";
-import usersRouter from './user/routes/user.routes';
+import usersRouter from './routes/user.routes';
+
 
 
 export async function createApp() : Promise<Express.Application> {

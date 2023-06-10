@@ -1,34 +1,38 @@
-import { DataSource, EntityManager, Repository } from "typeorm";
-
+import { DataSource, EntityManager} from "typeorm";
 import { UserRepository } from "../domain/repositories/user.repository";
 import { User } from "../domain/user";
-import { getConnection } from "../../db";
-import { UserEntity } from "./models/user.model";
+import { UserEntity } from "../models/user.model";
+import { getConnection } from "../db";
 
 
 export class UserDAO implements UserRepository {
   private connection: DataSource;
   //repository: Repository<UserModel>;
-  protected entityManager : EntityManager
+  //protected entityManager : EntityManager
 
   constructor() {
     getConnection().then((connection) => {
       this.connection = connection;
     });
-    this.entityManager = this.connection.createEntityManager()
+    
     //this.repository = this.connection.getRepository(UserModel);
   }
 
   async search(query?: string | undefined): Promise<User[]>{
-    return await this.entityManager.find(UserEntity) as User[]
+    return await this.connection.createEntityManager().find(UserEntity) as User[]
   }
 
   async create(item: User): Promise<User | undefined> {
-    return await this.entityManager.create(UserEntity, item) as User;
+    console.log(item);
+    const usersRepo = await this.connection.getRepository(UserEntity);
+
+    const result = await usersRepo.save(item)
+    console.log(result);
+    return result as User;
   }
 
   async read(id: string): Promise<User | undefined> {
-    return await this.entityManager.findOneBy(UserEntity, {id: id}) as User
+    return await this.connection.createEntityManager().findOneBy(UserEntity, {id: id}) as User
   }
 
 
