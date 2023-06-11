@@ -9,6 +9,7 @@ export default function casinoRouter(): Router {
     .get("/:id", handler.findOneById)
     .post("/", handler.create)
     .delete("/:id", handler.deleteCasino)
+    .put("/:id", handler.update)
 
   
 }

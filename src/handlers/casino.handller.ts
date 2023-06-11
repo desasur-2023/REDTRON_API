@@ -25,12 +25,20 @@ const findOneById = async (req: Request, res: Response, next: NextFunction) => {
   return res.status(StatusCodes.OK).json(casinoId);
 }
 
-const deleteCasino =async (req: Request, res: Response, next: NextFunction) => {
+const deleteCasino = async (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id as string;
   const casinoDelet = await controller.deleteCasino(id);
   if(casinoDelet instanceof BaseError) return next(casinoDelet);
   return res.status(StatusCodes.OK).json(casinoDelet);
 }
 
+const update = async (req: Request, res: Response, next: NextFunction) => {
+  const id = req.params.id as string;
+  const item = req.body;
+  const updateCasino = await controller.update(id, item);
+  if(updateCasino instanceof BaseError) return next(updateCasino);
+  return res.status(StatusCodes.OK).json(updateCasino);
+}
 
-export default {create, getAll, findOneById, deleteCasino}
+
+export default {create, getAll, findOneById, deleteCasino, update}

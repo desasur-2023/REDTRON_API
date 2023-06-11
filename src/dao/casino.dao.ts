@@ -4,6 +4,8 @@ import { getConnection } from "../db";
 import { CasinoRepository } from "../domain/repositories/casino.repository";
 import { CasinoEntity } from "../models/casino.model";
 import { Casino } from "../domain/casino"
+import { BaseError } from "../utils/error";
+import { StatusCodes } from "http-status-codes";
 
 export class CasinoDAO implements CasinoRepository{
 
@@ -21,9 +23,15 @@ export class CasinoDAO implements CasinoRepository{
     async read(id: string): Promise<Casino | undefined> {
         return await this.repository.findOneBy({id: id}) as Casino;
     }
-    update(id: string, item: Casino): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
+    async update(id: string, item: Casino): Promise<boolean> {
+        const existingCasino = await this.repository.findOneBy({ id: id });
+        if (item === null|| Object.keys(item).length === 0) {
+            throw new BaseError('No se proporcionó un objeto para actualizar.', StatusCodes.BAD_REQUEST);
+          }
+        const updatedCasino = Object.assign({},existingCasino, item);
+        await this.repository.save(updatedCasino);
+        return true
+      }
     async delete(id: string): Promise<boolean> {
         const result =  await this.repository.delete({id: id});
         return result.affected ? true : false;

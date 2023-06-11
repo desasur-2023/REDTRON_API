@@ -28,5 +28,11 @@ const deleteCasino = async (id:string) => {
     return casinoDelet
 }
 
+const update =async (id:string, item: Casino) => {
+    const casinoDAO = await new CasinoDAO();
+    const updateCasino = await casinoDAO.update(id, item).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
+    return updateCasino;
+}
 
-export default {create, getAll, findOneById, deleteCasino}
+
+export default {create, getAll, findOneById, deleteCasino, update}
