@@ -20,10 +20,17 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
 
 const findOneById = async (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id as string;
-  const casinoId = await controller.findOneById(id)
+  const casinoId = await controller.findOneById(id);
   if(casinoId instanceof BaseError) return next(casinoId);
   return res.status(StatusCodes.OK).json(casinoId);
 }
 
+const deleteCasino =async (req: Request, res: Response, next: NextFunction) => {
+  const id = req.params.id as string;
+  const casinoDelet = await controller.deleteCasino(id);
+  if(casinoDelet instanceof BaseError) return next(casinoDelet);
+  return res.status(StatusCodes.OK).json(casinoDelet);
+}
 
-export default {create, getAll, findOneById}
+
+export default {create, getAll, findOneById, deleteCasino}

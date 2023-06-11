@@ -24,8 +24,9 @@ export class CasinoDAO implements CasinoRepository{
     update(id: string, item: Casino): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
-    delete(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    async delete(id: string): Promise<boolean> {
+        const result =  await this.repository.delete({id: id});
+        return result.affected ? true : false;
     }
     async search(query?: string | undefined): Promise<Casino[]>{
         if (!query) {

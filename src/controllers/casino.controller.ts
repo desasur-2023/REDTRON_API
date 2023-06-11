@@ -18,9 +18,15 @@ const getAll = async (name?:string) => {
 
 const findOneById = async (id:string) => {
     const casinoDAO = await new CasinoDAO();
-    const casinoId = await casinoDAO.read(id).catch((error: Error) => new BaseError(`El id: '${id}' ,no pertece a un Casino existente`, StatusCodes.CONFLICT));
+    const casinoId = await casinoDAO.read(id).catch((error: Error) => new BaseError(`The id: '${id}' does not belong to an existing casino.`, StatusCodes.CONFLICT));
     return casinoId;
 }
 
+const deleteCasino = async (id:string) => {
+    const casinoDAO = await new CasinoDAO();
+    const casinoDelet = casinoDAO.delete(id).catch((error: Error) => new BaseError(`The id: '${id}' does not belong to an existing casino.`, StatusCodes.CONFLICT));
+    return casinoDelet
+}
 
-export default {create, getAll, findOneById}
+
+export default {create, getAll, findOneById, deleteCasino}
