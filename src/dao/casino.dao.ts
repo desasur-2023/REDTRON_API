@@ -1,4 +1,4 @@
-import { DataSource, EntityManager, Repository } from "typeorm";
+import { DataSource, EntityManager, ILike, Repository } from "typeorm";
 import { getConnection } from "../db";
 
 import { CasinoRepository } from "../domain/repositories/casino.repository";
@@ -31,6 +31,6 @@ export class CasinoDAO implements CasinoRepository{
         if (!query) {
             return await this.repository.find() as Casino[];
           }
-          return await this.repository.find({ where: { name: query } }) as Casino[];
+          return await this.repository.find({ where: { name: ILike(`%${query}%`) } }) as Casino[];
     }
 }
