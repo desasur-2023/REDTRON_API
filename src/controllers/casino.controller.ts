@@ -16,4 +16,11 @@ const getAll = async (name?:string) => {
     return searchCasino;
 }
 
-export default {create, getAll}
+const findOneById = async (id:string) => {
+    const casinoDAO = await new CasinoDAO();
+    const casinoId = await casinoDAO.read(id).catch((error: Error) => new BaseError(`El id: '${id}' ,no pertece a un Casino existente`, StatusCodes.CONFLICT));
+    return casinoId;
+}
+
+
+export default {create, getAll, findOneById}

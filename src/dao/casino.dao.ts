@@ -18,8 +18,8 @@ export class CasinoDAO implements CasinoRepository{
     async create(item: Casino): Promise<Casino | undefined> {
         return await this.repository.save(item) as Casino;
     }
-    read(id: string): Promise<Casino | undefined> {
-        throw new Error("Method not implemented.");
+    async read(id: string): Promise<Casino | undefined> {
+        return await this.repository.findOneBy({id: id}) as Casino;
     }
     update(id: string, item: Casino): Promise<boolean> {
         throw new Error("Method not implemented.");

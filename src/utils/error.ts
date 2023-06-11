@@ -33,3 +33,4 @@ export class ServerError extends BaseError {
 export function isAnError(error: any): boolean {
   return error instanceof Error;
 }
+

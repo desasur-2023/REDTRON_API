@@ -18,4 +18,12 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
     return res.status(StatusCodes.OK).json(result);
   }
 
-export default {create, getAll}
+const findOneById = async (req: Request, res: Response, next: NextFunction) => {
+  const id = req.params.id as string;
+  const casinoId = await controller.findOneById(id)
+  if(casinoId instanceof BaseError) return next(casinoId);
+  return res.status(StatusCodes.OK).json(casinoId);
+}
+
+
+export default {create, getAll, findOneById}

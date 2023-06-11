@@ -6,6 +6,7 @@ export default function casinoRouter(): Router {
   return Router()
 
     .get("/", handler.getAll)
+    .get("/:id", handler.findOneById)
     .post("/", handler.create)
 
   
