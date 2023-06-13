@@ -6,7 +6,7 @@ import { getConnection } from "./db";
 import morgan from "morgan";
 
 import { StatusCodes } from "http-status-codes";
-import { BaseError } from "./utils/error";
+import { BaseError } from "./utils/errors/error";
 import usersRouter from './routes/user.routes';
 import casinoRouter from './routes/casino.routes';
 
@@ -55,11 +55,15 @@ export async function createApp() : Promise<Express.Application> {
     // Error handler middleware
     app.use((err: BaseError | Error, _req: Request, res: Response, _next: NextFunction) => {
       if (err instanceof BaseError) {
-        res.status(err.statusCode).json({ error: err.message });
-      } else {
-        console.error(err.message);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
-      }
+      return res.status(err.statusCode || 500).send({
+        error: true,
+        message: err.message,
+        description: err.description
+      });
+    }
+      console.log(err)
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: true , message: 'Internal Server Error', describe: err.message });
+    
     });
 
   return app;
