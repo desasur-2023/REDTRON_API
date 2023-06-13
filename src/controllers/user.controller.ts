@@ -30,7 +30,7 @@ const getAll = async (name?: string) => {
   return result;
 };
 
-const signUp = async (user: User) => {
+const create = async (user: User) => {
   const userDAO = await new UserDAO();
 
   const cifrado = process.env.SALT 
@@ -81,4 +81,4 @@ const update = async (id: string, item: User) => {
 
   
 
-export default { findOneById, getAll, signUp, delete: del, logIn, update };
+export default { findOneById, getAll, create, delete: del, logIn, update };

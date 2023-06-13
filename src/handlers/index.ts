@@ -14,7 +14,7 @@ export const userHandler =  {
                         getAll: catchedAsync(userH.getAll),
                         findOneById : catchedAsync(userH.findOneById), 
                         delete: catchedAsync(userH.delete),
-                        signUp: catchedAsync(userH.signUp),
+                        create: catchedAsync(userH.create),
                         update: catchedAsync(userH.update),
                         logIn: catchedAsync(userH.logIn)
                         };

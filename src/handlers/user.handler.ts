@@ -15,8 +15,8 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
   return response(res, StatusCodes.OK, await controller.getAll(username as string));
 };
 
-const signUp = async (req: Request, res: Response, next: NextFunction) => {
-  return response(res, StatusCodes.OK, await controller.signUp(req.body as User));
+const create = async (req: Request, res: Response, next: NextFunction) => {
+  return response(res, StatusCodes.OK, await controller.create(req.body as User));
 };
 
 const del = async (req: Request, res: Response, next: NextFunction) => {
@@ -34,4 +34,4 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
   return response(res, StatusCodes.OK, await controller.update(id, {...req.body} as User));
 };
 
-export default { findOneById, getAll, signUp, delete: del, logIn, update };
+export default { findOneById, getAll, create, delete: del, logIn, update };
