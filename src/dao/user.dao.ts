@@ -67,4 +67,21 @@ export class UserDAO implements UserRepository {
     const result =  await this.repository.delete({id: id});
     return result.affected ? true : false;
   }
+
+  async loginUser(user: User): Promise<User | undefined> {
+    const userLogin = await this.repository.findOne({ where: { username: user.username } });
+    
+    if(!userLogin) throw new BaseError('El usuario no esta registrado', StatusCodes.BAD_REQUEST);
+  
+    if (userLogin) {
+      const isPasswordCorrect = await bcryptjs.compare(user.password, userLogin.password);
+  
+      if (isPasswordCorrect) {
+        return userLogin;
+      }
+    }
+  
+    throw new BaseError('Contraseña incorrecta', StatusCodes.BAD_REQUEST);
+  }
+  
 }

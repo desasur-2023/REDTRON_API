@@ -7,4 +7,5 @@ import { User } from "../user";
 export interface UserRepository extends ICRUD<User>, ISearch<User> {
   findByPhone(phone: string): Promise<User | undefined>;
   findByUserName(userName: string): Promise<User | undefined>;
+  loginUser(user: User): Promise<User | undefined>;
 }
