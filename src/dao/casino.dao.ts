@@ -17,13 +17,13 @@ export class CasinoDAO implements CasinoRepository{
         })
     }
 
-    async create(item: Casino): Promise<Casino | undefined> {
+    async create(item: Casino): Promise<Casino> {
         return await this.repository.save(item) as Casino;
     }
-    async read(id: string): Promise<Casino | undefined> {
+    async read(id: string): Promise<Casino> {
         return await this.repository.findOneBy({id: id}) as Casino;
     }
-    async update(id: string, item: Casino): Promise<Casino | undefined> {
+    async update(id: string, item: Casino): Promise<Casino> {
         const existingCasino = await this.repository.findOneBy({ id: id });
         if (item === null|| Object.keys(item).length === 0) {
             throw new BaseError('No se proporcionó un objeto para actualizar.', StatusCodes.BAD_REQUEST);
@@ -35,7 +35,7 @@ export class CasinoDAO implements CasinoRepository{
         const result =  await this.repository.delete({id: id});
         return result.affected ? true : false;
     }
-    async search(query?: string | undefined): Promise<Casino[]>{
+    async search(query?: string): Promise<Casino[]>{
         if (!query) {
             return await this.repository.find() as Casino[];
           }
