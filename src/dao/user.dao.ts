@@ -6,8 +6,10 @@ import { getConnection } from "../db";
 import { BaseError } from "../utils/error";
 import { StatusCodes } from "http-status-codes";
 import bcryptjs from "bcryptjs";
+import dotenv from "dotenv";
 import { log } from "console";
 
+dotenv.config();
 
 export class UserDAO implements UserRepository {
   
@@ -29,7 +31,12 @@ export class UserDAO implements UserRepository {
   }
 
   async create(item: User): Promise<User | undefined> {
-    const salt = await bcryptjs.genSalt(10);
+    const cifrado = process.env.SALT 
+    if (cifrado === undefined) {
+      throw new Error("La variable de entorno SALT no está definida");
+    }
+    const saltRounds = parseInt(cifrado)
+    const salt = await bcryptjs.genSalt(saltRounds);
     item.password = await bcryptjs.hash(item.password, salt);
     return await this.repository.save(item) as User;
   }
