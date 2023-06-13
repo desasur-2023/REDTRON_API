@@ -1,41 +1,37 @@
 import { NextFunction, Request, Response } from "express";
-import { BaseError } from "../utils/error";
+import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
 import controller from "../controllers/user.controller";
-import { User } from "../domain/user";
+import { User, UserLogin } from "../domain/user";
+import { response } from "../utils/utils";
 
 const findOneById = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
-  const result = await controller.findOneById(id);
-  if (result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+  return response(res, StatusCodes.OK, await controller.findOneById(id));
 };
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   const { username } = req.query;
-  const result = await controller.getAll(username as string);
-  if (result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+  return response(res, StatusCodes.OK, await controller.getAll(username as string));
 };
 
-const create = async (req: Request, res: Response, next: NextFunction) => {
-  const result = await controller.create(req.body as User);
-  if (result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+const signUp = async (req: Request, res: Response, next: NextFunction) => {
+  return response(res, StatusCodes.OK, await controller.signUp(req.body as User));
 };
 
 const del = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
-  const result = await controller.delete(id);
-  if (result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+  return response(res, StatusCodes.OK, await controller.delete(id));
 };
 
-const loginUser = async (req: Request, res: Response, next: NextFunction) => {
-  const user = req.body;
-  const result = await controller.loginUser(user);
-  if (result instanceof BaseError) return next(result);
-  return res.status(StatusCodes.OK).json(result);
+const logIn = async (req: Request, res: Response, next: NextFunction) => {
+  const userLogin = req.body;
+  return response(res, StatusCodes.OK, await controller.logIn({...userLogin} as UserLogin));
 };
 
-export default { findOneById, getAll, create, delete: del, loginUser };
+const update = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  return response(res, StatusCodes.OK, await controller.update(id, {...req.body} as User));
+};
+
+export default { findOneById, getAll, signUp, delete: del, logIn, update };

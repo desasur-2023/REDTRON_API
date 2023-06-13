@@ -19,3 +19,8 @@ export enum UserStatus {
   INACTIVE = 'INACTIVE',
   DISABLED = 'DISABLED'
 }
+
+export interface UserLogin{
+  username: string,
+  password: string
+}

@@ -7,8 +7,9 @@ export default function usersRouter(): Router {
 
     .get('/:id', handler.findOneById)
     .get("/", handler.getAll)
-    .post("/", handler.create)
-    .post("/login",handler.loginUser)
+    .post("/", handler.signUp)
+    .post("/login",handler.logIn)
     .delete("/:id", handler.delete)
+    .put("/:id", handler.update)
   
 }
