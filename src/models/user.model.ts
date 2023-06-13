@@ -21,9 +21,11 @@ export class UserEntity implements User {
   @Column({ name: "email", type: "varchar", length: 128, nullable: true})
   email: string;
 
-
   @Column({ name: "status", type: "enum", enum: UserStatus,default: UserStatus.INACTIVE })
   status: UserStatus;
+
+  @Column({name: "token", type:"varchar", nullable: true})
+  token: string;
 
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;

@@ -1,8 +1,9 @@
 import { UserDAO } from "../dao/user.dao";
 import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
-import { User, UserLogin } from "../domain/user";
+import { TokenPayload, User, UserLogin } from "../domain/user";
 
+import jwt from "jsonwebtoken"
 
 import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
@@ -66,8 +67,12 @@ const logIn = async (userLogin: UserLogin) => {
   if (!isPasswordCorrect) {
     throw new BaseError('Contraseña incorrecta', StatusCodes.FORBIDDEN);
   }
-  result.password = '';
-  return result;
+
+  result.token = generateToken(result);
+
+  const userWithToken = await userDAO.update(result.id, result)
+  userWithToken.password = '';
+  return userWithToken;
 // retornar usuario con un token
 }
 
@@ -79,6 +84,16 @@ const update = async (id: string, item: User) => {
   return result;
 }
 
+function generateToken(u: User): string {
+  if (!process.env.JWT_SECRET) {
+    throw new BaseError('Cannot generate token', StatusCodes.CONFLICT);
+  }
+  return jwt.sign(
+    { userId: u.id, role: u.role } as TokenPayload,
+    process.env.JWT_SECRET!,
+    { expiresIn: '1h' }
+  );
+}
   
 
-export default { findOneById, getAll, create, delete: del, logIn, update };
+export default { findOneById, getAll, create, delete: del, logIn, update};
