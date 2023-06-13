@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { User, UserRole, UserStatus } from "../domain/user";
 
 @Entity({ name: "users" })
@@ -27,5 +27,10 @@ export class UserEntity implements User {
 
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;
+
+ 
+  // async comparePassword(receivedPassword: string): Promise<boolean> {
+  //   return bcryptjs.compare(receivedPassword, this.password);
+  // }
 
 }

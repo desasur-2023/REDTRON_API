@@ -5,6 +5,8 @@ import { UserEntity } from "../models/user.model";
 import { getConnection } from "../db";
 import { BaseError } from "../utils/error";
 import { StatusCodes } from "http-status-codes";
+import bcryptjs from "bcryptjs";
+import { log } from "console";
 
 
 export class UserDAO implements UserRepository {
@@ -27,6 +29,8 @@ export class UserDAO implements UserRepository {
   }
 
   async create(item: User): Promise<User | undefined> {
+    const salt = await bcryptjs.genSalt(10);
+    item.password = await bcryptjs.hash(item.password, salt);
     return await this.repository.save(item) as User;
   }
 
