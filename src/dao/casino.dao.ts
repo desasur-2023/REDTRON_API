@@ -4,7 +4,7 @@ import { getConnection } from "../db";
 import { CasinoRepository } from "../domain/repositories/casino.repository";
 import { CasinoEntity } from "../models/casino.model";
 import { Casino } from "../domain/casino"
-import { BaseError } from "../utils/error";
+import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
 
 export class CasinoDAO implements CasinoRepository{

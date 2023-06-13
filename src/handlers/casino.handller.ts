@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import controller from "../controllers/casino.controller";
-import { BaseError } from "../utils/error";
+import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
 import { Casino } from "../domain/casino";
 
@@ -41,4 +41,4 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 
-export default {create, getAll, findOneById, deleteCasino, update}
+export default {create, getAll, findOneById, delete: deleteCasino, update}
