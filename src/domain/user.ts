@@ -6,7 +6,8 @@ export interface User extends Base {
   email?: string
   role: UserRole
   status: UserStatus
-  password: string
+  password: string,
+  token: string
 }
 
 export enum UserRole {
@@ -18,4 +19,14 @@ export enum UserStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
   DISABLED = 'DISABLED'
+}
+
+export interface UserLogin{
+  username: string,
+  password: string
+}
+
+export interface TokenPayload {
+  userId: string;
+  role: UserRole;
 }

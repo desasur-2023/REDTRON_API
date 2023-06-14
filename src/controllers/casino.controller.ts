@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { CasinoDAO } from "../dao/casino.dao";
 import { Casino } from "../domain/casino";
-import { BaseError } from "../utils/error";
+import { BaseError } from "../utils/errors/error";
 
 
 const create = async (casino: Casino) => {
