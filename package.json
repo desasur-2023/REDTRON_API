@@ -27,11 +27,8 @@
     "@types/jest": "^29.5.2",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^20.2.5",
-<<<<<<< HEAD
     "@types/supertest": "^2.0.12",
-=======
     "@types/nodemailer": "^6.4.8",
->>>>>>> efedb54528a8d65fd9d96a04a7a4c03b81cb5072
     "jest": "^29.5.0",
     "nodemon": "^2.0.20",
     "supertest": "^6.3.3",
