@@ -1,11 +1,6 @@
-import app from "./app";
-require("dotenv").config();
-import { sequelize } from "./db";
+import {createApp} from "./app";
+import server from "./server";
 
-const { PORT } = process.env;
-const port = PORT || 3001;
+export default server(createApp);
 
-app.listen(port,()=>{
-    sequelize.sync({ force: true})
-    console.log(`Server levantado en puerto ${port}`);
-})
+

@@ -1,9 +1,13 @@
 # REDTRON_API
+
 API REST PARA LA APLICACION REDTRON
 
-Para ejecutar en desarrollo:
-npm run dev;
+FORMATO DE .ENV PARA IR PROBANDO:
 
-Para produccion:
-npm run build
-npm start
+PG_HOST=localhost
+PG_PORT=5432
+PG_USER=fede
+PG_PASSWORD=...
+PG_DATABASE=desasur
+PORT=3001
+JWT_SECRET=desasur2023
