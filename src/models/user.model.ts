@@ -27,6 +27,15 @@ export class UserEntity implements User {
   @Column({name: "token", type:"varchar", nullable: true})
   token: string;
 
+  @Column({name: "percent_agreement",type: "decimal", precision: 10, scale: 0, nullable: false})
+  percent_agreement: number;
+
+  @Column({name: "total_balance",type: "decimal", precision: 10, scale: 2, nullable: true})
+  total_balance: number;
+
+  @Column({name: "last_settle_date", type: "timestamp", nullable: true})
+  last_settle_date: Date;
+
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;
 
