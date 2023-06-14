@@ -6,13 +6,13 @@ export class UserEntity implements User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ name: "username", type: "varchar", length: 32, nullable: false })
+  @Column({ name: "username", type: "varchar", length: 32, nullable: false, unique: true })
   username: string;
 
   @Column({ name: "password", type: "varchar",length: 128, nullable: false })
   password: string;
 
-  @Column({ name: "phone", type: "varchar", length: 64, nullable: false })
+  @Column({ name: "phone", type: "varchar", length: 64, nullable: false, unique:true })
   phone: string;
 
   @Column({ name: "role", type: "enum", enum: UserRole, default: UserRole.TELLER })
