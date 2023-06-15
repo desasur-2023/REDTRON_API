@@ -16,5 +16,6 @@ export default function usersRouter(): Router {
     .post("/login",handler.logIn)
     .delete("/:id", handler.delete)
     .put("/:id", handler.update)
+    .post("/changePassword", handler.changePassword)
   
 }

@@ -33,3 +33,9 @@ export interface TokenPayload {
   userId: string;
   role: UserRole;
 }
+
+export interface ChangePassword {
+  password: string,
+  newPassword: string,
+  comparePassword: string
+}
