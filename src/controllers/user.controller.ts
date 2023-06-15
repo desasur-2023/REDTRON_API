@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken"
 
 import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
+import { log } from "console";
 
 dotenv.config();
 
@@ -33,6 +34,8 @@ const getAll = async (name?: string) => {
 
 const create = async (user: User) => {
   const userDAO = await new UserDAO();
+
+  if(user.password === undefined ) user.password = "Redtron2013"
 
   const cifrado = process.env.SALT 
     if (cifrado === undefined) {
@@ -61,8 +64,8 @@ const logIn = async (userLogin: UserLogin) => {
                 .catch((error: Error) => new BaseError(`El usuario ${userLogin.username} no esta registrado`, StatusCodes.NOT_FOUND, error.message));
 
   if (!result || result instanceof BaseError) throw result; 
-  
-  const isPasswordCorrect = await bcryptjs.compare(userLogin.password, result.password);
+
+  const isPasswordCorrect = await bcryptjs.compare(userLogin.password, result.password as string);
 
   if (!isPasswordCorrect) {
     throw new BaseError('Contraseña incorrecta', StatusCodes.FORBIDDEN);
