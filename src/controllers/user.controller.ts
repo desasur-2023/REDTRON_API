@@ -44,7 +44,7 @@ const create = async (user: User) => {
     const saltRounds = parseInt(cifrado)
     const salt = await bcryptjs.genSalt(saltRounds);
     user.password = await bcryptjs.hash(user.password, salt);
-
+    log(user)
   const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT));
   if(result instanceof BaseError) throw result;
   return result;
