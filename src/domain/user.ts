@@ -6,7 +6,10 @@ export interface User extends Base {
   email?: string
   role: UserRole
   status: UserStatus
-  password: string,
+  password?: string,
+  percent_agreement: number,
+  total_balance: number,
+  last_settle_date: Date,
   token: string
 }
 
@@ -29,4 +32,10 @@ export interface UserLogin{
 export interface TokenPayload {
   userId: string;
   role: UserRole;
+}
+
+export interface ChangePassword {
+  password: string,
+  newPassword: string,
+  comparePassword: string
 }
