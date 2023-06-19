@@ -45,14 +45,14 @@ const create = async (user: User) => {
     const salt = await bcryptjs.genSalt(saltRounds);
     user.password = await bcryptjs.hash(user.password, salt);
 
-  const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT, error.message));
+  const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT));
   if(result instanceof BaseError) throw result;
   return result;
 };
 
 const del = async (id: string) => {
   const userDAO = await new UserDAO();
-  const result =  await userDAO.delete(id).catch(error => new BaseError("No se puede borrar el usuario", StatusCodes.CONFLICT, error.message));
+  const result =  await userDAO.delete(id).catch(error => new BaseError("No se puede borrar el usuario", StatusCodes.CONFLICT));
   if(result instanceof BaseError) throw result;
   return result;
 };
