@@ -12,6 +12,8 @@ import bienvenida from "./../utils/email/bienvenida"
 
 dotenv.config();
 
+const from = process.env.EMAIL
+
 const findOneById = async (id: string) => {
   const userDAO = await new UserDAO();
   const result =  await userDAO.read(id).catch(error => new BaseError("Usuario inexistente", StatusCodes.CONFLICT, error.message));
@@ -42,13 +44,14 @@ const create = async (user: User) => {
     }
     const saltRounds = parseInt(cifrado)
     const salt = await bcryptjs.genSalt(saltRounds);
-    user.password ? user.password : user.password = 'REDTRON1234';
+    let password = 'REDTRON1234';
+    user.password ? password = user.password : user.password = password;
     user.password = await bcryptjs.hash(user.password, salt);
 
   const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT, error.message));
   if(result instanceof BaseError) throw result;
   else {
-    const email = await sendEmail('hugo@gmail.com', 'usuario@gmail.com','Bienvenido a REDTRON' ,bienvenida, result)
+    const email = await sendEmail(from, 'Cajero creado con éxito', bienvenida, result, password)
     .catch(error => new BaseError("No se enviar el mail", StatusCodes.CONFLICT, error.message));
     if(email instanceof BaseError) throw email;
   }
