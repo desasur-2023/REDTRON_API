@@ -10,7 +10,7 @@ export default function usersRouter(): Router {
 
     .get('/:id', handler.findOneById)
     .get("/",authMiddleware.authorize, handler.getAll)
-    .post("/", [authMiddleware.authorize], handler.create)
+    .post("/", handler.create)
     .post("/login",handler.logIn)
     .delete("/:id", handler.delete)
     .put("/:id", handler.update)
