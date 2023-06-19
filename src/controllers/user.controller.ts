@@ -9,6 +9,8 @@ import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
 import { sendEmail } from "../utils/email/sendEmail";
 import bienvenida from "./../utils/email/bienvenida"
+import modificacion from "../utils/email/modificacion";
+import { log } from "console";
 
 dotenv.config();
 
@@ -51,8 +53,9 @@ const create = async (user: User) => {
   const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT, error.message));
   if(result instanceof BaseError) throw result;
   else {
+    result.password = '';
     const email = await sendEmail(from, 'Cajero creado con éxito', bienvenida, result, password)
-    .catch(error => new BaseError("No se enviar el mail", StatusCodes.CONFLICT, error.message));
+    .catch(error => new BaseError("No se puede enviar el mail", StatusCodes.CONFLICT, error.message));
     if(email instanceof BaseError) throw email;
   }
   
@@ -92,7 +95,12 @@ const update = async (id: string, item: User) => {
   const userDao = await new UserDAO();
   const result = await userDao.update(id, item).catch((error: Error) => new BaseError("No se puede modificar el usuario", StatusCodes.CONFLICT, error.message));
   if(result instanceof BaseError) throw result;
-  if(result) result.password = '';
+  else {
+    result.password = '';
+    const email = await sendEmail(from, 'Cajero modificado con éxito', modificacion, result, item)
+    .catch(error => new BaseError("No se puede enviar el mail", StatusCodes.CONFLICT, error.message));
+    if(email instanceof BaseError) throw email;
+  }
   return result;
 }
 
