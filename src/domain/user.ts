@@ -30,3 +30,8 @@ export interface TokenPayload {
   userId: string;
   role: UserRole;
 }
+
+export enum DefaultValues {
+  PASSWORD = 'REDTRON1234',
+  EMAIL = 'hugoschierano@gmail.com',
+}
