@@ -9,7 +9,7 @@ export class UserEntity implements User {
   @Column({ name: "username", type: "varchar", length: 32, nullable: false, unique: true })
   username: string;
 
-  @Column({ name: "password", type: "varchar",length: 128, nullable: false })
+  @Column({ name: "password", type: "varchar",length: 128, nullable: true, default: "Redtron2013" })
   password: string;
 
   @Column({ name: "phone", type: "varchar", length: 64, nullable: false, unique:true })
@@ -38,4 +38,5 @@ export class UserEntity implements User {
 
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;
+  
 }
