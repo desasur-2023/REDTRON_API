@@ -7,6 +7,8 @@ import jwt from "jsonwebtoken"
 
 import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
+import { sendEmail } from "../utils/email/sendEmail";
+import bienvenida from "./../utils/email/bienvenida"
 
 dotenv.config();
 
@@ -44,6 +46,12 @@ const create = async (user: User) => {
 
   const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT, error.message));
   if(result instanceof BaseError) throw result;
+  else {
+    const email = await sendEmail('hugo@gmail.com', 'usuario@gmail.com','Bienvenido a REDTRON' ,bienvenida, result)
+    .catch(error => new BaseError("No se enviar el mail", StatusCodes.CONFLICT, error.message));
+    if(email instanceof BaseError) throw email;
+  }
+  
   return result;
 };
 
