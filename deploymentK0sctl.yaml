@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redtron-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redtron-api
+  template:
+    metadata:
+      labels:
+        app: REDTRON_API
+    spec:
+      containers:
+      - name: redtron-api-container
+        image: image: redtron-docker:latest
+        ports:
+        - containerPort: 3001
