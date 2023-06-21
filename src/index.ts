@@ -2,6 +2,7 @@ import {createApp} from "./app";
 import server from "./server";
 import userController from "./crearUserMultiple";
 import dotenv from "dotenv";
+import { log } from "console";
 dotenv.config();
 
 export default server(createApp);
@@ -15,8 +16,9 @@ async function createUsers() {
       console.error("Error al crear los usuarios:", error);
     }
   }
-  
-  if (process.env.NODE_ENV === "development") {
+  log(process.env.NODE_ENV)
+  if (process.env.NODE_ENV) {
+    log(process.env.NODE_ENV)
     createUsers();
   }
 
