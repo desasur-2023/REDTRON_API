@@ -11,3 +11,6 @@ PG_PASSWORD=...
 PG_DATABASE=desasur
 PORT=3001
 JWT_SECRET=desasur2023
+SALT=10
+EMAIL=hugoschierano@gmail.com
+EMAIL_PASSWORD=keummkqrhmplhkgv

@@ -34,8 +34,7 @@ export interface TokenPayload {
   role: UserRole;
 }
 
-export interface ChangePassword {
-  password: string,
-  newPassword: string,
-  comparePassword: string
+export enum DefaultValues {
+  PASSWORD = 'REDTRON1234',
+  EMAIL = 'hugoschierano@gmail.com',
 }
