@@ -8,7 +8,7 @@ WORKDIR /REDTRON_API
 COPY package*.json ./
 
 # Instalar las dependencias
-RUN npm install --production
+RUN npm install
 
 # Instalar TypeScript de forma global
 RUN npm install -g typescript
