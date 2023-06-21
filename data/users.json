@@ -1,0 +1,20 @@
+[{
+  "username": "redtron",
+  "phone": "3814951480",
+  "email": "desasur.sa@gmail.com",
+  "role": "ADMIN",
+  "status": "ACTIVE",
+  "password": "Redtron2013",
+  "percent_agreement": 100,
+  "total_balance": 60
+},
+
+{
+    "username": "redtron_teller",
+    "phone": "3814951481",
+    "email": "ing.finterlandi@gmail.com",
+    "role": "TELLER",
+    "status": "INACTIVE",
+    "password": "Redtron2013",
+    "percent_agreement": 40
+  }]
