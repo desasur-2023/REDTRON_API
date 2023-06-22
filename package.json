@@ -8,7 +8,7 @@
     "dev": "nodemon src/index.ts",
     "start": "ts-node src/index.ts",
     "test": "jest",
-    "reset-db": "ts-node src/scripts/reset-db.ts"
+    "reset-users-db": "ts-node src/scripts/reset-users-db.ts"
   },
   "repository": {
     "type": "git",
