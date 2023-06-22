@@ -6,7 +6,10 @@ export interface User extends Base {
   email?: string
   role: UserRole
   status: UserStatus
-  password: string,
+  password?: string,
+  percent_agreement: number,
+  total_balance: number,
+  last_settle_date: Date,
   token: string
 }
 
@@ -31,7 +34,9 @@ export interface TokenPayload {
   role: UserRole;
 }
 
+
 export enum DefaultValues {
   PASSWORD = 'REDTRON1234',
   EMAIL = 'hugoschierano@gmail.com',
+
 }
