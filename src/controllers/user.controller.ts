@@ -46,7 +46,7 @@ const create = async (user: User) => {
     }
     const saltRounds = parseInt(cifrado)
     const salt = await bcryptjs.genSalt(saltRounds);
-    let password = 'REDTRON1234';
+    let password = 'Redtron2023';
     user.password ? password = user.password : user.password = password;
     user.password = await bcryptjs.hash(user.password, salt);
 
