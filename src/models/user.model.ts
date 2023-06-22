@@ -38,5 +38,4 @@ export class UserEntity implements User {
 
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;
-
 }
