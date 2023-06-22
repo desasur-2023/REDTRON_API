@@ -17,8 +17,9 @@ export const userHandler =  {
                         delete: catchedAsync(userH.delete),
                         create: catchedAsync(userH.create),
                         update: catchedAsync(userH.update),
-                        //logIn: catchedAsync(userH.logIn),
                         changePassword: catchedAsync(userH.changePassword)
                         };
 
-export const authHandler = { logIn: catchedAsync(authH.logIn) }
+export const authHandler = { logIn: catchedAsync(authH.logIn) };
+
+
