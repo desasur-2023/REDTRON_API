@@ -10,6 +10,9 @@ import bienvenida from "./../utils/email/bienvenida"
 import modificacion from "../utils/email/modificacion";
 
 
+
+
+
 dotenv.config();
 
 const from = process.env.EMAIL
@@ -46,7 +49,9 @@ const create = async (user: User) => {
     }
     const saltRounds = parseInt(cifrado)
     const salt = await bcryptjs.genSalt(saltRounds);
+
     let password = 'Redtron2023';
+
     user.password ? password = user.password : user.password = password;
     user.password = await bcryptjs.hash(user.password, salt);
 
