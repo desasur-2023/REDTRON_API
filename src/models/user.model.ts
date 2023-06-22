@@ -2,6 +2,8 @@ import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 import { User, UserRole, UserStatus, defaultValues } from "../domain/user";
 
+
+
 @Entity({ name: "users" })
 export class UserEntity implements User {
   @PrimaryGeneratedColumn("uuid")
@@ -18,7 +20,6 @@ export class UserEntity implements User {
 
   @Column({ name: "role", type: "enum", enum: UserRole, default: UserRole.TELLER })
   role: UserRole;
-
 
   @Column({ name: "email", type: "varchar", length: 128, default: defaultValues.email })
   email: string;
