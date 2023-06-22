@@ -1,4 +1,7 @@
-import { Base } from "../utils/common"
+import { Base } from "../utils/common";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export interface User extends Base {
   username: string
@@ -34,7 +37,7 @@ export interface TokenPayload {
   role: UserRole;
 }
 
-export enum DefaultValues {
-  PASSWORD = 'REDTRON1234',
-  EMAIL = 'hugoschierano@gmail.com',
+export const defaultValues = {
+  password: 'Redtron2023',
+  email: process.env.EMAIL,
 }
