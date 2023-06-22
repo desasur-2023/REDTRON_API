@@ -40,3 +40,9 @@ export enum DefaultValues {
   EMAIL = 'hugoschierano@gmail.com',
 
 }
+
+export interface ChangePassword {
+  password: string,
+  newPassword: string,
+  comparePassword: string
+}
