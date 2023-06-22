@@ -9,7 +9,10 @@ export interface User extends Base {
   email?: string
   role: UserRole
   status: UserStatus
-  password: string,
+  password?: string,
+  percent_agreement: number,
+  total_balance: number,
+  last_settle_date: Date,
   token: string
 }
 
@@ -37,4 +40,10 @@ export interface TokenPayload {
 export const defaultValues = {
   password: 'Redtron2023',
   email: process.env.EMAIL,
+}
+
+export interface ChangePassword {
+  password: string,
+  newPassword: string,
+  comparePassword: string
 }

@@ -1,7 +1,7 @@
 import { UserDAO } from "../dao/user.dao";
 import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
-import { TokenPayload, User, UserLogin } from "../domain/user";
+import { ChangePassword, TokenPayload, User, UserLogin, UserStatus } from "../domain/user";
 
 import jwt from "jsonwebtoken"
 
@@ -40,17 +40,21 @@ const getAll = async (name?: string) => {
 const create = async (user: User) => {
   const userDAO = await new UserDAO();
 
+  if(user.password === undefined ) user.password = "Redtron2013"
+
   const cifrado = process.env.SALT 
     if (cifrado === undefined) {
       throw new BaseError("La variable de entorno SALT no está definida", StatusCodes.CONFLICT);
     }
     const saltRounds = parseInt(cifrado)
     const salt = await bcryptjs.genSalt(saltRounds);
+
     let password = 'Redtron2023';
+
     user.password ? password = user.password : user.password = password;
     user.password = await bcryptjs.hash(user.password, salt);
 
-  const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT, error.message));
+  const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT));
   if(result instanceof BaseError) throw result;
   else {
     result.password = '';
@@ -64,7 +68,7 @@ const create = async (user: User) => {
 
 const del = async (id: string) => {
   const userDAO = await new UserDAO();
-  const result =  await userDAO.delete(id).catch(error => new BaseError("No se puede borrar el usuario", StatusCodes.CONFLICT, error.message));
+  const result =  await userDAO.delete(id).catch(error => new BaseError("No se puede borrar el usuario", StatusCodes.CONFLICT));
   if(result instanceof BaseError) throw result;
   return result;
 };
@@ -76,8 +80,8 @@ const logIn = async (userLogin: UserLogin) => {
                 .catch((error: Error) => new BaseError(`El usuario ${userLogin.username} no esta registrado`, StatusCodes.NOT_FOUND, error.message));
 
   if (!result || result instanceof BaseError) throw result; 
-  
-  const isPasswordCorrect = await bcryptjs.compare(userLogin.password, result.password);
+
+  const isPasswordCorrect = await bcryptjs.compare(userLogin.password, result.password as string);
 
   if (!isPasswordCorrect) {
     throw new BaseError('Contraseña incorrecta', StatusCodes.FORBIDDEN);
@@ -104,6 +108,7 @@ const update = async (id: string, item: User) => {
   return result;
 }
 
+
 function generateToken(u: User): string {
   if (!process.env.JWT_SECRET) {
     throw new BaseError('Cannot generate token', StatusCodes.CONFLICT);
@@ -114,6 +119,42 @@ function generateToken(u: User): string {
     { expiresIn: '1h' }
   );
 }
+
+const changePassword = async (userName: string, item: ChangePassword) => {
+  const userDao = await new UserDAO();
+  const user = await userDao.findByUserName(userName).catch((error: Error) => new BaseError(`El usuario: ${userName} no se encuentra registrado`, StatusCodes.CONFLICT, error.message));
+
+  if (!user || user instanceof BaseError) throw user; 
+
+  if (user.password === undefined) {
+    throw new BaseError('Contraseña no encontrada para el usuario', StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+
+  const isPasswordCorrect = await bcryptjs.compare(item.password, user.password);
+
+  if (!isPasswordCorrect) {
+    throw new BaseError('Contraseña incorrecta', StatusCodes.FORBIDDEN);
+  }
+
+  if(item.newPassword === item.comparePassword){
+    const cifrado = process.env.SALT 
+    if (cifrado === undefined) {
+      throw new BaseError("La variable de entorno SALT no está definida", StatusCodes.CONFLICT);
+    }
+    const saltRounds = parseInt(cifrado)
+    const salt = await bcryptjs.genSalt(saltRounds);
+    const pass = await bcryptjs.hash(item.newPassword, salt)
+   
+    const changeUser: User ={
+      ...user,
+      password: pass,
+      status: UserStatus.ACTIVE
+    }
+    userDao.update(user.id, changeUser)
+    return true
+  }
+  throw new BaseError('Las contraseñas no coinciden', StatusCodes.FORBIDDEN);
+}
   
 
-export default { findOneById, getAll, create, delete: del, logIn, update};
+export default { findOneById, getAll, create, delete: del, logIn, update, changePassword};
