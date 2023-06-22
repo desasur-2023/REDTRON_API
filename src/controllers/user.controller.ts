@@ -7,9 +7,12 @@ import jwt from "jsonwebtoken"
 
 import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
-import { log } from "console";
+import { sendEmail } from "../utils/email/sendEmail";
+import bienvenida from "./../utils/email/bienvenida"
 
 dotenv.config();
+
+const from = process.env.EMAIL
 
 const findOneById = async (id: string) => {
   const userDAO = await new UserDAO();
@@ -43,10 +46,18 @@ const create = async (user: User) => {
     }
     const saltRounds = parseInt(cifrado)
     const salt = await bcryptjs.genSalt(saltRounds);
+    let password = 'REDTRON1234';
+    user.password ? password = user.password : user.password = password;
     user.password = await bcryptjs.hash(user.password, salt);
 
   const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT));
   if(result instanceof BaseError) throw result;
+  else {
+    const email = await sendEmail(from, 'Cajero creado con éxito', bienvenida, result, password)
+    .catch(error => new BaseError("No se enviar el mail", StatusCodes.CONFLICT, error.message));
+    if(email instanceof BaseError) throw email;
+  }
+  
   return result;
 };
 
