@@ -34,10 +34,4 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   return response(res, StatusCodes.OK, await controller.update(id, {...req.body} as User));
 };
-
-const changePassword = async (req: Request, res: Response, next: NextFunction) => {
-  const {userName, item} = req.body
-  return response(res, StatusCodes.OK, await controller.changePassword(userName, item));
-};
-
-export default { findOneById, getAll, create, delete: del, logIn, update, changePassword };
+export default { findOneById, getAll, create, delete: del, logIn, update};

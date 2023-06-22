@@ -17,5 +17,5 @@ export const userHandler =  {
                         create: catchedAsync(userH.create),
                         update: catchedAsync(userH.update),
                         logIn: catchedAsync(userH.logIn),
-                        changePassword: catchedAsync(userH.changePassword)
+                     
                         };

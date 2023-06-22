@@ -1,7 +1,7 @@
 import { UserDAO } from "../dao/user.dao";
 import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
-import { ChangePassword, TokenPayload, User, UserLogin, UserStatus } from "../domain/user";
+import {  TokenPayload, User, UserLogin } from "../domain/user";
 
 import jwt from "jsonwebtoken"
 
@@ -109,42 +109,5 @@ function generateToken(u: User): string {
     { expiresIn: '1h' }
   );
 }
-
-const changePassword = async (userName: string, item: ChangePassword) => {
-  const userDao = await new UserDAO();
-  const user = await userDao.findByUserName(userName).catch((error: Error) => new BaseError(`El usuario: ${userName} no se encuentra registrado`, StatusCodes.CONFLICT, error.message));
-
-  if (!user || user instanceof BaseError) throw user; 
-
-  if (user.password === undefined) {
-    throw new BaseError('Contraseña no encontrada para el usuario', StatusCodes.INTERNAL_SERVER_ERROR);
-  }
-
-  const isPasswordCorrect = await bcryptjs.compare(item.password, user.password);
-
-  if (!isPasswordCorrect) {
-    throw new BaseError('Contraseña incorrecta', StatusCodes.FORBIDDEN);
-  }
-
-  if(item.newPassword === item.comparePassword){
-    const cifrado = process.env.SALT 
-    if (cifrado === undefined) {
-      throw new BaseError("La variable de entorno SALT no está definida", StatusCodes.CONFLICT);
-    }
-    const saltRounds = parseInt(cifrado)
-    const salt = await bcryptjs.genSalt(saltRounds);
-    const pass = await bcryptjs.hash(item.newPassword, salt)
-   
-    const changeUser: User ={
-      ...user,
-      password: pass,
-      status: UserStatus.ACTIVE
-    }
-    userDao.update(user.id, changeUser)
-    return true
-  }
-  throw new BaseError('Las contraseñas no coinciden', StatusCodes.FORBIDDEN);
-}
   
-
-export default { findOneById, getAll, create, delete: del, logIn, update, changePassword};
+export default { findOneById, getAll, create, delete: del, logIn, update};
