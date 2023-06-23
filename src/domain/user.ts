@@ -1,4 +1,7 @@
-import { Base } from "../utils/common"
+import { Base } from "../utils/common";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export interface User extends Base {
   username: string
@@ -32,6 +35,11 @@ export interface UserLogin{
 export interface TokenPayload {
   userId: string;
   role: UserRole;
+}
+
+export const defaultValues = {
+  password: 'Redtron2023',
+  email: process.env.EMAIL,
 }
 
 export interface ChangePassword {

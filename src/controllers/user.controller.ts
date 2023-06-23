@@ -1,15 +1,21 @@
 import { UserDAO } from "../dao/user.dao";
 import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
-import { ChangePassword, TokenPayload, User, UserLogin, UserStatus } from "../domain/user";
-
-import jwt from "jsonwebtoken"
+import { ChangePassword, User, UserStatus } from "../domain/user";
 
 import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
-import { log } from "console";
+import { sendEmail } from "../utils/email/sendEmail";
+import bienvenida from "./../utils/email/bienvenida"
+import modificacion from "../utils/email/modificacion";
+
+
+
+
 
 dotenv.config();
+
+const from = process.env.EMAIL
 
 const findOneById = async (id: string) => {
   const userDAO = await new UserDAO();
@@ -43,10 +49,21 @@ const create = async (user: User) => {
     }
     const saltRounds = parseInt(cifrado)
     const salt = await bcryptjs.genSalt(saltRounds);
+
+    let password = 'Redtron2023';
+
+    user.password ? password = user.password : user.password = password;
     user.password = await bcryptjs.hash(user.password, salt);
 
   const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT));
   if(result instanceof BaseError) throw result;
+  else {
+    result.password = '';
+    const email = await sendEmail(from, 'Cajero creado con éxito', bienvenida, result, password)
+    .catch(error => new BaseError("No se puede enviar el mail", StatusCodes.CONFLICT, error.message));
+    if(email instanceof BaseError) throw email;
+  }
+  
   return result;
 };
 
@@ -57,47 +74,20 @@ const del = async (id: string) => {
   return result;
 };
 
-const logIn = async (userLogin: UserLogin) => {
-  const userDAO = await new UserDAO();
-  
-  const result = await userDAO.findByUserName(userLogin.username) 
-                .catch((error: Error) => new BaseError(`El usuario ${userLogin.username} no esta registrado`, StatusCodes.NOT_FOUND, error.message));
-
-  if (!result || result instanceof BaseError) throw result; 
-
-  const isPasswordCorrect = await bcryptjs.compare(userLogin.password, result.password as string);
-
-  if (!isPasswordCorrect) {
-    throw new BaseError('Contraseña incorrecta', StatusCodes.FORBIDDEN);
-  }
-
-  result.token = generateToken(result);
-
-  const userWithToken = await userDAO.update(result.id, result)
-  userWithToken.password = '';
-  return userWithToken;
-// retornar usuario con un token
-}
 
 const update = async (id: string, item: User) => {
   const userDao = await new UserDAO();
   const result = await userDao.update(id, item).catch((error: Error) => new BaseError("No se puede modificar el usuario", StatusCodes.CONFLICT, error.message));
   if(result instanceof BaseError) throw result;
-  if(result) result.password = '';
+  else {
+    result.password = '';
+    const email = await sendEmail(from, 'Cajero modificado con éxito', modificacion, result, item)
+    .catch(error => new BaseError("No se puede enviar el mail", StatusCodes.CONFLICT, error.message));
+    if(email instanceof BaseError) throw email;
+  }
   return result;
 }
 
-
-function generateToken(u: User): string {
-  if (!process.env.JWT_SECRET) {
-    throw new BaseError('Cannot generate token', StatusCodes.CONFLICT);
-  }
-  return jwt.sign(
-    { userId: u.id, role: u.role } as TokenPayload,
-    process.env.JWT_SECRET!,
-    { expiresIn: '1h' }
-  );
-}
 
 const changePassword = async (userName: string, item: ChangePassword) => {
   const userDao = await new UserDAO();
@@ -136,4 +126,4 @@ const changePassword = async (userName: string, item: ChangePassword) => {
 }
   
 
-export default { findOneById, getAll, create, delete: del, logIn, update, changePassword};
+export default { findOneById, getAll, create, delete: del, update, changePassword};
