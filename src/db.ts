@@ -4,6 +4,7 @@ import { DataSource } from "typeorm";
 import { logger } from "./logger";
 import { UserEntity } from "./models/user.model";
 import { CasinoEntity } from "./models/casino.model";
+import { PlayerEntity } from "./models/player.model";
 
 
 dotenv.config();
@@ -15,7 +16,7 @@ dotenv.config();
     synchronize: true,
     logging: false,
     url: process.env.DATABASE_URL, // Reemplaza process.env.DATABASE_URL con la URL proporcionada por Railway
-    entities: [UserEntity, CasinoEntity],
+    entities: [UserEntity, CasinoEntity, PlayerEntity],
   });
 
 
@@ -30,7 +31,7 @@ const PostgresDataSourceUnderDevelopment = new DataSource({
   username: process.env.PG_USER,
   password: process.env.PG_PASSWORD,
   database: process.env.PG_DATABASE,
-  entities: [UserEntity, CasinoEntity],
+  entities: [UserEntity, CasinoEntity, PlayerEntity],
 });
 
 let PostgresDataSource: DataSource;

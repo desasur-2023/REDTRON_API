@@ -38,7 +38,6 @@ export async function sendEmail(from, subject, html, user, password){
           console.error(error);
           throw error;
         } else {
-          console.log('Email sent:', info);
           return info;
         }
       })
