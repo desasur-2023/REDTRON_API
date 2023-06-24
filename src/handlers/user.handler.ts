@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
 import controller from "../controllers/user.controller";
-import { User, UserLogin } from "../domain/user";
+import { User } from "../domain/user";
 import { response } from "../utils/utils";
-import { log } from "console";
+
 
 const findOneById = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
@@ -25,11 +24,6 @@ const del = async (req: Request, res: Response, next: NextFunction) => {
   return response(res, StatusCodes.OK, await controller.delete(id));
 };
 
-const logIn = async (req: Request, res: Response, next: NextFunction) => {
-  const userLogin = req.body;
-  return response(res, StatusCodes.OK, await controller.logIn({...userLogin} as UserLogin));
-};
-
 const update = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   return response(res, StatusCodes.OK, await controller.update(id, {...req.body} as User));
@@ -40,4 +34,4 @@ const changePassword = async (req: Request, res: Response, next: NextFunction) =
   return response(res, StatusCodes.OK, await controller.changePassword(userName, item));
 };
 
-export default { findOneById, getAll, create, delete: del, logIn, update, changePassword };
+export default { findOneById, getAll, create, delete: del, update, changePassword };
