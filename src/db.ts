@@ -8,15 +8,23 @@ import { CasinoEntity } from "./models/casino.model";
 
 dotenv.config();
 
+// const PostgresDataSource = new DataSource({
+//   type: "postgres",
+//   synchronize: true,
+//   logging: false,
+//   host: process.env.PG_HOST,
+//   port: Number(process.env.PG_PORT),
+//   username: process.env.PG_USER,
+//   password: process.env.PG_PASSWORD,
+//   database: process.env.PG_DATABASE,
+//   entities: [UserEntity, CasinoEntity],
+// });
+
 const PostgresDataSource = new DataSource({
   type: "postgres",
   synchronize: true,
   logging: false,
-  host: process.env.PG_HOST,
-  port: Number(process.env.PG_PORT),
-  username: process.env.PG_USER,
-  password: process.env.PG_PASSWORD,
-  database: process.env.PG_DATABASE,
+  url: process.env.DATABASE_URL, // Reemplaza process.env.DATABASE_URL con la URL proporcionada por Railway
   entities: [UserEntity, CasinoEntity],
 });
 
