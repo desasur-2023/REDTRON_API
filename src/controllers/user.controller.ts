@@ -41,7 +41,7 @@ const getAll = async (name?: string) => {
 const create = async (user: User) => {
   const userDAO = await new UserDAO();
 
-  if(user.password === undefined ) user.password = "Redtron2013"
+  if(user.password === undefined ) user.password = "Redtron2023"
 
   const cifrado = process.env.SALT 
     if (cifrado === undefined) {
@@ -54,7 +54,7 @@ const create = async (user: User) => {
 
     user.password ? password = user.password : user.password = password;
     user.password = await bcryptjs.hash(user.password, salt);
-    log(user)
+  
   const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT));
   if(result instanceof BaseError) throw result;
   else {

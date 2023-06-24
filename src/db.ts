@@ -8,25 +8,34 @@ import { CasinoEntity } from "./models/casino.model";
 
 dotenv.config();
 
-// const PostgresDataSource = new DataSource({
-//   type: "postgres",
-//   synchronize: true,
-//   logging: false,
-//   host: process.env.PG_HOST,
-//   port: Number(process.env.PG_PORT),
-//   username: process.env.PG_USER,
-//   password: process.env.PG_PASSWORD,
-//   database: process.env.PG_DATABASE,
-//   entities: [UserEntity, CasinoEntity],
-// });
 
-const PostgresDataSource = new DataSource({
+
+  const PostgresDataSourceInDevelopmentTrial = new DataSource({
+    type: "postgres",
+    synchronize: true,
+    logging: false,
+    url: process.env.DATABASE_URL, // Reemplaza process.env.DATABASE_URL con la URL proporcionada por Railway
+    entities: [UserEntity, CasinoEntity],
+  });
+
+
+
+
+const PostgresDataSourceUnderDevelopment = new DataSource({
   type: "postgres",
   synchronize: true,
   logging: false,
-  url: process.env.DATABASE_URL, // Reemplaza process.env.DATABASE_URL con la URL proporcionada por Railway
+  host: process.env.PG_HOST,
+  port: Number(process.env.PG_PORT),
+  username: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  database: process.env.PG_DATABASE,
   entities: [UserEntity, CasinoEntity],
 });
+
+let PostgresDataSource: DataSource;
+
+process.env.NODE_DB?PostgresDataSource = PostgresDataSourceInDevelopmentTrial : PostgresDataSource = PostgresDataSourceUnderDevelopment
 
 export async function getConnection(): Promise<DataSource> {
   const { isInitialized } = PostgresDataSource;
