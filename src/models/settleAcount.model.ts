@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { SettleAcount, SettleAcountStatus } from "../domain/settleAcount";
+import { UserEntity } from "./user.model";
 
 @Entity({name: "settleAcount"})
 export class SettleAcountEntity implements SettleAcount {
@@ -23,4 +24,7 @@ export class SettleAcountEntity implements SettleAcount {
     
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date;
+
+    @ManyToOne(() => UserEntity, (user) => user.settleAcount)
+    user: UserEntity
 }

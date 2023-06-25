@@ -1,5 +1,6 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Player } from "../domain/player";
+import { CasinoEntity } from "./casino.model";
 
 @Entity({ name: "player" })
 export class PlayerEntity implements Player {
@@ -13,4 +14,7 @@ export class PlayerEntity implements Player {
     teller: string;
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date; 
+
+    @ManyToOne(() => CasinoEntity, (casino) => casino.player)
+    casino: CasinoEntity
 }
