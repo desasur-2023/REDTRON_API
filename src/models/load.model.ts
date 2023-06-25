@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Load, LoadStatus } from "../domain/load";
+import { PlayerEntity } from "./player.model";
 
 @Entity({ name: "load" })
 export class LoadEntity implements Load {
@@ -15,4 +16,8 @@ export class LoadEntity implements Load {
     time: Date;
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date;
+
+    //Relacion un player tiene muchos load y load tiene un solo player
+    @ManyToOne(() => PlayerEntity, (player) => player.load)
+    player: PlayerEntity
 }
