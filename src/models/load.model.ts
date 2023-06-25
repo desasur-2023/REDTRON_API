@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Load, LoadStatus } from "../domain/load";
 import { PlayerEntity } from "./player.model";
+import { HistoricEntity } from "./historic.model";
 
 @Entity({ name: "load" })
 export class LoadEntity implements Load {
@@ -20,4 +21,8 @@ export class LoadEntity implements Load {
     //Relacion un player tiene muchos load y load tiene un solo player
     @ManyToOne(() => PlayerEntity, (player) => player.load)
     player: PlayerEntity
+
+    //Relacion un historic tiene muchos load y load tiene un solo historic
+    @ManyToOne(() => HistoricEntity, (historic) => historic.load)
+    historic: HistoricEntity
 }
