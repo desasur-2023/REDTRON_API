@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Casino } from "../domain/casino";
+import { User_Casino_Entity } from "./user_casino.model";
 
 @Entity('casino')
 export class CasinoEntity implements Casino{
@@ -18,5 +19,7 @@ export class CasinoEntity implements Casino{
     @Column({name: "created_at",type: "timestamp",nullable: false,default: () => "now()",})
     createdAt: Date;
 
+    @OneToMany(() => User_Casino_Entity, user_casino => user_casino.casino)
+    public user_casino: User_Casino_Entity[];
     
 }

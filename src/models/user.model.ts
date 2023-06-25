@@ -1,6 +1,7 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { User, UserRole, UserStatus, defaultValues } from "../domain/user";
+import { User_Casino_Entity } from "./user_casino.model";
 
 
 
@@ -42,4 +43,6 @@ export class UserEntity implements User {
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;
   
+  @OneToMany(() => User_Casino_Entity, user_casino => user_casino.users)
+  public user_casino: User_Casino_Entity[];
 }
