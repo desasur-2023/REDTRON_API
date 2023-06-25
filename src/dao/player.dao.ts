@@ -14,6 +14,7 @@ export class PlayerDAO implements PlayerRepository{
             this.repository = connection.getRepository(PlayerEntity)
         })
     }
+   
     async create(item: Player): Promise<Player> {
         return await this.repository.save(item) as Player;
     }
@@ -39,4 +40,5 @@ export class PlayerDAO implements PlayerRepository{
           }
           return await this.repository.find({ where: { nickname: ILike(`%${query}%`) } }) as Player[];
     }
+    searchDate: (query?: Date | undefined) => Promise<Player[]>;
 }
