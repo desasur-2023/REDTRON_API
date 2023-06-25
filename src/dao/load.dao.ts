@@ -1,4 +1,4 @@
-import { Between, ILike, Repository } from "typeorm";
+import { Between, Repository } from "typeorm";
 import { LoadRepository } from "../domain/repositories/load.repository";
 import { LoadEntity } from "../models/load.model";
 import { getConnection } from "../db";
@@ -22,15 +22,15 @@ export class LoadDAO implements LoadRepository {
     return (await this.repository.findOneBy({ id: id })) as Load;
   }
   async update(id: string, item: Load): Promise<Load> {
-    const existingPlayer = await this.repository.findOneBy({ id: id });
+    const existingLoad = await this.repository.findOneBy({ id: id });
     if (item === null || Object.keys(item).length === 0) {
       throw new BaseError(
         "No se proporcionó un objeto para actualizar.",
         StatusCodes.BAD_REQUEST
       );
     }
-    const updatedPlayer = Object.assign({}, existingPlayer, item);
-    return (await this.repository.save(updatedPlayer)) as Load;
+    const updatedLoad = Object.assign({}, existingLoad, item);
+    return (await this.repository.save(updatedLoad)) as Load;
   }
 
   async delete(id: string): Promise<boolean> {

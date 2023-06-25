@@ -5,7 +5,7 @@ import { Load, LoadStatus } from "../domain/load";
 export class LoadEntity implements Load {
     @PrimaryGeneratedColumn("uuid")
     id: string;
-    @Column({ name:"trasfer_url", type: "varchar", length: 36, nullable: false})
+    @Column({ name:"trasfer_url", type: "varchar", length: 200, nullable: false})
     trasfer_url: string;
     @Column({name:"status", type: "enum", enum: LoadStatus, default: LoadStatus.PENDING})
     status: LoadStatus;

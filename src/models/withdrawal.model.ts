@@ -11,7 +11,7 @@ export class WithdrawalEntity implements Withdrawal {
     status: WithdrawalStatus;
     @Column({name: "time", type: "timestamp", nullable: false, default: () => "now()",})
     time: Date;
-    @Column({ name:"trasfer_url", type: "varchar", length: 36, nullable: false})
+    @Column({ name:"trasfer_url", type: "varchar", length: 200, nullable: false})
     trasfer_url: string;
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date;
