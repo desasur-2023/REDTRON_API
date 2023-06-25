@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Withdrawal, WithdrawalStatus } from "../domain/withdrawal";
 import { PlayerEntity } from "./player.model";
+import { HistoricEntity } from "./historic.model";
 
 @Entity({name: "withdrawal"})
 export class WithdrawalEntity implements Withdrawal {
@@ -20,4 +21,8 @@ export class WithdrawalEntity implements Withdrawal {
     //Relacion un player tiene muchos withdrawal y withdrawal tiene un solo player
     @ManyToOne(() => PlayerEntity, (player) => player.withdrawal)
     player: PlayerEntity
+
+    //Relacion un historic tiene muchos withdrawal y withdrawal tiene un solo historic
+    @ManyToOne(() => HistoricEntity, (historic) => historic.withdrawal)
+    historic: HistoricEntity
 }
