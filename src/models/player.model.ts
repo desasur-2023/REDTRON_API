@@ -1,6 +1,7 @@
-import { BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Player } from "../domain/player";
 import { CasinoEntity } from "./casino.model";
+import { WithdrawalEntity } from "./withdrawal.model";
 
 @Entity({ name: "player" })
 export class PlayerEntity implements Player {
@@ -17,4 +18,8 @@ export class PlayerEntity implements Player {
 
     @ManyToOne(() => CasinoEntity, (casino) => casino.player)
     casino: CasinoEntity
+
+    //Relacion un player tiene muchos withdrawal y withdrawal tiene un solo player
+    @OneToMany(() => WithdrawalEntity, (withdrawal)=> withdrawal.player)
+    withdrawal: WithdrawalEntity[];
 }
