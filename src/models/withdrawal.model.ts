@@ -3,6 +3,9 @@ import { Withdrawal, WithdrawalStatus } from "../domain/withdrawal";
 import { PlayerEntity } from "./player.model";
 import { HistoricEntity } from "./historic.model";
 import { User_Casino_Entity } from "./user_casino.model";
+import { Player } from "../domain/player";
+import { Historic } from "../domain/historic";
+import { User_Casino } from "../domain/user_casino";
 
 @Entity({name: "withdrawal"})
 export class WithdrawalEntity implements Withdrawal {
@@ -21,13 +24,13 @@ export class WithdrawalEntity implements Withdrawal {
 
     //Relacion un player tiene muchos withdrawal y withdrawal tiene un solo player
     @ManyToOne(() => PlayerEntity, (player) => player.withdrawal)
-    player: PlayerEntity
+    player: Player;
 
     //Relacion un historic tiene muchos withdrawal y withdrawal tiene un solo historic
     @ManyToOne(() => HistoricEntity, (historic) => historic.withdrawal)
-    historic: HistoricEntity
+    historic: Historic;
 
     //Relacion un user_casino tiene muchos withdrawal y withdrawal tiene un solo user_casino
     @ManyToOne(() => User_Casino_Entity, (user_casino) => user_casino.withdrawal)
-    user_casino: User_Casino_Entity
+    user_casino: User_Casino;
 }

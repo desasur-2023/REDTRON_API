@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { SettleAcount, SettleAcountStatus } from "../domain/settleAcount";
 import { UserEntity } from "./user.model";
+import { User } from "../domain/user";
 
 @Entity({name: "settleAcount"})
 export class SettleAcountEntity implements SettleAcount {
@@ -26,5 +27,5 @@ export class SettleAcountEntity implements SettleAcount {
     createdAt: Date;
 
     @ManyToOne(() => UserEntity, (user) => user.settleAcount)
-    user: UserEntity
+    user: User;
 }

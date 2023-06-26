@@ -4,9 +4,13 @@ import { UserEntity } from "./user.model";
 import { User_Casino } from "../domain/user_casino";
 import { WithdrawalEntity } from "./withdrawal.model";
 import { LoadEntity } from "./load.model";
+import { User } from "../domain/user";
+import { PlayerEntity } from "./player.model";
+import { Player } from "../domain/player";
 
 @Entity({name: "user_casino"})
 export class User_Casino_Entity implements User_Casino{
+
     @PrimaryGeneratedColumn("uuid")
     public id: string;
     @Column({name:"debits", type: "decimal", precision: 10, scale: 0, nullable: false})
@@ -19,7 +23,7 @@ export class User_Casino_Entity implements User_Casino{
     public createdAt: Date;
 
     @ManyToOne(()=>UserEntity, (users) => users.user_casino)
-    public users: UserEntity;
+    public user: UserEntity;
 
     @ManyToOne(()=>CasinoEntity, (casino) => casino.user_casino)
     public casino: CasinoEntity;
@@ -31,4 +35,7 @@ export class User_Casino_Entity implements User_Casino{
     //Relacion un user_casino tiene muchos load y load tiene un solo user_casino
     @OneToMany(() => LoadEntity, (load)=> load.user_casino)
     load: LoadEntity[];
+
+    @OneToMany(() => PlayerEntity, (player)=> player.teller)
+    player: Player[];
 }

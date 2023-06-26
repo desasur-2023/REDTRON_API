@@ -3,6 +3,9 @@ import { Load, LoadStatus } from "../domain/load";
 import { PlayerEntity } from "./player.model";
 import { HistoricEntity } from "./historic.model";
 import { User_Casino_Entity } from "./user_casino.model";
+import { Player } from "../domain/player";
+import { Historic } from "../domain/historic";
+import { User_Casino } from "../domain/user_casino";
 
 @Entity({ name: "load" })
 export class LoadEntity implements Load {
@@ -21,13 +24,13 @@ export class LoadEntity implements Load {
 
     //Relacion un player tiene muchos load y load tiene un solo player
     @ManyToOne(() => PlayerEntity, (player) => player.load)
-    player: PlayerEntity
+    player: Player
 
     //Relacion un historic tiene muchos load y load tiene un solo historic
     @ManyToOne(() => HistoricEntity, (historic) => historic.load)
-    historic: HistoricEntity
+    historic: Historic
 
     //Relacion un user_casino tiene muchos load y load tiene un solo user_casino
     @ManyToOne(() => User_Casino_Entity, (user_casino) => user_casino.load)
-    user_casino: User_Casino_Entity
+    user_casino: User_Casino
 }

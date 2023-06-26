@@ -3,6 +3,8 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User, UserRole, UserStatus, defaultValues } from "../domain/user";
 import { User_Casino_Entity } from "./user_casino.model";
 import { SettleAcountEntity } from "./settleAcount.model";
+import { User_Casino } from "../domain/user_casino";
+import { SettleAcount } from "../domain/settleAcount";
 
 
 
@@ -44,9 +46,9 @@ export class UserEntity implements User {
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;
   
-  @OneToMany(() => User_Casino_Entity, user_casino => user_casino.users)
-  public user_casino: User_Casino_Entity[];
+  @OneToMany(() => User_Casino_Entity, user_casino => user_casino.user)
+  public user_casino: User_Casino[];
 
   @OneToMany(() => SettleAcountEntity, (settleAcount)=> settleAcount.user)
-  settleAcount: SettleAcountEntity[];
+  settleAcount: SettleAcount[];
 }

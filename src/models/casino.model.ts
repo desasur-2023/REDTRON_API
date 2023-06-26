@@ -2,6 +2,8 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Casino } from "../domain/casino";
 import { User_Casino_Entity } from "./user_casino.model";
 import { PlayerEntity } from "./player.model";
+import { User_Casino } from "../domain/user_casino";
+import { Player } from "../domain/player";
 
 @Entity('casino')
 export class CasinoEntity implements Casino{
@@ -21,9 +23,6 @@ export class CasinoEntity implements Casino{
     createdAt: Date;
 
     @OneToMany(() => User_Casino_Entity, user_casino => user_casino.casino)
-    public user_casino: User_Casino_Entity[];
-
-    @OneToMany(() => PlayerEntity, (player)=> player.casino)
-    player: PlayerEntity[];
+    public user_casino: User_Casino[];
     
 }
