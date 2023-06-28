@@ -14,11 +14,11 @@ export class SettleAcountEntity implements SettleAcount {
     @Column({name:"status", type: "enum", enum: SettleAcountStatus, default: SettleAcountStatus.PENDING})
     status: SettleAcountStatus;
 
-    @Column({ name: "period", type: "json", nullable: false })
-    period: { start: Date; end: Date; };
+    @Column({ name: "starPeriod", type: "timestamp", nullable: false })
+    starPeriod: Date;
 
-    @Column({name: "time", type: "timestamp", nullable: false, default: () => "now()",})
-    time: Date;
+    @Column({name: "endPeriod", type: "timestamp", nullable: false, default: () => "now()",})
+    endPeriod: Date;
 
     @Column({ name:"trasfer_url", type: "varchar", length: 200, nullable: false})
     transfer_url: string;
