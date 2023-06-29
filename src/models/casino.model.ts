@@ -12,12 +12,9 @@ export class CasinoEntity implements Casino{
     
     @Column({name: "name",type: "varchar", length: 32, nullable: false})
     name: string;
-    
-    @Column({name: "profits",type: "decimal", precision: 10, scale: 2,nullable: false})
-    profits: number;
 
-    @Column({name: "losses",type: "decimal", precision: 10, scale: 2, nullable: false})
-    losses: number;
+    @Column({ name:"image_url", type: "varchar", length: 200, nullable: true})
+    image_url: string;
     
     @Column({name: "created_at",type: "timestamp",nullable: false,default: () => "now()",})
     createdAt: Date;

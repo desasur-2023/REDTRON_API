@@ -1,6 +1,5 @@
 import { Base } from "../utils/common";
 import dotenv from "dotenv";
-import { User_Casino } from "./user_casino";
 
 dotenv.config();
 
