@@ -9,7 +9,6 @@ import { HistoricEntity } from "./models/historic.model";
 import { WithdrawalEntity } from "./models/withdrawal.model";
 import { SettleAcountEntity } from "./models/settleAcount.model";
 import { User_Casino_Entity } from "./models/user_casino.model";
-import { CoinsInflowEntity } from "./models/coinsInflow.model";
 import { CoinsMovementsEntity } from "./models/coinsMovements.model";
 
 dotenv.config();
@@ -19,7 +18,7 @@ const PostgresDataSourceInDevelopmentTrial = new DataSource({
   synchronize: true,
   logging: false,
   url: process.env.DATABASE_URL, 
-  entities: [UserEntity, CasinoEntity, PlayerEntity, LoadEntity, HistoricEntity,WithdrawalEntity, SettleAcountEntity,User_Casino_Entity, CoinsInflowEntity, CoinsMovementsEntity],
+  entities: [UserEntity, CasinoEntity, PlayerEntity, LoadEntity, HistoricEntity,WithdrawalEntity, SettleAcountEntity,User_Casino_Entity, CoinsMovementsEntity],
  });
 
 
@@ -32,7 +31,7 @@ const PostgresDataSourceUnderDevelopment = new DataSource({
   username: process.env.PG_USER,
   password: process.env.PG_PASSWORD,
   database: process.env.PG_DATABASE,
-  entities: [UserEntity, CasinoEntity, PlayerEntity, LoadEntity, HistoricEntity, WithdrawalEntity, SettleAcountEntity,User_Casino_Entity, CoinsInflowEntity, CoinsMovementsEntity],
+  entities: [UserEntity, CasinoEntity, PlayerEntity, LoadEntity, HistoricEntity, WithdrawalEntity, SettleAcountEntity,User_Casino_Entity, CoinsMovementsEntity],
 });
 
 let PostgresDataSource: DataSource;

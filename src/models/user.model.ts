@@ -1,13 +1,11 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
 import { User, UserRole, UserStatus, defaultValues } from "../domain/user";
 import { User_Casino_Entity } from "./user_casino.model";
 import { SettleAcountEntity } from "./settleAcount.model";
 import { User_Casino } from "../domain/user_casino";
 import { SettleAcount } from "../domain/settleAcount";
-import { CoinsInflowEntity } from "./coinsInflow.model";
-import { CoinsInflow } from "../domain/coinsInflow";
-
+import { CoinsMovementsEntity } from "./coinsMovements.model";
+import { CoinsMovements } from "../domain/coinsMovements";
 
 
 @Entity({ name: "users" })
@@ -57,6 +55,6 @@ export class UserEntity implements User {
   @OneToMany(() => SettleAcountEntity, (settleAcount)=> settleAcount.user)
   settleAcount: SettleAcount[];
 
-  @OneToMany(() => CoinsInflowEntity, (coinsInflow)=> coinsInflow.user)
-  coinsInflow: CoinsInflow[];
+  @OneToMany(() => CoinsMovementsEntity, (coinsMovements)=> coinsMovements.user)
+  coinsMovements: CoinsMovements[];
 }

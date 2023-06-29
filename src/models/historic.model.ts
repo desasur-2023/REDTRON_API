@@ -4,15 +4,13 @@ import { WithdrawalEntity } from "./withdrawal.model";
 import { LoadEntity } from "./load.model";
 import { Withdrawal } from "../domain/withdrawal";
 import { Load } from "../domain/load";
-import { CoinsInflowEntity } from "./coinsInflow.model";
-import { CoinsInflow } from "../domain/coinsInflow";
+import { CoinsMovementsEntity } from "./coinsMovements.model";
+import { CoinsMovements } from "../domain/coinsMovements";
 
 @Entity({ name: "historic" })
 export class HistoricEntity implements Historic {
     @PrimaryGeneratedColumn("uuid")
     id: string;
-    @Column({ name: "time", type: "timestamp", nullable: false, default: () => "now()", })
-    time: Date;
     @Column({ name: "created_at", type: "timestamp", nullable: false, default: () => "now()", })
     createdAt: Date;
 
@@ -25,6 +23,6 @@ export class HistoricEntity implements Historic {
     load: Load[];
 
     //Relacion un historic tiene muchos coinsInflow y coinsInflow tiene un solo historic
-    @OneToMany(() => CoinsInflowEntity, (coinsInflow) => coinsInflow.historic)
-    coinsInflow: CoinsInflow[];
+    @OneToMany(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.historic)
+    coinsMovements: CoinsMovements[];
 }

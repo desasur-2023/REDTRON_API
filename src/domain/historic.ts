@@ -4,5 +4,5 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export interface Historic extends Base {
-    time: Date
+
 }

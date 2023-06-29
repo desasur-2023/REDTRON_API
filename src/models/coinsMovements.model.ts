@@ -3,10 +3,12 @@ import { SettleAcount, SettleAcountStatus } from "../domain/settleAcount";
 import { UserEntity } from "./user.model";
 import { User } from "../domain/user";
 import { CoinsMovements } from "../domain/coinsMovements";
-import { CoinsInflowEntity } from "./coinsInflow.model";
-import { CoinsInflow } from "../domain/coinsInflow";
 import { Load } from "../domain/load";
 import { LoadEntity } from "./load.model";
+import { User_Casino_Entity } from "./user_casino.model";
+import { User_Casino } from "../domain/user_casino";
+import { HistoricEntity } from "./historic.model";
+import { Historic } from "../domain/historic";
 
 @Entity({name: "coinsMovements"})
 export class CoinsMovementsEntity implements CoinsMovements {
@@ -25,11 +27,18 @@ export class CoinsMovementsEntity implements CoinsMovements {
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date;
 
-    //Relacion un coinsMovements tiene muchos coinsInflow y coinsInflow tiene un solo coinsMovements
-    @OneToMany(() => CoinsInflowEntity, (coinsInflow) => coinsInflow.coinsMovements)
-    coinsInflow: CoinsInflow[];
-
     //Relacion un coinsMovements tiene muchos loads y load tiene un solo coinsMovements
     @OneToMany(() => LoadEntity, (load) => load.coinsMovements)
     load: Load[];
+
+    @OneToMany(() => User_Casino_Entity, (userCasino) => userCasino.coinsMovements)
+    userCasino: User_Casino[];
+
+    @OneToMany(() => UserEntity, (user) => user.coinsMovements)
+    user: User[];
+
+    @ManyToOne(() => HistoricEntity, (historic) => historic.coinsMovements)
+    historic: Historic
+
+    
 }

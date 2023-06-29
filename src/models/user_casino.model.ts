@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { CasinoEntity } from "./casino.model";
 import { UserEntity } from "./user.model";
 import { User_Casino } from "../domain/user_casino";
@@ -7,6 +7,8 @@ import { LoadEntity } from "./load.model";
 import { User } from "../domain/user";
 import { PlayerEntity } from "./player.model";
 import { Player } from "../domain/player";
+import { CoinsMovementsEntity } from "./coinsMovements.model";
+import { CoinsMovements } from "../domain/coinsMovements";
 
 @Entity({name: "user_casino"})
 export class User_Casino_Entity implements User_Casino{
@@ -39,4 +41,9 @@ export class User_Casino_Entity implements User_Casino{
     @OneToMany(() => PlayerEntity, (player)=> player.teller)
     player: Player[];
     coinsInflow: any;
+
+    @ManyToOne(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.userCasino)
+    coinsMovements: CoinsMovements;
+
+   
 }
