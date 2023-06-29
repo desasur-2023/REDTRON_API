@@ -6,8 +6,8 @@ dotenv.config();
 export interface SettleAcount extends Base {
     balance_due: number;
     status: SettleAcountStatus;
-    starPeriod: Date;
-    endPeriod: Date;
+    start_period: Date;
+    end_period: Date;
     transfer_url: string;
 }
 

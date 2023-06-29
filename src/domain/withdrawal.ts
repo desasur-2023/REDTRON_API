@@ -6,7 +6,6 @@ dotenv.config();
 export interface Withdrawal extends Base {
     credits: number
     status: WithdrawalStatus
-    time: Date
     trasfer_url: string
 }
 

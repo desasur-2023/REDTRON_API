@@ -38,4 +38,5 @@ export class User_Casino_Entity implements User_Casino{
 
     @OneToMany(() => PlayerEntity, (player)=> player.teller)
     player: Player[];
+    coinsInflow: any;
 }

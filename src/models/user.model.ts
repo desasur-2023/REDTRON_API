@@ -5,6 +5,8 @@ import { User_Casino_Entity } from "./user_casino.model";
 import { SettleAcountEntity } from "./settleAcount.model";
 import { User_Casino } from "../domain/user_casino";
 import { SettleAcount } from "../domain/settleAcount";
+import { CoinsInflowEntity } from "./coinsInflow.model";
+import { CoinsInflow } from "../domain/coinsInflow";
 
 
 
@@ -51,4 +53,7 @@ export class UserEntity implements User {
 
   @OneToMany(() => SettleAcountEntity, (settleAcount)=> settleAcount.user)
   settleAcount: SettleAcount[];
+
+  @OneToMany(() => CoinsInflowEntity, (coinsInflow)=> coinsInflow.user)
+  coinsInflow: CoinsInflow[];
 }

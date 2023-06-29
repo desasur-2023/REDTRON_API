@@ -6,6 +6,8 @@ import { User_Casino_Entity } from "./user_casino.model";
 import { Player } from "../domain/player";
 import { Historic } from "../domain/historic";
 import { User_Casino } from "../domain/user_casino";
+import { CoinsMovementsEntity } from "./coinsMovements.model";
+import { CoinsMovements } from "../domain/coinsMovements";
 
 @Entity({ name: "load" })
 export class LoadEntity implements Load {
@@ -17,6 +19,8 @@ export class LoadEntity implements Load {
     status: LoadStatus;
     @Column({name:"debits", type: "decimal", precision: 10, scale: 0, nullable: false})
     debits: number;
+    @Column({name:"coins_outflow_qty", type: "decimal", precision: 10, scale: 0, nullable: false})
+    coins_outflow_qty: number;
     @Column({name: "time", type: "timestamp", nullable: false, default: () => "now()",})
     time: Date;
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
@@ -33,4 +37,8 @@ export class LoadEntity implements Load {
     //Relacion un user_casino tiene muchos load y load tiene un solo user_casino
     @ManyToOne(() => User_Casino_Entity, (user_casino) => user_casino.load)
     user_casino: User_Casino
+
+    //Relacion un coinsMovements tiene muchos load y load tiene un solo coinsMovements
+    @ManyToOne(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.load)
+    coinsMovements: CoinsMovements
 }
