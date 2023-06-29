@@ -38,7 +38,7 @@ export class LoadEntity implements Load {
     @ManyToOne(() => User_Casino_Entity, (user_casino) => user_casino.load)
     user_casino: User_Casino
 
-    //Relacion un coinsMovements tiene muchos load y load tiene un solo coinsMovements
-    @ManyToOne(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.load)
-    coinsMovements: CoinsMovements
+    // //Relacion un coinsMovements tiene muchos load y load tiene un solo coinsMovements
+    // @ManyToOne(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.load)
+    // coinsMovements: CoinsMovements
 }

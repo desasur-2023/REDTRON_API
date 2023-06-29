@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { SettleAcount, SettleAcountStatus } from "../domain/settleAcount";
 import { UserEntity } from "./user.model";
 import { User } from "../domain/user";
@@ -27,12 +27,9 @@ export class CoinsMovementsEntity implements CoinsMovements {
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date;
 
-    //Relacion un coinsMovements tiene muchos loads y load tiene un solo coinsMovements
-    @OneToMany(() => LoadEntity, (load) => load.coinsMovements)
-    load: Load[];
-
-    @OneToMany(() => User_Casino_Entity, (userCasino) => userCasino.coinsMovements)
-    userCasino: User_Casino[];
+    @OneToOne(() => LoadEntity, {nullable: true})
+    @JoinColumn({name: 'load_id', referencedColumnName: 'id'})
+    load: Load;
 
     @OneToMany(() => UserEntity, (user) => user.coinsMovements)
     user: User[];
@@ -40,5 +37,7 @@ export class CoinsMovementsEntity implements CoinsMovements {
     @ManyToOne(() => HistoricEntity, (historic) => historic.coinsMovements)
     historic: Historic
 
-    
+    @ManyToOne(() => User_Casino_Entity, (userCasino) => userCasino.coinsMovements)
+    @JoinColumn({name: 'user_casino_id', referencedColumnName: 'id'})
+    userCasinoId: User_Casino_Entity;
 }

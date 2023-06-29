@@ -42,8 +42,8 @@ export class User_Casino_Entity implements User_Casino{
     player: Player[];
     coinsInflow: any;
 
-    @ManyToOne(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.userCasino)
-    coinsMovements: CoinsMovements;
+    @OneToMany(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.userCasinoId)
+    coinsMovements: CoinsMovements[];
 
    
 }
