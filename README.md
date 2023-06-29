@@ -14,3 +14,7 @@ JWT_SECRET=desasur2023
 SALT=10
 EMAIL=hugoschierano@gmail.com
 EMAIL_PASSWORD=keummkqrhmplhkgv
+------
+Deploy de Base de Datos
+DATABASE_URL=postgresql://postgres:9jC0dGsnUSv1drbDjIIX@containers-us-west-139.railway.app:7048/railway
+------
