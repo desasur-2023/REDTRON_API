@@ -6,5 +6,4 @@ dotenv.config();
 export interface User_Casino extends Base {
     debits: number;
     credits: number;
-    time: Date;
 }

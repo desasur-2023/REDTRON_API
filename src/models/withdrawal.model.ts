@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Withdrawal, WithdrawalStatus } from "../domain/withdrawal";
 import { PlayerEntity } from "./player.model";
 import { HistoricEntity } from "./historic.model";
@@ -24,13 +24,16 @@ export class WithdrawalEntity implements Withdrawal {
 
     //Relacion un player tiene muchos withdrawal y withdrawal tiene un solo player
     @ManyToOne(() => PlayerEntity, (player) => player.withdrawal)
+    @JoinColumn({name: 'player_id', referencedColumnName: 'id'})
     player: Player;
 
     //Relacion un historic tiene muchos withdrawal y withdrawal tiene un solo historic
     @ManyToOne(() => HistoricEntity, (historic) => historic.withdrawal)
+    @JoinColumn({name: 'historic_id', referencedColumnName: 'id'})
     historic: Historic;
 
     //Relacion un user_casino tiene muchos withdrawal y withdrawal tiene un solo user_casino
     @ManyToOne(() => User_Casino_Entity, (user_casino) => user_casino.withdrawal)
+    @JoinColumn({name: 'user_casino_id', referencedColumnName: 'id'})
     user_casino: User_Casino;
 }

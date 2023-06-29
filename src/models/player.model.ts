@@ -21,7 +21,7 @@ export class PlayerEntity implements Player {
     createdAt: Date; 
 
     @ManyToOne(() => User_Casino_Entity, (user_casino) => user_casino.player)
-    teller: User_Casino;
+    user_casino: User_Casino;
 
     //Relacion un player tiene muchos withdrawal y withdrawal tiene un solo player
     @OneToMany(() => WithdrawalEntity, (withdrawal)=> withdrawal.player)

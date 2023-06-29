@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Load, LoadStatus } from "../domain/load";
 import { PlayerEntity } from "./player.model";
 import { HistoricEntity } from "./historic.model";
@@ -28,17 +28,17 @@ export class LoadEntity implements Load {
 
     //Relacion un player tiene muchos load y load tiene un solo player
     @ManyToOne(() => PlayerEntity, (player) => player.load)
+    @JoinColumn({name: 'player_id', referencedColumnName: 'id'})
     player: Player
 
     //Relacion un historic tiene muchos load y load tiene un solo historic
     @ManyToOne(() => HistoricEntity, (historic) => historic.load)
+    @JoinColumn({name: 'historic_id', referencedColumnName: 'id'})
     historic: Historic
 
     //Relacion un user_casino tiene muchos load y load tiene un solo user_casino
     @ManyToOne(() => User_Casino_Entity, (user_casino) => user_casino.load)
+    @JoinColumn({name: 'user_casino_id', referencedColumnName: 'id'})
     user_casino: User_Casino
 
-    // //Relacion un coinsMovements tiene muchos load y load tiene un solo coinsMovements
-    // @ManyToOne(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.load)
-    // coinsMovements: CoinsMovements
 }

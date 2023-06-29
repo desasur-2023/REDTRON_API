@@ -31,10 +31,12 @@ export class CoinsMovementsEntity implements CoinsMovements {
     @JoinColumn({name: 'load_id', referencedColumnName: 'id'})
     load: Load;
 
-    @OneToMany(() => UserEntity, (user) => user.coinsMovements)
-    user: User[];
+    @ManyToOne(() => UserEntity, (user) => user.coinsMovements)
+    @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
+    user: User;
 
     @ManyToOne(() => HistoricEntity, (historic) => historic.coinsMovements)
+    @JoinColumn({name: 'historic_id', referencedColumnName: 'id'})
     historic: Historic
 
     @ManyToOne(() => User_Casino_Entity, (userCasino) => userCasino.coinsMovements)
