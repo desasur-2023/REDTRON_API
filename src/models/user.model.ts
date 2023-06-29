@@ -45,6 +45,9 @@ export class UserEntity implements User {
   @Column({name: "last_settle_date", type: "timestamp", nullable: true})
   last_settle_date: Date;
 
+  @Column({name: "activation_date", type: "timestamp", nullable: true})
+  activation_date: Date;
+
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;
   

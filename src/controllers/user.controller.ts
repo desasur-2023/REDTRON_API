@@ -117,7 +117,8 @@ const changePassword = async (userName: string, item: ChangePassword) => {
     const changeUser: User ={
       ...user,
       password: pass,
-      status: UserStatus.ACTIVE
+      status: UserStatus.ACTIVE,
+      activation_date: new Date()
     }
     userDao.update(user.id, changeUser)
     return true
