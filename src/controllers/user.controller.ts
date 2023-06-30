@@ -92,7 +92,7 @@ const update = async (id: string, item: User) => {
 const changePassword = async (userName: string, item: ChangePassword) => {
   const userDao = await new UserDAO();
   const user = await userDao.findByUserName(userName).catch((error: Error) => new BaseError(`El usuario: ${userName} no se encuentra registrado`, StatusCodes.CONFLICT, error.message));
-
+  
   if (!user || user instanceof BaseError) throw user; 
 
   if (user.password === undefined) {

@@ -8,6 +8,7 @@ export default function usersRouter(): Router {
     .get("/", handler.getAll)
     .post("/", handler.create)
     .delete("/:id", handler.delete)
+    .put("/changePassword", handler.changePassword)
     .put("/:id", handler.update)
   
 }
