@@ -2,6 +2,7 @@ import { catchedAsync } from "../utils/utils"
 import casinoH from "./casino.handller"
 import userH from "./user.handler"
 import authH from "./auth.handler"
+import userCasinoH from "./userCasino.handler"
 
 export const casinoHandler =  {
                         getAll: catchedAsync(casinoH.getAll),
@@ -21,5 +22,11 @@ export const userHandler =  {
                         };
 
 export const authHandler = { logIn: catchedAsync(authH.logIn) };
+
+export const userCasinoHandler = {
+
+                        create: catchedAsync(userCasinoH.create)
+
+                        }
 
 
