@@ -1,7 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { UserDAO } from "../dao/user.dao";
 import { UserCasinoDAO } from "../dao/userCasino.dao";
-import { User_Casino } from "../domain/user_casino";
 import { BaseError } from "../utils/errors/error";
 import { CasinoDAO } from "../dao/casino.dao";
 import { User_Casino_Entity } from "../models/user_casino.model";
@@ -40,8 +39,10 @@ const create  = async (userid: string, casinoId: string) => {
     const userCasino = await new User_Casino_Entity();
     userCasino.user = userid as unknown as User
     userCasino.casino = casinoId as unknown as Casino
+    userCasino.credits = 0
+    userCasino.debits = 0
 
-    const result =  await userCasinoDAO.create(userCasino).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT));
+    const result =  await userCasinoDAO.create(userCasino).catch(error => new BaseError("Failed to create the user_casino.", StatusCodes.CONFLICT));
 
    return result
 }
