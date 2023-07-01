@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Historic } from "../domain/historic";
 import { WithdrawalEntity } from "./withdrawal.model";
 import { LoadEntity } from "./load.model";
@@ -19,10 +19,11 @@ export class HistoricEntity implements Historic {
     withdrawal: Withdrawal[];
 
     //Relacion un historic tiene muchos load y load tiene un solo historic
-    @OneToMany(() => LoadEntity, (load) => load.historic)
+    @OneToMany(() => LoadEntity, (load) => load.historicId)
     load: Load[];
 
-    //Relacion un historic tiene muchos coinsInflow y coinsInflow tiene un solo historic
+    //Relacion un historic tiene muchos coinsMovements y coinsMovements tiene un solo historic
     @OneToMany(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.historic)
+    @JoinColumn({name: 'coins_movements', referencedColumnName: 'id'})
     coinsMovements: CoinsMovements[];
 }

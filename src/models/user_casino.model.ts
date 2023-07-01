@@ -36,10 +36,10 @@ export class User_Casino_Entity implements User_Casino{
     withdrawal: WithdrawalEntity[];
 
     //Relacion un user_casino tiene muchos load y load tiene un solo user_casino
-    @OneToMany(() => LoadEntity, (load)=> load.user_casino)
+    @OneToMany(() => LoadEntity, (load)=> load.user_casinoId)
     load: LoadEntity[];
 
-    @OneToMany(() => PlayerEntity, (player)=> player.user_casino)
+    @OneToMany(() => PlayerEntity, (player)=> player.user_casinoId)
     player: Player[];
 
     @OneToMany(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.userCasinoId)

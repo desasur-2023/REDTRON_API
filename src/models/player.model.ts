@@ -21,13 +21,13 @@ export class PlayerEntity implements Player {
     createdAt: Date; 
 
     @ManyToOne(() => User_Casino_Entity, (user_casino) => user_casino.player)
-    user_casino: User_Casino;
+    user_casinoId: User_Casino;
 
     //Relacion un player tiene muchos withdrawal y withdrawal tiene un solo player
     @OneToMany(() => WithdrawalEntity, (withdrawal)=> withdrawal.player)
     withdrawal: Withdrawal[];
 
     //Relacion un player tiene muchos load y load tiene un solo player
-    @OneToMany(() => LoadEntity, (load)=> load.player)
+    @OneToMany(() => LoadEntity, (load)=> load.playerId)
     load: Load[];
 }
