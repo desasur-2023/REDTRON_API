@@ -8,13 +8,14 @@ const router = Router();
 
 //Solo log in podra iniciarse sin autorizacion (sin token)
 router.use("/auth", authRouter());
-router.use("/userCasino", userCasinoRouter());
+
 
 //Antes del resto de las rutas se debe pasar por authorize
-router.use(authorize);
+// router.use(authorize);
 
 //Resto de las rutas autorizadas
 router.use("/users",usersRouter());
 router.use("/casino", casinoRouter());
+router.use("/userCasino", userCasinoRouter());
 
 export default router;
