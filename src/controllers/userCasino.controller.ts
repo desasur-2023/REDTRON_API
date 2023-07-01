@@ -10,22 +10,22 @@ import { Casino } from "../domain/casino";
 
 
 
-const create  = async (userid: string, casinoId: string) => {
+const create  = async (userId: string, casinoId: string) => {
     const userCasinoDAO = await new UserCasinoDAO()
 
     if (!isValidUUID(casinoId)) {
         throw new BaseError('Invalid casinoId format', StatusCodes.BAD_REQUEST);
       }
 
-    if (!isValidUUID(userid)) {
+    if (!isValidUUID(userId)) {
         throw new BaseError('Invalid userid format', StatusCodes.BAD_REQUEST);
       }
     
     const userDAO = await new UserDAO();
-    const user =  await userDAO.read(userid).catch(error => new BaseError("Usuario inexistente", StatusCodes.CONFLICT, error.message));
+    const user =  await userDAO.read(userId).catch(error => new BaseError("Usuario inexistente", StatusCodes.CONFLICT, error.message));
     
     if(Object.keys(user).length === 0){
-        throw new BaseError(`The id: '${userid}' does not belong to an existing casino.`, StatusCodes.CONFLICT);
+        throw new BaseError(`The id: '${userId}' does not belong to an existing casino.`, StatusCodes.CONFLICT);
     }
 
     const casinoDAO = await new CasinoDAO();
@@ -37,7 +37,7 @@ const create  = async (userid: string, casinoId: string) => {
     }
 
     const userCasino = await new User_Casino_Entity();
-    userCasino.user = userid as unknown as User
+    userCasino.user = userId as unknown as User
     userCasino.casino = casinoId as unknown as Casino
     userCasino.credits = 0
     userCasino.debits = 0

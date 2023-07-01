@@ -578,6 +578,48 @@ true
 ```
 ---
 
+# User_Casino
+
+--- 
+
+## POST `/userCasino`
+
+Endpoint encargado de crear un nuevo user_casino
+
+### Parámetros body
+
+|param|descripción|
+|---|---|
+|userId|identificador del usuario|
+|casinoId|identificador del casino|
+
+### Ejemplo Body 
+
+```json
+{
+	"userId":"642c89c6-e6d0-4ccb-98f2-16bc75c97ed9",
+	"casinoId":"83229184-4805-4407-814a-90bdecf7279c"
+}
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": {
+		"user": "642c89c6-e6d0-4ccb-98f2-16bc75c97ed9",
+		"casino": "83229184-4805-4407-814a-90bdecf7279c",
+		"credits": 0,
+		"debits": 0,
+		"id": "2f3c22f9-5bdb-4bca-9495-fd547a576329",
+		"createdAt": "2023-07-01T01:42:59.903Z"
+	}
+}
+```
+---
 
 
 
