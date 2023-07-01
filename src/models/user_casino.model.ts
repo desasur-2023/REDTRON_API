@@ -16,9 +16,9 @@ export class User_Casino_Entity implements User_Casino{
 
     @PrimaryGeneratedColumn("uuid")
     public id: string;
-    @Column({name:"debits", type: "decimal", precision: 10, scale: 0, nullable: false})
+    @Column({name:"debits", type: "decimal", precision: 10, scale: 0, nullable: true})
     public debits: number;
-    @Column({name:"credits", type: "decimal", precision: 10, scale: 0, nullable: false})
+    @Column({name:"credits", type: "decimal", precision: 10, scale: 0, nullable: true})
     public credits: number;
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     public createdAt: Date;

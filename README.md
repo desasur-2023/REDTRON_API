@@ -146,5 +146,629 @@ Respuesta en caso de éxito:
 ```
 ---
 
+## GET `/users`
+
+Endpoint encargado de traer todos los user/cajero
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+
+	{
+	"error": false,
+	"data": [
+		{
+			"id": "e5827ffc-11b1-46c5-b413-0f6eaa83e22e",
+			"username": "test-admin",
+			"password": "",
+			"phone": "561-711-0225 x10741",
+			"role": "ADMIN",
+			"email": "test-admin@hotmail.com",
+			"status": "ACTIVE",
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlNTgyN2ZmYy0xMWIxLTQ2YzUtYjQxMy0wZjZlYWE4M2UyMmUiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2ODgwODcwNjUsImV4cCI6MTY4ODA5MDY2NX0.xeh4rre1OX6LrpyIA9wGBacEcEfmo5NEiEIUL3NuQ44",
+			"percent_agreement": "100",
+			"total_balance": null,
+			"last_settle_date": null,
+			"activation_date": null,
+			"createdAt": "2023-06-29T17:17:12.649Z"
+		},
+		{
+			"id": "a4b1bca3-81b8-4747-8c2c-72e55b33ab8c",
+			"username": "test-cajero",
+			"password": "",
+			"phone": "561-711-0225 x107415",
+			"role": "ADMIN",
+			"email": "test-cajero@hotmail.com",
+			"status": "ACTIVE",
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNGIxYmNhMy04MWI4LTQ3NDctOGMyYy03MmU1NWIzM2FiOGMiLCJyb2xlIjoiVEVMTEVSIiwiaWF0IjoxNjg4MDg4MjgyLCJleHAiOjE2ODgwOTE4ODJ9.AHSJPDwBWHVrsYyhTUfOXo1tyodDpEfz10UvOKjmdiU",
+			"percent_agreement": "40",
+			"total_balance": null,
+			"last_settle_date": null,
+			"activation_date": "2023-06-30T01:21:18.867Z",
+			"createdAt": "2023-06-29T17:44:48.694Z"
+		},
+		-----
+			{
+			"id": "d4fd0ee6-55f9-495a-a7f9-af973f26f7ce",
+			"username": "test-cajero3",
+			"password": "",
+			"phone": "561-711-0225 x10743",
+			"role": "TELLER",
+			"email": "test-cajero3@hotmail.com",
+			"status": "ACTIVE",
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNGZkMGVlNi01NWY5LTQ5NWEtYTdmOS1hZjk3M2YyNmY3Y2UiLCJyb2xlIjoiVEVMTEVSIiwiaWF0IjoxNjg4MDkyMTQxLCJleHAiOjE2ODgwOTU3NDF9.qHt0n7FsKj4Rq-gn9QMLbRXGm-LrQOKlfMM-q0k_Dgk",
+			"percent_agreement": "40",
+			"total_balance": null,
+			"last_settle_date": null,
+			"activation_date": "2023-06-30T01:30:26.137Z",
+			"createdAt": "2023-06-30T01:07:34.085Z"
+		}
+	]
+}
+
+```
+---
+
+## PUT `/users/:id`
+
+Endpoint encargado de modificar los datos de un user/cajero
+
+### Parámetros param
+
+|param|descripción|
+|---|---|
+|id|identificador del usuario|
+
+
+### Ejemplo ruta
+
+```
+/users/d4fd0ee6-55f9-495a-a7f9-af973f26f7ce
+```
+
+---
+
+### Parámetros body
+
+|param|descripción|
+|---|---|
+|phone|telefono del usuario|
+|email|email del usuario|
+|percent_agreement|porcentaje de ganancia del usuario|
+|role| rol del usuario|
+
+### Ejemplo Body 
+
+```json
+{
+    "phone": "111111111",
+    "email": "test-cajero_admin@hotmail.com",
+	"percent_agreement": 60,
+	"role":"ADMIN"
+}
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+
+	{
+	"error": false,
+	"data": {
+		"id": "d4fd0ee6-55f9-495a-a7f9-af973f26f7ce",
+		"username": "test-cajero3",
+		"password": "",
+		"phone": "111111111",
+		"role": "ADMIN",
+		"email": "test-cajero_admin@hotmail.com",
+		"status": "ACTIVE",
+		"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNGZkMGVlNi01NWY5LTQ5NWEtYTdmOS1hZjk3M2YyNmY3Y2UiLCJyb2xlIjoiVEVMTEVSIiwiaWF0IjoxNjg4MDkyMTQxLCJleHAiOjE2ODgwOTU3NDF9.qHt0n7FsKj4Rq-gn9QMLbRXGm-LrQOKlfMM-q0k_Dgk",
+		"percent_agreement": 60,
+		"total_balance": null,
+		"last_settle_date": null,
+		"activation_date": "2023-06-30T01:30:26.137Z",
+		"createdAt": "2023-06-30T01:07:34.085Z"
+	}
+}
+
+```
+---
+
+## GET `/users/:id`
+
+Endpoint encargado de traer un user/cajero
+
+### Parámetros param
+
+|param|descripción|
+|---|---|
+|id|identificador del usuario|
+
+
+### Ejemplo ruta
+
+```
+/users/d4fd0ee6-55f9-495a-a7f9-af973f26f7ce
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+
+	{
+	"error": false,
+	"data": {
+		"id": "d4fd0ee6-55f9-495a-a7f9-af973f26f7ce",
+		"username": "test-cajero3",
+		"password": "",
+		"phone": "111111111",
+		"role": "ADMIN",
+		"email": "test-cajero_admin@hotmail.com",
+		"status": "ACTIVE",
+		"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNGZkMGVlNi01NWY5LTQ5NWEtYTdmOS1hZjk3M2YyNmY3Y2UiLCJyb2xlIjoiVEVMTEVSIiwiaWF0IjoxNjg4MDkyMTQxLCJleHAiOjE2ODgwOTU3NDF9.qHt0n7FsKj4Rq-gn9QMLbRXGm-LrQOKlfMM-q0k_Dgk",
+		"percent_agreement": "60",
+		"total_balance": null,
+		"last_settle_date": null,
+		"activation_date": "2023-06-30T01:30:26.137Z",
+		"createdAt": "2023-06-30T01:07:34.085Z"
+	}
+}
+
+```
+---
+
+## DELETE `/users/:id`
+
+Endpoint encargado de eliminar el registro de un usuario
+
+### Parámetros param
+
+|param|descripción|
+|---|---|
+|id|identificador del usuario|
+
+
+### Ejemplo ruta
+
+```
+/users/d4fd0ee6-55f9-495a-a7f9-af973f26f7ce
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+
+	{
+	"error": false,
+	"data": true
+	}
+
+```
+---
+
+## PUT `/users/changePassword`
+
+Endpoint encargado de modificar la contraseña y el status de un cajero al iniciar por primera vez
+
+---
+
+### Parámetros body
+
+|param|descripción|
+|---|---|
+|userName|nombre de usuario|
+|item|objero con las contraseñas|
+|password|contraseña designada por defeto|
+|newPassword|nueva contraseña|
+|comparePassword|repite la nueva contraseña|
+
+### Ejemplo Body 
+
+```json
+{
+  "userName": "test-cajero3",
+  "item": {
+    "password": "Redtron2023",
+    "newPassword": "cajero3",
+    "comparePassword": "cajero3"
+  }
+}
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+
+	{
+	"error": false,
+	"data": true
+	}
+
+```
+---
+
+# Casino
+
+--- 
+
+## POST `/casino`
+
+Endpoint encargado de crear un nuevo casino
+
+### Parámetros body
+
+|param|descripción|
+|---|---|
+|name|nombre del casino|
+|image_url|imagen del logo de casino|
+
+### Ejemplo Body 
+
+```json
+{
+	"name": "Zeus",
+	"image_url":"https://static.vecteezy.com/system/resources/previews/001/008/560/original/casino-frame-label-falling-ribbons-casino-vector.jpg"
+}
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"name": "Zeus",
+	"image_url": "https://static.vecteezy.com/system/resources/previews/001/008/560/original/casino-frame-label-falling-ribbons-casino-vector.jpg",
+	"id": "83229184-4805-4407-814a-90bdecf7279c",
+	"createdAt": "2023-07-01T01:06:16.545Z"
+}
+```
+---
+
+## GET `/casino`
+
+Endpoint encargado de traer todos los cajeros
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+
+[
+	{
+		"id": "83229184-4805-4407-814a-90bdecf7279c",
+		"name": "Zeus",
+		"image_url": "https://static.vecteezy.com/system/resources/previews/001/008/560/original/casino-frame-label-falling-ribbons-casino-vector.jpg",
+		"createdAt": "2023-07-01T01:06:16.545Z"
+	},
+	{
+		"id": "0abacb98-3427-484f-a406-56f4a62885fa",
+		"name": "Faraon",
+		"image_url": "https://static.vecteezy.com/system/resources/previews/001/008/560/original/casino-frame-label-falling-ribbons-casino-vector.jpg",
+		"createdAt": "2023-07-01T01:11:08.628Z"
+	},
+	{
+		"id": "6785eb30-7a39-43dc-8edc-08a6b31750fd",
+		"name": "Gana en Casa",
+		"image_url": "https://static.vecteezy.com/system/resources/previews/001/008/560/original/casino-frame-label-falling-ribbons-casino-vector.jpg",
+		"createdAt": "2023-07-01T01:11:25.376Z"
+	}
+]
+
+```
+---
+
+## PUT `/casino/:id`
+
+Endpoint encargado de modificar los datos de un casino
+
+### Parámetros param
+
+|param|descripción|
+|---|---|
+|id|identificador del casino|
+
+
+### Ejemplo ruta
+
+```
+/casino/6785eb30-7a39-43dc-8edc-08a6b31750fd
+```
+---
+
+### Parámetros body
+
+|param|descripción|
+|---|---|
+|name|nombre del casino|
+|image_url|imagen del logo de casino|
+
+### Ejemplo Body 
+
+```json
+{
+	"name": "Modificado",
+	"image_url": "https://static.vecteezy.com/system/resources/previews/001/008/560/original/casino-frame-label-falling-ribbons-casino-vector.jpg"
+}
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+
+{
+	"id": "6785eb30-7a39-43dc-8edc-08a6b31750fd",
+	"name": "Modificado",
+	"image_url": "https://static.vecteezy.com/system/resources/previews/001/008/560/original/casino-frame-label-falling-ribbons-casino-vector.jpg",
+	"createdAt": "2023-07-01T01:11:25.376Z"
+}
+
+```
+---
+
+## GET `/casino/:id`
+
+Endpoint encargado de traer un casino
+
+### Parámetros param
+
+|param|descripción|
+|---|---|
+|id|identificador del casino|
+
+
+### Ejemplo ruta
+
+```
+/casino/6785eb30-7a39-43dc-8edc-08a6b31750fd
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+
+{
+	"id": "6785eb30-7a39-43dc-8edc-08a6b31750fd",
+	"name": "Modificado",
+	"image_url": "https://static.vecteezy.com/system/resources/previews/001/008/560/original/casino-frame-label-falling-ribbons-casino-vector.jpg",
+	"createdAt": "2023-07-01T01:11:25.376Z"
+}
+
+```
+---
+
+## DELETE `/casino/:id`
+
+Endpoint encargado de eliminar el registro de un casino
+
+### Parámetros param
+
+|param|descripción|
+|---|---|
+|id|identificador del casino|
+
+
+### Ejemplo ruta
+
+```
+/casino/6785eb30-7a39-43dc-8edc-08a6b31750fd
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+true
+```
+---
+
+# User_Casino
+
+--- 
+
+## POST `/userCasino`
+
+Endpoint encargado de crear un nuevo user_casino
+
+### Parámetros body
+
+|param|descripción|
+|---|---|
+|userId|identificador del usuario|
+|casinoId|identificador del casino|
+
+### Ejemplo Body 
+
+```json
+{
+	"userId":"642c89c6-e6d0-4ccb-98f2-16bc75c97ed9",
+	"casinoId":"83229184-4805-4407-814a-90bdecf7279c"
+}
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": {
+		"user": "642c89c6-e6d0-4ccb-98f2-16bc75c97ed9",
+		"casino": "83229184-4805-4407-814a-90bdecf7279c",
+		"credits": 0,
+		"debits": 0,
+		"id": "2f3c22f9-5bdb-4bca-9495-fd547a576329",
+		"createdAt": "2023-07-01T01:42:59.903Z"
+	}
+}
+```
+---
+
+## GET `/userCasino`
+
+Endpoint encargado de traer todos los user_casino
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "2f3c22f9-5bdb-4bca-9495-fd547a576329",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T01:42:59.903Z"
+		},
+		{
+			"id": "9ec8c475-a068-4257-a56b-e85d5d52eaa8",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:07:12.985Z"
+		},
+		{
+			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:29:45.278Z"
+		}
+	]
+}
+
+```
+---
+
+## GET `/userCasino?user=id`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un usuario
+
+### Parámetros query
+
+|param|descripción|
+|---|---|
+|user| id: identificador del usuario|
+
+
+### Ejemplo ruta
+
+```
+/userCasino?user=75a27939-2133-4002-99b3-9efdde4daac1
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "9ec8c475-a068-4257-a56b-e85d5d52eaa8",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:07:12.985Z"
+		},
+		{
+			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:29:45.278Z"
+		}
+	]
+}
+
+```
+---
+
+## GET `/userCasino?casino=id`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un casino
+
+### Parámetros query
+
+|param|descripción|
+|---|---|
+|casino| id: identificador del casino|
+
+
+### Ejemplo ruta
+
+```
+/userCasino?casino=0abacb98-3427-484f-a406-56f4a62885fa
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:29:45.278Z"
+		}
+	]
+}
+
+```
+---
+
+## GET `/userCasino?user=id&casino=id`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un casino y un usuario en particular
+
+### Parámetros query
+
+|param|descripción|
+|---|---|
+|casino| id: identificador del casino|
+|user| id: identificador del usuario|
+
+
+### Ejemplo ruta
+
+```
+/userCasino?user=75a27939-2133-4002-99b3-9efdde4daac1&casino=0abacb98-3427-484f-a406-56f4a62885fa
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:29:45.278Z"
+		}
+	]
+}
+
+```
+---
+
 
 
