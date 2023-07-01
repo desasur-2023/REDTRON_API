@@ -5,4 +5,5 @@ export default function usersRouter(): Router {
   return Router()
   
     .post("/", handler.create)
+    .get("/", handler.getAll)
 }

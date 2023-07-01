@@ -621,7 +621,154 @@ Respuesta en caso de éxito:
 ```
 ---
 
+## GET `/userCasino`
 
+Endpoint encargado de traer todos los user_casino
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "2f3c22f9-5bdb-4bca-9495-fd547a576329",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T01:42:59.903Z"
+		},
+		{
+			"id": "9ec8c475-a068-4257-a56b-e85d5d52eaa8",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:07:12.985Z"
+		},
+		{
+			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:29:45.278Z"
+		}
+	]
+}
+
+```
+---
+
+## GET `/userCasino?user=id`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un usuario
+
+### Parámetros query
+
+|param|descripción|
+|---|---|
+|user| id: identificador del usuario|
+
+
+### Ejemplo ruta
+
+```
+/userCasino?user=75a27939-2133-4002-99b3-9efdde4daac1
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "9ec8c475-a068-4257-a56b-e85d5d52eaa8",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:07:12.985Z"
+		},
+		{
+			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:29:45.278Z"
+		}
+	]
+}
+
+```
+---
+
+## GET `/userCasino?casino=id`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un casino
+
+### Parámetros query
+
+|param|descripción|
+|---|---|
+|casino| id: identificador del casino|
+
+
+### Ejemplo ruta
+
+```
+/userCasino?casino=0abacb98-3427-484f-a406-56f4a62885fa
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:29:45.278Z"
+		}
+	]
+}
+
+```
+---
+
+## GET `/userCasino?user=id&casino=id`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un casino y un usuario en particular
+
+### Parámetros query
+
+|param|descripción|
+|---|---|
+|casino| id: identificador del casino|
+|user| id: identificador del usuario|
+
+
+### Ejemplo ruta
+
+```
+/userCasino?user=75a27939-2133-4002-99b3-9efdde4daac1&casino=0abacb98-3427-484f-a406-56f4a62885fa
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-01T02:29:45.278Z"
+		}
+	]
+}
+
+```
+---
 
 
 

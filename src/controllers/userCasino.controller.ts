@@ -47,4 +47,12 @@ const create  = async (userId: string, casinoId: string) => {
    return result
 }
 
-export default { create };
+const getAll = async (user?:string, casino?:string) => {
+  const userDAO = await new UserCasinoDAO();
+  const result =  await userDAO.search(user, casino).catch(error => new BaseError("No User_Casino found with those parameters", StatusCodes.CONFLICT, error.message));
+  if(result instanceof BaseError) throw result;
+
+  return result;
+};
+
+export default { create, getAll };

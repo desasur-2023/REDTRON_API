@@ -25,7 +25,8 @@ export const authHandler = { logIn: catchedAsync(authH.logIn) };
 
 export const userCasinoHandler = {
 
-                        create: catchedAsync(userCasinoH.create)
+                        create: catchedAsync(userCasinoH.create),
+                        getAll: catchedAsync(userCasinoH.getAll),
 
                         }
 
