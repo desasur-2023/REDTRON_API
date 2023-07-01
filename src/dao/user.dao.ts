@@ -60,5 +60,7 @@ export class UserDAO implements UserRepository {
     const result =  await this.repository.delete({id: id});
     return result.affected ? true : false;
   }
+
+  searchDate: (query?: Date | undefined) => Promise<User[]>;
   
 }

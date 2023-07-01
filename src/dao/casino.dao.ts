@@ -16,6 +16,7 @@ export class CasinoDAO implements CasinoRepository{
             this.repository = connection.getRepository(CasinoEntity)
         })
     }
+    
 
     async create(item: Casino): Promise<Casino> {
         return await this.repository.save(item) as Casino;
@@ -40,5 +41,7 @@ export class CasinoDAO implements CasinoRepository{
             return await this.repository.find() as Casino[];
           }
           return await this.repository.find({ where: { name: ILike(`%${query}%`) } }) as Casino[];
+
     }
+    searchDate: (query?: Date | undefined) => Promise<Casino[]>;
 }

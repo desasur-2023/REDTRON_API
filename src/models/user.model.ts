@@ -1,7 +1,11 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User, UserRole, UserStatus, defaultValues } from "../domain/user";
-
+import { User_Casino_Entity } from "./user_casino.model";
+import { SettleAcountEntity } from "./settleAcount.model";
+import { User_Casino } from "../domain/user_casino";
+import { SettleAcount } from "../domain/settleAcount";
+import { CoinsMovementsEntity } from "./coinsMovements.model";
+import { CoinsMovements } from "../domain/coinsMovements";
 
 
 @Entity({ name: "users" })
@@ -12,7 +16,7 @@ export class UserEntity implements User {
   @Column({ name: "username", type: "varchar", length: 32, nullable: false, unique: true })
   username: string;
 
-  @Column({ name: "password", type: "varchar",length: 128, nullable: true, default: "Redtron2013" })
+  @Column({ name: "password", type: "varchar",length: 128, nullable: true, default: "Redtron2023" })
   password: string;
 
   @Column({ name: "phone", type: "varchar", length: 64, nullable: false, unique:true })
@@ -39,7 +43,18 @@ export class UserEntity implements User {
   @Column({name: "last_settle_date", type: "timestamp", nullable: true})
   last_settle_date: Date;
 
+  @Column({name: "activation_date", type: "timestamp", nullable: true})
+  activation_date: Date;
+
   @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
   createdAt: Date;
   
+  @OneToMany(() => User_Casino_Entity, user_casino => user_casino.user)
+  public user_casino: User_Casino[];
+
+  @OneToMany(() => SettleAcountEntity, (settleAcount)=> settleAcount.user)
+  settleAcount: SettleAcount[];
+
+  @OneToMany(() => CoinsMovementsEntity, (coinsMovements)=> coinsMovements.user)
+  coinsMovements: CoinsMovements[];
 }
