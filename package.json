@@ -7,7 +7,8 @@
     "build": "tsc -p .",
     "dev": "nodemon src/index.ts",
     "start": "ts-node src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "reset-users-db": "ts-node src/scripts/reset-users-db.ts"
   },
   "repository": {
     "type": "git",
@@ -27,8 +28,9 @@
     "@types/jest": "^29.5.2",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^20.2.5",
-    "@types/supertest": "^2.0.12",
     "@types/nodemailer": "^6.4.8",
+    "@types/pg": "^8.10.2",
+    "@types/supertest": "^2.0.12",
     "jest": "^29.5.0",
     "nodemon": "^2.0.20",
     "supertest": "^6.3.3",
