@@ -597,7 +597,7 @@ Endpoint encargado de crear un nuevo user_casino
 
 ```json
 {
-	"userId":"642c89c6-e6d0-4ccb-98f2-16bc75c97ed9",
+	"userId":"75a27939-2133-4002-99b3-9efdde4daac1",
 	"casinoId":"83229184-4805-4407-814a-90bdecf7279c"
 }
 ```
@@ -610,12 +610,18 @@ Respuesta en caso de éxito:
 {
 	"error": false,
 	"data": {
-		"user": "642c89c6-e6d0-4ccb-98f2-16bc75c97ed9",
-		"casino": "83229184-4805-4407-814a-90bdecf7279c",
-		"credits": 0,
-		"debits": 0,
-		"id": "2f3c22f9-5bdb-4bca-9495-fd547a576329",
-		"createdAt": "2023-07-01T01:42:59.903Z"
+		"id": "2000c851-ce61-4f1c-8f0c-849c20b9bf5a",
+		"debits": "0",
+		"credits": "0",
+		"createdAt": "2023-07-02T22:28:22.077Z",
+		"user": {
+			"id": "75a27939-2133-4002-99b3-9efdde4daac1",
+			"username": "test-cajero3"
+		},
+		"casino": {
+			"id": "83229184-4805-4407-814a-90bdecf7279c",
+			"name": "Zeus"
+		}
 	}
 }
 ```
@@ -632,26 +638,49 @@ Respuesta en caso de éxito:
 	"error": false,
 	"data": [
 		{
-			"id": "2f3c22f9-5bdb-4bca-9495-fd547a576329",
+			"id": "2000c851-ce61-4f1c-8f0c-849c20b9bf5a",
 			"debits": "0",
 			"credits": "0",
-			"createdAt": "2023-07-01T01:42:59.903Z"
+			"createdAt": "2023-07-02T22:28:22.077Z",
+			"user": {
+				"id": "75a27939-2133-4002-99b3-9efdde4daac1",
+				"username": "test-cajero3"
+			},
+			"casino": {
+				"id": "83229184-4805-4407-814a-90bdecf7279c",
+				"name": "Zeus"
+			}
 		},
 		{
-			"id": "9ec8c475-a068-4257-a56b-e85d5d52eaa8",
+			"id": "b83f4377-8a27-4611-aa8c-3ab70b8fff03",
 			"debits": "0",
 			"credits": "0",
-			"createdAt": "2023-07-01T02:07:12.985Z"
+			"createdAt": "2023-07-02T22:26:51.724Z",
+			"user": {
+				"id": "06c7fef8-9b88-4163-b7cb-2c761498730a",
+				"username": "test-cajero2"
+			},
+			"casino": {
+				"id": "0abacb98-3427-484f-a406-56f4a62885fa",
+				"name": "Faraon"
+			}
 		},
 		{
-			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"id": "464174a4-380f-46c8-9ee1-5a31d1a77a4a",
 			"debits": "0",
 			"credits": "0",
-			"createdAt": "2023-07-01T02:29:45.278Z"
+			"createdAt": "2023-07-02T22:26:10.126Z",
+			"user": {
+				"id": "75a27939-2133-4002-99b3-9efdde4daac1",
+				"username": "test-cajero3"
+			},
+			"casino": {
+				"id": "0abacb98-3427-484f-a406-56f4a62885fa",
+				"name": "Faraon"
+			}
 		}
 	]
 }
-
 ```
 ---
 
@@ -680,16 +709,32 @@ Respuesta en caso de éxito:
 	"error": false,
 	"data": [
 		{
-			"id": "9ec8c475-a068-4257-a56b-e85d5d52eaa8",
+			"id": "2000c851-ce61-4f1c-8f0c-849c20b9bf5a",
 			"debits": "0",
 			"credits": "0",
-			"createdAt": "2023-07-01T02:07:12.985Z"
+			"createdAt": "2023-07-02T22:28:22.077Z",
+			"user": {
+				"id": "75a27939-2133-4002-99b3-9efdde4daac1",
+				"username": "test-cajero3"
+			},
+			"casino": {
+				"id": "83229184-4805-4407-814a-90bdecf7279c",
+				"name": "Zeus"
+			}
 		},
 		{
-			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"id": "464174a4-380f-46c8-9ee1-5a31d1a77a4a",
 			"debits": "0",
 			"credits": "0",
-			"createdAt": "2023-07-01T02:29:45.278Z"
+			"createdAt": "2023-07-02T22:26:10.126Z",
+			"user": {
+				"id": "75a27939-2133-4002-99b3-9efdde4daac1",
+				"username": "test-cajero3"
+			},
+			"casino": {
+				"id": "0abacb98-3427-484f-a406-56f4a62885fa",
+				"name": "Faraon"
+			}
 		}
 	]
 }
@@ -722,10 +767,32 @@ Respuesta en caso de éxito:
 	"error": false,
 	"data": [
 		{
-			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"id": "b83f4377-8a27-4611-aa8c-3ab70b8fff03",
 			"debits": "0",
 			"credits": "0",
-			"createdAt": "2023-07-01T02:29:45.278Z"
+			"createdAt": "2023-07-02T22:26:51.724Z",
+			"user": {
+				"id": "06c7fef8-9b88-4163-b7cb-2c761498730a",
+				"username": "test-cajero2"
+			},
+			"casino": {
+				"id": "0abacb98-3427-484f-a406-56f4a62885fa",
+				"name": "Faraon"
+			}
+		},
+		{
+			"id": "464174a4-380f-46c8-9ee1-5a31d1a77a4a",
+			"debits": "0",
+			"credits": "0",
+			"createdAt": "2023-07-02T22:26:10.126Z",
+			"user": {
+				"id": "75a27939-2133-4002-99b3-9efdde4daac1",
+				"username": "test-cajero3"
+			},
+			"casino": {
+				"id": "0abacb98-3427-484f-a406-56f4a62885fa",
+				"name": "Faraon"
+			}
 		}
 	]
 }
@@ -759,10 +826,18 @@ Respuesta en caso de éxito:
 	"error": false,
 	"data": [
 		{
-			"id": "94b02b95-ba6a-4740-afad-73a4d42971d1",
+			"id": "464174a4-380f-46c8-9ee1-5a31d1a77a4a",
 			"debits": "0",
 			"credits": "0",
-			"createdAt": "2023-07-01T02:29:45.278Z"
+			"createdAt": "2023-07-02T22:26:10.126Z",
+			"user": {
+				"id": "75a27939-2133-4002-99b3-9efdde4daac1",
+				"username": "test-cajero3"
+			},
+			"casino": {
+				"id": "0abacb98-3427-484f-a406-56f4a62885fa",
+				"name": "Faraon"
+			}
 		}
 	]
 }
