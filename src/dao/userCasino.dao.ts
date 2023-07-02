@@ -13,7 +13,21 @@ export class UserCasinoDAO implements UserCasinoRepository {
     });
   }
   async create(item: User_Casino): Promise<User_Casino> {
-    return { ...(await this.repository.save(item)) } as User_Casino;
+    const saveUserCasino = await this.repository.save(item);
+    const userCasino = await this.repository
+      .createQueryBuilder("user_casino")
+      .leftJoinAndSelect("user_casino.user", "user")
+      .leftJoinAndSelect("user_casino.casino", "casino")
+      .where("user_casino.id = :id", { id: saveUserCasino.id })
+      .select([
+        "user_casino",
+        "user.id",
+        "user.username",
+        "casino.id",
+        "casino.name"
+      ])
+      .getOne();
+    return userCasino as User_Casino;
   }
 
   read(id: string): Promise<User_Casino> {
@@ -27,12 +41,30 @@ export class UserCasinoDAO implements UserCasinoRepository {
   }
   
   async search(user?: string, casino?: string): Promise<User_Casino[]> {
+    const userCasinos = async (searchUserCasino: User_Casino_Entity[]) => { 
+      const result  = await this.repository
+      .createQueryBuilder("user_casino")
+      .leftJoinAndSelect("user_casino.user", "user")
+      .leftJoinAndSelect("user_casino.casino", "casino")
+      .whereInIds(searchUserCasino)
+      .select([
+        "user_casino",
+        "user.id",
+        "user.username",
+        "casino.id",
+        "casino.name"
+      ])
+      .getMany();
+    return result;
+  }
+    
     if (!user && !casino) {
-      return (await this.repository.find()) as User_Casino[];
-    }
-
+      const searchUserCasino = await this.repository.find();
+       return userCasinos(searchUserCasino)
+      }
+  
     if (user && casino) {
-      return await this.repository.find({
+      const searchUserCasino = await this.repository.find({
         where: {
           user: {
             id: user,
@@ -42,25 +74,28 @@ export class UserCasinoDAO implements UserCasinoRepository {
           },
         },
       });
+      return userCasinos(searchUserCasino)
     }
-
+  
     if (user) {
-      return await this.repository.find({
+      const searchUserCasino = await this.repository.find({
         where: {
           user: {
             id: user,
           },
         },
       });
+      return userCasinos(searchUserCasino)
     }
-
-    return await this.repository.find({
+  
+     const searchUserCasino = await this.repository.find({
       where: {
         casino: {
           id: casino,
         },
       },
     });
+    return userCasinos(searchUserCasino)
   }
 
   searchDate: (query?: Date | undefined) => Promise<User_Casino[]>;
