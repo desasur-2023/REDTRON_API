@@ -4,7 +4,7 @@
   "email": "desasur.sa@gmail.com",
   "role": "ADMIN",
   "status": "ACTIVE",
-  "password": "Redtron2013",
+  "password": "Redtron2023",
   "percent_agreement": 100,
   "total_balance": 60
 },
@@ -15,6 +15,6 @@
     "email": "ing.finterlandi@gmail.com",
     "role": "TELLER",
     "status": "INACTIVE",
-    "password": "Redtron2013",
+    "password": "Redtron2023",
     "percent_agreement": 40
   }]

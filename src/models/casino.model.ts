@@ -7,6 +7,7 @@ import { Player } from "../domain/player";
 
 @Entity('casino')
 export class CasinoEntity implements Casino{
+    
     @PrimaryGeneratedColumn('uuid')
     id: string;
     
@@ -14,8 +15,8 @@ export class CasinoEntity implements Casino{
     name: string;
 
     @Column({ name:"image_url", type: "varchar", length: 200, nullable: true})
-    image_url: string;
-    
+    imageUrl: string;
+
     @Column({name: "created_at",type: "timestamp",nullable: false,default: () => "now()",})
     createdAt: Date;
 
