@@ -627,6 +627,16 @@ Respuesta en caso de éxito:
 ```
 ---
 
+Respuesta en caso de que el User ya tenga ese casino asignado:
+
+```json
+{
+    "error": true,
+    "message": "The user has already assigned to this casino"
+}
+```
+---
+
 ## GET `/userCasino`
 
 Endpoint encargado de traer todos los user_casino
