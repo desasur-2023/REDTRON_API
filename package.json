@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "nodemon src/index.ts",
+    "db": "set NODE_DB=true && nodemon src/index.ts",
     "start": "ts-node src/index.ts",
     "test": "jest",
     "reset-users-db": "ts-node src/scripts/reset-users-db.ts"
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/desasur-2023/REDTRON_API#readme",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/dotenv": "^8.2.0",
@@ -39,7 +41,7 @@
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "axios": "^1.3.4",
+    "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
