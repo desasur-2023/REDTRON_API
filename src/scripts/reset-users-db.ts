@@ -29,6 +29,7 @@ async function resetUserDatabase() {
     const users : User[] = JSON.parse(jsonData);
 
     // Borrar los datos de la tabla users
+    await client.query('DELETE FROM user_casino')// Borro tabla intermedia antes
     await client.query('DELETE FROM users');
 
     // Creando usuarios random. 20 por defecto
