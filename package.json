@@ -9,7 +9,8 @@
     "db": "set NODE_DB=true && nodemon src/index.ts",
     "start": "ts-node src/index.ts",
     "test": "jest",
-    "reset-users-db": "ts-node src/scripts/reset-users-db.ts"
+    "reset-users-db": "ts-node src/scripts/reset-users-db.ts",
+    "reset-casinos-db": "ts-node src/scripts/reset-casinos-db.ts"
   },
   "repository": {
     "type": "git",
