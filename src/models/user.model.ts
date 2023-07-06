@@ -50,7 +50,7 @@ export class UserEntity implements User {
   createdAt: Date;
   
   @OneToMany(() => User_Casino_Entity, user_casino => user_casino.user)
-  public user_casino: User_Casino[];
+  user_casino: User_Casino[];
 
   @OneToMany(() => SettleAcountEntity, (settleAcount)=> settleAcount.user)
   settleAcount: SettleAcount[];
