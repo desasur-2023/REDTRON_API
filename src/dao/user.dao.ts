@@ -23,9 +23,9 @@ export class UserDAO implements UserRepository {
 
   async search(query?: string): Promise<User[]>{
     if (!query) {
-      return  await this.repository.find() as User[];
+      return  await this.repository.find({ relations: {user_casino: true }}) as User[];
     }
-    return await this.repository.find({ where: { username: query } });
+    return await this.repository.find({ relations: {user_casino: true }, where: { username: query } });
   }
 
   async create(item: User): Promise<User> {
