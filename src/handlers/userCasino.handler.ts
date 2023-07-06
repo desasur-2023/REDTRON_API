@@ -5,14 +5,14 @@ import controller from "../controllers/userCasino.controller";
 
 
 const create = async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.body.userId;
+    const usersId = req.body.usersId;
     const casinoId = req.body.casinoId;
-    return response(res, StatusCodes.OK, await controller.create(userId, casinoId));
+    return response(res, StatusCodes.OK, await controller.create(usersId, casinoId));
   };
 
   const getAll = async (req: Request, res: Response, next: NextFunction) => {
-    const { user, casino} = req.query;
-    return response(res, StatusCodes.OK, await controller.getAll(user as string, casino as string));
+    const { userId, casinoId} = req.query;
+    return response(res, StatusCodes.OK, await controller.getAll(userId as string, casinoId as string));
   };
 
   export default { create, getAll };

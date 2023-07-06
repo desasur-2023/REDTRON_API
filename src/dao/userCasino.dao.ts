@@ -40,63 +40,33 @@ export class UserCasinoDAO implements UserCasinoRepository {
     throw new Error("Method not implemented.");
   }
   
-  async search(user?: string, casino?: string): Promise<User_Casino[]> {
-    const userCasinos = async (searchUserCasino: User_Casino_Entity[]) => { 
-      const result  = await this.repository
-      .createQueryBuilder("user_casino")
-      .leftJoinAndSelect("user_casino.user", "user")
-      .leftJoinAndSelect("user_casino.casino", "casino")
-      .whereInIds(searchUserCasino)
-      .select([
-        "user_casino",
-        "user.id",
-        "user.username",
-        "casino.id",
-        "casino.name"
-      ])
-      .getMany();
-    return result;
-  }
+  async search(userId?: string, casinoId?: string): Promise<User_Casino[]> {
     
-    if (!user && !casino) {
-      const searchUserCasino = await this.repository.find();
-       return userCasinos(searchUserCasino)
-      }
+  const queryBuilder  = this.repository
+  .createQueryBuilder("user_casino")
+  .leftJoinAndSelect("user_casino.user", "user")
+  .leftJoinAndSelect("user_casino.casino", "casino")
+  .select([
+    "user_casino",
+    "user.id",
+    "user.username",
+    "casino.id",
+    "casino.name"
+  ])
   
-    if (user && casino) {
-      const searchUserCasino = await this.repository.find({
-        where: {
-          user: {
-            id: user,
-          },
-          casino: {
-            id: casino,
-          },
-        },
-      });
-      return userCasinos(searchUserCasino)
-    }
-  
-    if (user) {
-      const searchUserCasino = await this.repository.find({
-        where: {
-          user: {
-            id: user,
-          },
-        },
-      });
-      return userCasinos(searchUserCasino)
-    }
-  
-     const searchUserCasino = await this.repository.find({
-      where: {
-        casino: {
-          id: casino,
-        },
-      },
-    });
-    return userCasinos(searchUserCasino)
+  if (userId) {
+    queryBuilder.andWhere("user.id = :userId", { userId });
   }
+
+  if (casinoId) {
+    queryBuilder.andWhere("casino.id = :casinoId", { casinoId });
+  }
+
+  const result = await queryBuilder.getMany();
+
+  return result;
+     
+}
 
   searchDate: (query?: Date | undefined) => Promise<User_Casino[]>;
 }

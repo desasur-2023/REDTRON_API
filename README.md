@@ -595,17 +595,20 @@ Endpoint encargado de crear un nuevo user_casino
 
 ### Parámetros body
 
-| param    | descripción               |
-| -------- | ------------------------- |
-| userId   | identificador del usuario |
-| casinoId | identificador del casino  |
+| param    | descripción                          |
+| -------- | ------------------------------------ |
+| usersId  | array de identificadores de usuarios |
+| casinoId | identificador del casino             |
 
 ### Ejemplo Body
 
 ```json
 {
-  "userId": "75a27939-2133-4002-99b3-9efdde4daac1",
-  "casinoId": "83229184-4805-4407-814a-90bdecf7279c"
+  "usersId": [
+    "6fea47ad-98d8-4dbf-9566-c261d7e15c3f",
+    "92f6d557-8cc9-4c8e-8a0b-a49e527f0e76"
+  ],
+  "casinoId": "d7a28e76-1f92-4ec5-be3c-13520bcd632d"
 }
 ```
 
@@ -616,20 +619,36 @@ Respuesta en caso de éxito:
 ```json
 {
   "error": false,
-  "data": {
-    "id": "2000c851-ce61-4f1c-8f0c-849c20b9bf5a",
-    "debits": "0",
-    "credits": "0",
-    "createdAt": "2023-07-02T22:28:22.077Z",
-    "user": {
-      "id": "75a27939-2133-4002-99b3-9efdde4daac1",
-      "username": "test-cajero3"
+  "data": [
+    {
+      "id": "65c55ba0-c4f2-431d-bcb5-2d5403809496",
+      "debits": "0",
+      "credits": "0",
+      "createdAt": "2023-07-06T01:58:42.379Z",
+      "user": {
+        "id": "6fea47ad-98d8-4dbf-9566-c261d7e15c3f",
+        "username": "redtron_teller"
+      },
+      "casino": {
+        "id": "d7a28e76-1f92-4ec5-be3c-13520bcd632d",
+        "name": "Linkbuzz"
+      }
     },
-    "casino": {
-      "id": "83229184-4805-4407-814a-90bdecf7279c",
-      "name": "Zeus"
+    {
+      "id": "76470561-beb5-431a-9002-175522bb9dce",
+      "debits": "0",
+      "credits": "0",
+      "createdAt": "2023-07-06T01:58:42.394Z",
+      "user": {
+        "id": "92f6d557-8cc9-4c8e-8a0b-a49e527f0e76",
+        "username": "kbenez9"
+      },
+      "casino": {
+        "id": "d7a28e76-1f92-4ec5-be3c-13520bcd632d",
+        "name": "Linkbuzz"
+      }
     }
-  }
+  ]
 }
 ```
 
