@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Casino } from "../domain/casino";
+import { Casino, CasinoStatus } from "../domain/casino";
 import { User_Casino_Entity } from "./user_casino.model";
 import { PlayerEntity } from "./player.model";
 import { User_Casino } from "../domain/user_casino";
@@ -13,6 +13,9 @@ export class CasinoEntity implements Casino{
     
     @Column({name: "name",type: "varchar", length: 32, nullable: false})
     name: string;
+
+    @Column({name:"status", type: "enum", enum: CasinoStatus, default: CasinoStatus.ACTIVE})
+    status: CasinoStatus;
 
     @Column({name: "image_url",type: "varchar", length: 255, nullable: true})
     imageUrl: string;

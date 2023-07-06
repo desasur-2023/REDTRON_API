@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Player } from "../domain/player";
+import { Player, PlayerStatus } from "../domain/player";
 import { CasinoEntity } from "./casino.model";
 import { WithdrawalEntity } from "./withdrawal.model";
 import { LoadEntity } from "./load.model";
@@ -15,6 +15,8 @@ export class PlayerEntity implements Player {
     id: string;
     @Column({ name: "nickname", type: "varchar", length: 32, nullable: false, unique: true })
     nickname: string;
+    @Column({name:"status", type: "enum", enum: PlayerStatus, default: PlayerStatus.ACTIVE})
+    status: PlayerStatus;
     @Column({ name: "debits_profits", type: "decimal", precision: 10, scale: 2, nullable: true})
     debits_profits: number;
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})

@@ -4,6 +4,7 @@ import casinoRouter from "./casino.routes";
 import authRouter from "./auth.routes"
 import userCasinoRouter from "./userCasino.routes"
 import { authorize } from "../middlewares/auth.middleware";
+import coinsMovementsRouter from "./coinsMovements.routes";
 const router = Router();
 
 //Solo log in podra iniciarse sin autorizacion (sin token)
@@ -17,5 +18,6 @@ router.use("/auth", authRouter());
 router.use("/users",usersRouter());
 router.use("/casino", casinoRouter());
 router.use("/userCasino", userCasinoRouter());
+router.use("/coinsMovements", coinsMovementsRouter());
 
 export default router;

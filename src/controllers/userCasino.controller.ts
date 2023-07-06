@@ -11,15 +11,12 @@ import { Casino } from "../domain/casino";
 
 
 const create = async (userId: string, casinoId: string) => {
+
+  if(!isValidUUID(casinoId)) throw new BaseError('Invalid casinoId format', StatusCodes.BAD_REQUEST);
+  
+  if(!isValidUUID(userId)) throw new BaseError('Invalid userid format', StatusCodes.BAD_REQUEST);
+
   const userCasinoDAO = await new UserCasinoDAO()
-
-  if (!isValidUUID(casinoId)) {
-    throw new BaseError('Invalid casinoId format', StatusCodes.BAD_REQUEST);
-  }
-
-  if (!isValidUUID(userId)) {
-    throw new BaseError('Invalid userid format', StatusCodes.BAD_REQUEST);
-  }
 
   const checkUserCasino = await userCasinoDAO.search(userId, casinoId).catch(error => new BaseError('The ids does not belong to an existing user or casino.', StatusCodes.CONFLICT, error.message));
   
@@ -34,7 +31,6 @@ const create = async (userId: string, casinoId: string) => {
 
   const casinoDAO = await new CasinoDAO();
   const casino = await casinoDAO.read(casinoId).catch(error => new BaseError(`The id: '${casinoId}' does not belong to an existing casino.`, StatusCodes.CONFLICT, error.message));
-  const casinoName = casino?.name;
 
   if (Object.keys(casino).length === 0) {
     throw new BaseError(`The id: '${casino}' does not belong to an existing casino.`, StatusCodes.CONFLICT);

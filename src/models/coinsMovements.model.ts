@@ -21,8 +21,8 @@ export class CoinsMovementsEntity implements CoinsMovements {
     @Column({name:"outflow_qty", type: "decimal", precision: 10, scale: 0, nullable: false})
     outflow_qty: number;
 
-    @Column({name:"balance", type: "decimal", precision: 10, scale: 0, nullable: false})
-    balance: number;
+    @Column({name:"coins_balance", type: "decimal", precision: 10, scale: 0, nullable: false})
+    coins_balance: number;
 
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date;
@@ -41,5 +41,5 @@ export class CoinsMovementsEntity implements CoinsMovements {
 
     @ManyToOne(() => User_Casino_Entity, (userCasino) => userCasino.coinsMovements)
     @JoinColumn({name: 'user_casino_id', referencedColumnName: 'id'})
-    userCasinoId: User_Casino_Entity;
+    userCasinoId: string;
 }
