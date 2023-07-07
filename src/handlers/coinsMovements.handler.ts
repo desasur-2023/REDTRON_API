@@ -15,7 +15,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
     const name = req.query.name as string;
     const result = await controller.getAll(name)
-    if(result instanceof BaseError) return next(result);
+    // if(result instanceof BaseError) return next(result);
     return res.status(StatusCodes.OK).json(result);
   }
 

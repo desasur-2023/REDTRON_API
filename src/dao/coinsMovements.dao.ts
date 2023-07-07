@@ -37,7 +37,21 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
     //   user: item.userId,
     //   userCasinoId: item.userCasinoId
     // }
-    return (await this.repository.save(coinsMovement)) as CoinsMovements;
+    const newCoinsMovement = await this.repository.save(coinsMovement);
+    const result = await this.repository
+      .createQueryBuilder("coinsMovements")
+      .leftJoinAndSelect("coinsMovements.user", "user")
+      .leftJoinAndSelect("coinsMovements.userCasinoId", "user_casino")
+      .where("coinsMovements.id = :id", { id: newCoinsMovement.id })
+      .select([
+        "coinsMovements",
+        "user.id",
+        "user.username",
+        "user.role",
+        "user_casino.id",
+      ])
+      .getOne();
+    return result as CoinsMovements;
   }
   async read(id: string): Promise<CoinsMovements> {
     return (await this.repository.findOneBy({ id: id })) as CoinsMovements;
@@ -65,19 +79,87 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
     // if(Object.keys(userCasino).length === 0) throw new BaseError('The id does not belong to an existing userCasino.', StatusCodes.CONFLICT);
     // const userCasinoId = userCasino.id
     // const userCasinoId = userCasino.id.toString()
-    const lastInput = await this.repository.findOne({
+    const lastInput = await this.repository.find({
       where: { 
-        userCasinoId: userCasinoId
+        userCasinoId: {
+          id: userCasinoId
+        }
       },
       order: { createdAt: 'DESC'}
   }).catch(error => new BaseError(`The id: '${userCasinoId}' does not belong to an DAO existing userCasino.`, StatusCodes.CONFLICT, error.message));;
     console.log(lastInput);  
 
     if (!lastInput) throw new BaseError('No se encuentra el Movimiento de Fichas', StatusCodes.NOT_FOUND);
-    return { ...lastInput } as CoinsMovements;
+    return lastInput as unknown as CoinsMovementsEntity
   }
 
-  search: (query?: string | undefined) => Promise<CoinsMovements[]>;
+  async search(user?: string, casino?: string, userCasinoId?: string): Promise<CoinsMovements[]> {
+    const coinsMovements = async (searchCoinsMovements: CoinsMovements[]) => { 
+      const result  = await this.repository
+      .createQueryBuilder("coinsMovements")
+      .leftJoinAndSelect("coinsMovements.user", "user")
+      .leftJoinAndSelect("coinsMovements.userCasinoId", "user_casino")
+      .whereInIds(searchCoinsMovements)
+      .select([
+        "coinsMovements",
+        "user.id",
+        "user.username",
+        "user.role",
+        "user_casino.id",
+      ])
+      .groupBy("user_casino.id")
+      .getMany();
+    return result;
+  }
+    
+    if (!user && !casino) {
+      const searchCoinsMovements = await this.repository.find();
+       return coinsMovements(searchCoinsMovements)
+      }
+  
+    if (user && casino) {
+      const searchCoinsMovements = await this.repository.find({
+        where: {
+          user: {
+            id: user,
+          },
+          userCasinoId: {
+            id: casino,
+          },
+        },
+      });
+      return coinsMovements(searchCoinsMovements)
+    }
+  
+    if (user) {
+      const searchCoinsMovements = await this.repository.find({
+        where: {
+          user: {
+            id: user,
+          },
+        },
+      });
+      return coinsMovements(searchCoinsMovements)
+    }
+
+    if (userCasinoId) {
+      const searchCoinsMovements = await this.repository.find({
+        where: {
+            id: userCasinoId,
+        },
+      });
+      return coinsMovements(searchCoinsMovements)
+    }
+  
+     const searchCoinsMovements = await this.repository.find({
+      where: {
+        userCasinoId: {
+          id: casino,
+        },
+      },
+    });
+    return coinsMovements(searchCoinsMovements)
+  }
 
   async searchDate(query?: Date): Promise<CoinsMovements[]> {
     if (!query) {

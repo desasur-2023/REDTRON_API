@@ -33,9 +33,9 @@ const createCoinsInflow = async (item: CoinsInflow) => {
     const lastMovementByUserCasinoId = await coinsMovementsDAO.findLastInputByUserCasinoId(userCasino.id).catch(error => new BaseError(`The id: '${userCasino.id}' does not belong to an existing userCasino.`, StatusCodes.CONFLICT, error.message));
     if (lastMovementByUserCasinoId instanceof BaseError) throw new BaseError(`The id: '${userCasino.id}' does not belong to an existing userCasino.`, StatusCodes.CONFLICT)
     if (Object.keys(lastMovementByUserCasinoId).length === 0) {
-        const coinsMovement = new CoinsMovementsEntity;
-        coinsMovement.user = user as unknown as User
-        coinsMovement.userCasinoId = userCasino.id //as unknown as User_Casino
+        const coinsMovement = new CoinsMovementsEntity();
+        coinsMovement.user = user.id as unknown as User
+        coinsMovement.userCasinoId = userCasino.id as unknown as User_Casino
         coinsMovement.inflow_qty = item.qty
         coinsMovement.outflow_qty = 0
         coinsMovement.coins_balance = item.qty
@@ -43,20 +43,20 @@ const createCoinsInflow = async (item: CoinsInflow) => {
         const newCoinsMovement = await coinsMovementsDAO.createInflow(coinsMovement)
         return newCoinsMovement;
     }
-    
-    const coinsMovement = new CoinsMovementsEntity;
-    coinsMovement.user = user as unknown as User
-    coinsMovement.userCasinoId = userCasino.id //as unknown as User_Casino
+
+    const coinsMovement = new CoinsMovementsEntity();
+    coinsMovement.user = user.id as unknown as User
+    coinsMovement.userCasinoId = userCasino.id as unknown as User_Casino
     coinsMovement.inflow_qty = item.qty
     coinsMovement.outflow_qty = 0
-    coinsMovement.coins_balance = lastMovementByUserCasinoId.coins_balance + item.qty
+    coinsMovement.coins_balance = parseInt(lastMovementByUserCasinoId[0].coins_balance)+ item.qty
 
     const newCoinsMovement = await coinsMovementsDAO.createInflow(coinsMovement)
     return newCoinsMovement;
 }
 
 const getAll = async (name?: string) => {
-    const casinoDAO = await new CasinoDAO();
+    const casinoDAO = await new CoinsMovementsDAO();
     const searchCasino = await casinoDAO.search(name).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
     return searchCasino;
 }

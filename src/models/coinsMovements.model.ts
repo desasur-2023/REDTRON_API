@@ -41,5 +41,5 @@ export class CoinsMovementsEntity implements CoinsMovements {
 
     @ManyToOne(() => User_Casino_Entity, (userCasino) => userCasino.coinsMovements)
     @JoinColumn({name: 'user_casino_id', referencedColumnName: 'id'})
-    userCasinoId: string;
+    userCasinoId: User_Casino;
 }
