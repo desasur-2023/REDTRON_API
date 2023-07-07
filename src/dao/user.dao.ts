@@ -22,10 +22,17 @@ export class UserDAO implements UserRepository {
   }
 
   async search(query?: string): Promise<User[]>{
+    
+    const result =  await this.repository
+      .createQueryBuilder('users')
+      .leftJoinAndSelect('users.user_casino', 'user_casino')
+      .leftJoinAndSelect('user_casino.casino', 'casino')
+      .getMany() 
+
     if (!query) {
-      return  await this.repository.find({ relations: {user_casino: true }}) as User[];
+      return result as User[];
     }
-    return await this.repository.find({ relations: {user_casino: true }, where: { username: query } });
+    return result.filter(r => r.username === query) as User[];
   }
 
   async create(item: User): Promise<User> {
