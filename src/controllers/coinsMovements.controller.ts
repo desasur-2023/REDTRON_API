@@ -55,9 +55,9 @@ const createCoinsInflow = async (item: CoinsInflow) => {
     return newCoinsMovement;
 }
 
-const getAll = async (name?: string) => {
+const getAll = async (user?: string, userCasinoId?: string) => {
     const casinoDAO = await new CoinsMovementsDAO();
-    const searchCasino = await casinoDAO.search(name).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
+    const searchCasino = await casinoDAO.search(user, userCasinoId).catch((error: Error) => new BaseError(error.message, StatusCodes.CONFLICT));
     return searchCasino;
 }
 

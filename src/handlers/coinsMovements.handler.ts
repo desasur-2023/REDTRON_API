@@ -13,8 +13,9 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   };
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
-    const name = req.query.name as string;
-    const result = await controller.getAll(name)
+    const user = req.query.user as string;
+    const userCasinoId = req.query.userCasinoId as string;
+    const result = await controller.getAll(user,userCasinoId)
     // if(result instanceof BaseError) return next(result);
     return res.status(StatusCodes.OK).json(result);
   }

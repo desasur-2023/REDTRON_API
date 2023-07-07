@@ -1,4 +1,4 @@
-import { Between, Repository } from "typeorm";
+import { And, Between, Repository } from "typeorm";
 import { getConnection } from "../db";
 import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
@@ -93,7 +93,7 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
     return lastInput as unknown as CoinsMovementsEntity
   }
 
-  async search(user?: string, casino?: string, userCasinoId?: string): Promise<CoinsMovements[]> {
+  async search(user?: string,userCasinoId?: string): Promise<CoinsMovements[]> {
     const coinsMovements = async (searchCoinsMovements: CoinsMovements[]) => { 
       const result  = await this.repository
       .createQueryBuilder("coinsMovements")
@@ -107,29 +107,9 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
         "user.role",
         "user_casino.id",
       ])
-      .groupBy("user_casino.id")
       .getMany();
     return result;
   }
-    
-    if (!user && !casino) {
-      const searchCoinsMovements = await this.repository.find();
-       return coinsMovements(searchCoinsMovements)
-      }
-  
-    if (user && casino) {
-      const searchCoinsMovements = await this.repository.find({
-        where: {
-          user: {
-            id: user,
-          },
-          userCasinoId: {
-            id: casino,
-          },
-        },
-      });
-      return coinsMovements(searchCoinsMovements)
-    }
   
     if (user) {
       const searchCoinsMovements = await this.repository.find({
@@ -138,6 +118,7 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
             id: user,
           },
         },
+        order: { createdAt: 'DESC'},
       });
       return coinsMovements(searchCoinsMovements)
     }
@@ -145,20 +126,17 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
     if (userCasinoId) {
       const searchCoinsMovements = await this.repository.find({
         where: {
+          userCasinoId: {
             id: userCasinoId,
+          },
         },
+        order: { createdAt: 'DESC'},
+        take: 1
       });
       return coinsMovements(searchCoinsMovements)
     }
-  
-     const searchCoinsMovements = await this.repository.find({
-      where: {
-        userCasinoId: {
-          id: casino,
-        },
-      },
-    });
-    return coinsMovements(searchCoinsMovements)
+    const searchCoinsMovements = await this.repository.find();
+       return coinsMovements(searchCoinsMovements)
   }
 
   async searchDate(query?: Date): Promise<CoinsMovements[]> {
