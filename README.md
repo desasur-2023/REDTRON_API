@@ -23,7 +23,7 @@ MOCK_USERS_URL="https://my.api.mockaroo.com/redtron_users.json?key=784e5460"
 ---
 
 Deploy de Base de Datos
-DATABASE_URL= `postgresql://postgres:9jC0dGsnUSv1drbDjIIX@containers-us-west-139.railway.app:7048/railway`
+DATABASE_URL= `postgresql://postgres:OrbSyrG0p1TCaF572U0C@containers-us-west-52.railway.app:7846/railway`
 
 ---
 
