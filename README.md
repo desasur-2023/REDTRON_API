@@ -23,7 +23,7 @@ Deploy de Base de Datos
 DATABASE_URL= `postgresql://postgres:OrbSyrG0p1TCaF572U0C@containers-us-west-52.railway.app:7846/railway`
 
 Deploy de api
-`redtronapi-development.up.railway.app`
+`https://redtronapi-development.up.railway.app`
 
 ---
 
