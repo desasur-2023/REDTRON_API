@@ -8,6 +8,7 @@ import morgan from "morgan";
 import { StatusCodes } from "http-status-codes";
 import { BaseError } from "./utils/errors/error";
 import routes from "./routes"
+import cors from 'cors';
 
 
 
@@ -16,6 +17,7 @@ export async function createApp() : Promise<Express.Application> {
 
     const app = express();
 
+    app.use(cors())
     app.use(express.json())
     app.use(morgan("dev"))
     app.use((_, res: Response, next: NextFunction) => {
