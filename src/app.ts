@@ -17,7 +17,7 @@ export async function createApp() : Promise<Express.Application> {
 
     const app = express();
 
-    app.use(cors())
+
     app.use(express.json())
     app.use(morgan("dev"))
     app.use((_, res: Response, next: NextFunction) => {
