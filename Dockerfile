@@ -16,8 +16,8 @@ RUN npm install --omit=dev
 
 COPY . .
 
-# Copy the .env file
-COPY .env .env
+# # Copy the .env file
+# COPY .env .env
 
 # Expose the necessary port(s)
 EXPOSE 3001
