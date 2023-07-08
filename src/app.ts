@@ -8,7 +8,7 @@ import morgan from "morgan";
 import { StatusCodes } from "http-status-codes";
 import { BaseError } from "./utils/errors/error";
 import routes from "./routes"
-import cors from 'cors';
+
 
 
 

@@ -8,7 +8,6 @@ import jwt from "jsonwebtoken"
 
 const logIn = async (userLogin: UserLogin) => {
     const userDAO = await new UserDAO();
-    console.log(userLogin);
     const result = await userDAO.findByUserName(userLogin.username) 
                   .catch((error: Error) => new BaseError(`El usuario ${userLogin.username} no esta registrado`, StatusCodes.NOT_FOUND, error.message));
   

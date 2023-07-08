@@ -6,7 +6,6 @@ import { UserLogin } from "../domain/user";
 
 const logIn = async (req: Request, res: Response, next: NextFunction) => {
     const userLogin = req.body;
-    console.log(req.body);
     return response(res, StatusCodes.OK, await controller.logIn({...userLogin} as UserLogin));
 };
 
