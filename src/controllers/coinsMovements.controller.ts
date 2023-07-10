@@ -49,7 +49,7 @@ const createCoinsInflow = async (item: CoinsInflow) => {
     coinsMovement.userCasinoId = userCasino.id as unknown as User_Casino
     coinsMovement.inflow_qty = item.qty
     coinsMovement.outflow_qty = 0
-    coinsMovement.coins_balance = parseInt(lastMovementByUserCasinoId[0].coins_balance)+ item.qty
+    coinsMovement.coins_balance = Math.floor(lastMovementByUserCasinoId.coins_balance) + item.qty
 
     const newCoinsMovement = await coinsMovementsDAO.createInflow(coinsMovement)
     return newCoinsMovement;

@@ -79,7 +79,7 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
     // if(Object.keys(userCasino).length === 0) throw new BaseError('The id does not belong to an existing userCasino.', StatusCodes.CONFLICT);
     // const userCasinoId = userCasino.id
     // const userCasinoId = userCasino.id.toString()
-    const lastInput = await this.repository.find({
+    const lastInput = await this.repository.findOne({
       where: { 
         userCasinoId: {
           id: userCasinoId
