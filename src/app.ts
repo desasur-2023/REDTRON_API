@@ -34,10 +34,6 @@ export async function createApp() : Promise<Express.Application> {
         next();
     })
       
-
-    app.use(routes);
-  
-    
     app.get("/health", async (_, res: Response) => {
       const isDbConnected = connection.isInitialized;
       const health = {
@@ -48,6 +44,11 @@ export async function createApp() : Promise<Express.Application> {
 
       res.status(StatusCodes.OK).json(health);
     })
+
+    app.use(routes);
+  
+    
+    
     
     app.use((_req: Request, _res: Response, next: NextFunction) => {
       next(new BaseError('Not found', StatusCodes.NOT_FOUND));

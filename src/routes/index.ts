@@ -12,7 +12,7 @@ const router = Router();
 
 const readmePath = path.join(__dirname, './../../README.md');
 const readmeContent = fs.readFileSync(readmePath, 'utf-8');
-const readmeHtml = marked(readmeContent)
+const readmeHtml = marked(readmeContent, {mangle: false, headerIds: false});
 
 router.get('/', (_, res) => {
     const htmlWithStyles = `<div style="background-color: black; color: white;">${readmeHtml}</div>`;
