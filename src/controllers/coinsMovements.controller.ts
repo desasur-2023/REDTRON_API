@@ -12,6 +12,7 @@ import { CoinsInflow } from "../interfaces/coinsInflow.interface";
 import { User } from "../domain/user";
 import { User_Casino } from "../domain/user_casino";
 import { CoinsMovementsEntity } from "../models/coinsMovements.model";
+import { CoinsOutflow } from "../interfaces/coinsOutflow.interface";
 
 
 const createCoinsInflow = async (item: CoinsInflow) => {
@@ -36,22 +37,66 @@ const createCoinsInflow = async (item: CoinsInflow) => {
         const coinsMovement = new CoinsMovementsEntity();
         coinsMovement.user = user.id as unknown as User
         coinsMovement.userCasinoId = userCasino.id as unknown as User_Casino
-        coinsMovement.inflow_qty = item.qty
+        coinsMovement.inflow_qty = item.inflow_qty
         coinsMovement.outflow_qty = 0
-        coinsMovement.coins_balance = item.qty
+        coinsMovement.coins_balance = item.inflow_qty
 
-        const newCoinsMovement = await coinsMovementsDAO.createInflow(coinsMovement)
+        const newCoinsMovement = await coinsMovementsDAO.createCoinsFlow(coinsMovement)
         return newCoinsMovement;
     }
 
     const coinsMovement = new CoinsMovementsEntity();
     coinsMovement.user = user.id as unknown as User
     coinsMovement.userCasinoId = userCasino.id as unknown as User_Casino
-    coinsMovement.inflow_qty = item.qty
+    coinsMovement.inflow_qty = item.inflow_qty
     coinsMovement.outflow_qty = 0
-    coinsMovement.coins_balance = Math.floor(lastMovementByUserCasinoId.coins_balance) + item.qty
+    coinsMovement.coins_balance = Math.floor(lastMovementByUserCasinoId.coins_balance) + item.inflow_qty
 
-    const newCoinsMovement = await coinsMovementsDAO.createInflow(coinsMovement)
+    const newCoinsMovement = await coinsMovementsDAO.createCoinsFlow(coinsMovement)
+    return newCoinsMovement;
+}
+
+const createCoinsOutflow = async (item: CoinsOutflow) => {
+
+    if (!isValidUUID(item.userId)) throw new BaseError('Invalid userid format', StatusCodes.BAD_REQUEST);
+    if (!isValidUUID(item.userCasinoId)) throw new BaseError('Invalid userCasinoId format', StatusCodes.BAD_REQUEST);
+    
+    const userDAO = await new UserDAO();
+    const user = await userDAO.read(item.userId)//.catch(error => new BaseError(`The id: '${item.userId}' does not belong to an existing user.`, StatusCodes.CONFLICT, error.message));
+    if (Object.keys(user).length === 0) throw new BaseError(`The id: '${item.userId}' does not belong to an existing user.`, StatusCodes.CONFLICT);
+    if (user.role !== 'TELLER') throw new BaseError('This User is not enabled to perform that action.', StatusCodes.CONFLICT);
+    
+    const userCasinoDAO = await new UserCasinoDAO();
+    const userCasino = await userCasinoDAO.findById(item.userCasinoId)//.catch(error => new BaseError('The ids does not belong to an existing user or casino.', StatusCodes.CONFLICT, error.message));
+    if (Object.keys(userCasino).length === 0) throw new BaseError('The id does not belong to an existing userCasino.', StatusCodes.CONFLICT);
+    if (userCasino.status !== 'ACTIVE') throw new BaseError('The userCasino status is not ACTIVE.', StatusCodes.CONFLICT);
+    if (userCasino.user.id !== item.userId) throw new BaseError('This User is not enabled to perform that action.', StatusCodes.CONFLICT);
+    
+    const coinsMovementsDAO = await new CoinsMovementsDAO();
+    const lastMovementByUserCasinoId = await coinsMovementsDAO.findLastInputByUserCasinoId(userCasino.id).catch(error => new BaseError(`The id: '${userCasino.id}' does not belong to an existing userCasino.`, StatusCodes.CONFLICT, error.message));
+    if (lastMovementByUserCasinoId instanceof BaseError) throw new BaseError(`The id: '${userCasino.id}' does not belong to an existing userCasino.`, StatusCodes.CONFLICT)
+    if (Object.keys(lastMovementByUserCasinoId).length === 0) throw new BaseError ('The userCasino does not have any coins', StatusCodes.CONFLICT)
+    if (lastMovementByUserCasinoId.coins_balance - item.outflow_qty < 0) throw new BaseError ('The userCasino does not have enough coins ', StatusCodes.CONFLICT)
+    // {
+    //     const coinsMovement = new CoinsMovementsEntity();
+    //     coinsMovement.user = user.id as unknown as User
+    //     coinsMovement.userCasinoId = userCasino.id as unknown as User_Casino
+    //     coinsMovement.inflow_qty = item.qty
+    //     coinsMovement.outflow_qty = 0
+    //     coinsMovement.coins_balance = item.qty
+
+    //     const newCoinsMovement = await coinsMovementsDAO.createInflow(coinsMovement)
+    //     return newCoinsMovement;
+    // }
+
+    const coinsMovement = new CoinsMovementsEntity();
+    coinsMovement.user = user.id as unknown as User
+    coinsMovement.userCasinoId = userCasino.id as unknown as User_Casino
+    coinsMovement.inflow_qty = 0
+    coinsMovement.outflow_qty = item.outflow_qty
+    coinsMovement.coins_balance = Math.floor(lastMovementByUserCasinoId.coins_balance) - item.outflow_qty
+
+    const newCoinsMovement = await coinsMovementsDAO.createCoinsFlow(coinsMovement)
     return newCoinsMovement;
 }
 
@@ -80,4 +125,4 @@ const update = async (id: string, item: Casino) => {
 }
 
 
-export default { createCoinsInflow, getAll, findOneById, deleteCasino, update }
+export default { createCoinsInflow, createCoinsOutflow, getAll, findOneById, deleteCasino, update }

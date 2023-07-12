@@ -6,6 +6,7 @@ import { User } from "./user";
 dotenv.config();
 
 export interface User_Casino extends Base {
+    user: any;
     status: User_CasinoStatus
     debits: number;
     credits: number;

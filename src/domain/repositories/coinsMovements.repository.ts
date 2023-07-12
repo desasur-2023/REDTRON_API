@@ -4,5 +4,5 @@ import { ISearch } from "../../utils/interfaces/ISearch";
 import { CoinsMovements } from "../coinsMovements";
 
 export interface CoinsMovementsRepository extends ICRUD<CoinsMovements>, ISearch<CoinsMovements>{
-    createInflow(coinsMovement: CoinsMovements):Promise<CoinsMovements>
+    createCoinsFlow(coinsMovement: CoinsMovements):Promise<CoinsMovements>
 }

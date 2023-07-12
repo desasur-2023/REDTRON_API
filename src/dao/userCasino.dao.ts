@@ -113,9 +113,38 @@ export class UserCasinoDAO implements UserCasinoRepository {
   }
 
   async findById(userCasinoId: string): Promise<User_Casino> {
-    const userCasino =  await this.repository.findOneBy({ id: userCasinoId });
+    const userCasino =  await this.repository//.findOneBy({ id: userCasinoId });
+    .createQueryBuilder("user_casino")
+        .leftJoinAndSelect("user_casino.user", "user")
+        .leftJoinAndSelect("user_casino.casino", "casino")
+        .whereInIds(userCasinoId)
+        .select([
+          "user_casino",
+          "user.id",
+          "user.username",
+          "user.email",
+          "casino.id",
+          "casino.name"
+        ])
+        .getOne();
     if(!userCasino) throw new BaseError('No se encuentra el userCasino', StatusCodes.NOT_FOUND);
     return {...userCasino} as User_Casino;
+  //   const userCasino = async (userCasinoId: string) => { 
+  //     const result  = await this.repository
+  //     .createQueryBuilder("user_casino")
+  //     .leftJoinAndSelect("user_casino.user", "user")
+  //     .leftJoinAndSelect("user_casino.casino", "casino")
+  //     .whereInIds(userCasinoId)
+  //     .select([
+  //       "user_casino",
+  //       "user.id",
+  //       "user.username",
+  //       "casino.id",
+  //       "casino.name"
+  //     ])
+  //     .getOne();
+  //   return result as User_Casino;
+  // }
   }
 
 

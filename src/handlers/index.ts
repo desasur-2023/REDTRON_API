@@ -31,7 +31,8 @@ export const userCasinoHandler = {
 }
 
 export const coinsMovementsHandler = {
-    create: catchedAsync(coinsMovementsH.create),
+    createCoinsInflow: catchedAsync(coinsMovementsH.createCoinsInflow),
+    createCoinsOutflow: catchedAsync(coinsMovementsH.createCoinsOutflow),
     getAll: catchedAsync(coinsMovementsH.getAll),
     findById: catchedAsync(coinsMovementsH.findOneById),
     update: catchedAsync(coinsMovementsH.update),

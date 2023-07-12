@@ -1,5 +1,5 @@
 export interface CoinsInflow {
     userId: string,
     userCasinoId: string,
-    qty: number
+    inflow_qty: number
 }

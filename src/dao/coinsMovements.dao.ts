@@ -24,11 +24,14 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
       this.repository = connection.getRepository(CoinsMovementsEntity);
     });
   }
+  createInflow(coinsMovement: CoinsMovements): Promise<CoinsMovements> {
+    throw new Error("Method not implemented.");
+  }
   create(item: CoinsMovements): Promise<CoinsMovements> {
     throw new Error("Method not implemented.");
   }
 
-  async createInflow(coinsMovement: CoinsMovements): Promise<CoinsMovements> {
+  async createCoinsFlow(coinsMovement: CoinsMovements): Promise<CoinsMovements> {
     // const lastInput = await this.findLastInputByUserCasinoId(item.userCasinoId)
     // const coinsMovement = {
     //   inflow_qty: item.qty,
