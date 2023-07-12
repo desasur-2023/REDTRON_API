@@ -41,7 +41,9 @@ export async function getConnection(): Promise<DataSource> {
   if (!isInitialized) {
     return PostgresDataSource.initialize()
       .then((connection) => {
-        logger().info("Connected to Postgres");
+        logger().info(`${process.env.NODE_DB ? "Connected to Postgres Remotly"
+        : "Connected to Postgres Localy"}` 
+        + ` - database name: ${connection.driver.database}`);
         return connection;
       })
       .catch((err) => {
