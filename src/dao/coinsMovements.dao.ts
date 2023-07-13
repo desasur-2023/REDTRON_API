@@ -50,14 +50,20 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
   }
   async update(id: string, item: CoinsMovements): Promise<CoinsMovements> {
     const existingCoinsMovements = await this.repository.findOneBy({ id: id });
-    if (item === null || Object.keys(item).length === 0) {
-      throw new BaseError(
-        "No se proporcionó un objeto para actualizar.",
-        StatusCodes.BAD_REQUEST
-      );
-    }
-    const updateCoinsMovements = Object.assign({}, existingCoinsMovements, item);
-    return (await this.repository.save(updateCoinsMovements)) as CoinsMovements;
+    if(!existingCoinsMovements) throw new BaseError('No se encuentra el Coins Movement', StatusCodes.NOT_FOUND);    
+    if (item === null || Object.keys(item).length === 0) throw new BaseError( "No se proporcionó un objeto para actualizar.", StatusCodes.BAD_REQUEST);
+  
+    const prevCoinsMovements = new CoinsMovementsEntity();
+    prevCoinsMovements.id = existingCoinsMovements.id; 
+    prevCoinsMovements.user = existingCoinsMovements.user;
+    prevCoinsMovements.userCasinoId = existingCoinsMovements.userCasinoId
+    prevCoinsMovements.historic = existingCoinsMovements.historic;
+    prevCoinsMovements.inflow_qty = existingCoinsMovements.inflow_qty;
+    prevCoinsMovements.outflow_qty = existingCoinsMovements.outflow_qty;
+    prevCoinsMovements.coins_balance = Math.floor(existingCoinsMovements.coins_balance) - existingCoinsMovements.inflow_qty + Math.floor(item.inflow_qty)
+    
+    const updatedCoinsMovements = Object.assign({}, prevCoinsMovements, item);
+    return (await this.repository.save(updatedCoinsMovements)) as CoinsMovements;
   }
 
   async delete(id: string): Promise<boolean> {

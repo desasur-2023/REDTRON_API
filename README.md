@@ -1059,3 +1059,76 @@ Respuesta en caso de éxito:
 ```
 
 ---
+
+## DELETE `/coinsMovements/id:`
+
+Endpoint encargado de borrar un Coins Movement
+
+### Parámetros query
+
+| param | descripción                   |
+| ----- | ----------------------------- |
+| user  | id: identificador del coinsMovement |
+
+### Ejemplo ruta
+
+```
+/coinsMovements/3d8b5cd4-7f58-4461-8016-68a767b5ccca
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+true 
+```
+
+---
+
+## PUT `/coinsMovements/id:`
+
+Endpoint encargado de editar un Coins Movement. Se puede modificar el User Casino y/o la cantidad de Coins que se le asignan al movimiento.
+
+### Parámetros query
+
+| param | descripción                   |
+| ----- | ----------------------------- |
+| user  | id: identificador del coinsMovement |
+
+### Parámetros body
+
+| param    | descripción            |
+| -------- | ---------------------- |
+| userCasinoId | Id del User Casino    |
+| inflow_qty | Cantidad de Coins que se agregarán |
+
+### Ejemplo Body
+
+```json
+{
+  "userCasinoId":"40c8bab8-35e6-472c-9795-c9c89312173b",
+  "inflow_qty":443
+}
+```
+
+---
+
+### Ejemplo ruta
+
+```
+/coinsMovements/1b6a9d16-5236-4bd6-b603-d00df5e4f44b
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+    "id": "1b6a9d16-5236-4bd6-b603-d00df5e4f44b",
+    "inflow_qty": 442,
+    "outflow_qty": "0",
+    "coins_balance": 3999
+}
+```
+
+---

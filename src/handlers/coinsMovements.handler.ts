@@ -30,20 +30,20 @@ const findOneById = async (req: Request, res: Response, next: NextFunction) => {
   return res.status(StatusCodes.OK).json(casinoId);
 }
 
-const deleteCasino = async (req: Request, res: Response, next: NextFunction) => {
+const deleteCoinsMovement = async (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id as string;
-  const casinoDelet = await controller.deleteCasino(id);
-  if (casinoDelet instanceof BaseError) return next(casinoDelet);
-  return res.status(StatusCodes.OK).json(casinoDelet);
+  const coinsMovementDeleted = await controller.deleteCoinsMovement(id);
+  if (coinsMovementDeleted instanceof BaseError) return next(coinsMovementDeleted);
+  return res.status(StatusCodes.OK).json(coinsMovementDeleted);
 }
 
 const update = async (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id as string;
   const item = req.body;
-  const updateCasino = await controller.update(id, item);
-  if (updateCasino instanceof BaseError) return next(updateCasino);
-  return res.status(StatusCodes.OK).json(updateCasino);
+  const updatedCoinsMovement = await controller.update(id, item);
+  if (updatedCoinsMovement instanceof BaseError) return next(updatedCoinsMovement);
+  return res.status(StatusCodes.OK).json(updatedCoinsMovement);
 }
 
 
-export default { createCoinsInflow, createCoinsOutflow, getAll, findOneById, delete: deleteCasino, update }
+export default { createCoinsInflow, createCoinsOutflow, getAll, findOneById, delete: deleteCoinsMovement, update }

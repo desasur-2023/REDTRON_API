@@ -76,7 +76,7 @@ export class UserCasinoDAO implements UserCasinoRepository {
 }
 
 async findById(userCasinoId: string): Promise<User_Casino> {
-  const userCasino =  await this.repository//.findOneBy({ id: userCasinoId });
+  const userCasino =  await this.repository
   .createQueryBuilder("user_casino")
       .leftJoinAndSelect("user_casino.user", "user")
       .leftJoinAndSelect("user_casino.casino", "casino")
