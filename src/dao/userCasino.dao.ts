@@ -2,9 +2,14 @@ import { Repository } from "typeorm";
 import { UserCasinoRepository } from "../domain/repositories/userCasino.repository";
 import { User_Casino_Entity } from "../models/user_casino.model";
 import { User_Casino } from "../domain/user_casino";
+import { BaseError } from "../utils/errors/error";
 import { getConnection } from "../db";
+import { StatusCodes } from "http-status-codes";
 
 export class UserCasinoDAO implements UserCasinoRepository {
+  findOne(arg0: { id: string; }) {
+    throw new Error("Method not implemented.");
+  }
   repository: Repository<User_Casino_Entity>;
 
   constructor() {
@@ -23,6 +28,7 @@ export class UserCasinoDAO implements UserCasinoRepository {
         "user_casino",
         "user.id",
         "user.username",
+        "user.email",
         "casino.id",
         "casino.name"
       ])
@@ -50,6 +56,7 @@ export class UserCasinoDAO implements UserCasinoRepository {
     "user_casino",
     "user.id",
     "user.username",
+    "user.email",
     "casino.id",
     "casino.name"
   ])
@@ -66,6 +73,25 @@ export class UserCasinoDAO implements UserCasinoRepository {
 
   return result;
      
+}
+
+async findById(userCasinoId: string): Promise<User_Casino> {
+  const userCasino =  await this.repository
+  .createQueryBuilder("user_casino")
+      .leftJoinAndSelect("user_casino.user", "user")
+      .leftJoinAndSelect("user_casino.casino", "casino")
+      .whereInIds(userCasinoId)
+      .select([
+        "user_casino",
+        "user.id",
+        "user.username",
+        "user.email",
+        "casino.id",
+        "casino.name"
+      ])
+      .getOne();
+  if(!userCasino) throw new BaseError('No se encuentra el userCasino', StatusCodes.NOT_FOUND);
+  return {...userCasino} as User_Casino;
 }
 
   searchDate: (query?: Date | undefined) => Promise<User_Casino[]>;

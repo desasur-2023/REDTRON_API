@@ -8,17 +8,15 @@ import { isValidUUID } from "../utils/functions/comprobarUUID";
 import { User_Casino } from "../domain/user_casino";
 
 
-
-
 const create = async (usersId: string[], casinoId: string) => {
+  if (!isValidUUID(casinoId)) {
+    throw new BaseError('Invalid casinoId format', StatusCodes.BAD_REQUEST);
+  }
+
   const userCasinoDAO = await new UserCasinoDAO();
   const casinoDAO = await new CasinoDAO();
   const userDAO = await new UserDAO();
 
-  if (!isValidUUID(casinoId)) {
-    throw new BaseError('Invalid casinoId format', StatusCodes.BAD_REQUEST);
-  }
-  
   const casino = await casinoDAO.read(casinoId)
   if(!casino) throw new BaseError(`The id: '${casinoId}' does not belong to an existing casino.`, StatusCodes.CONFLICT);
 

@@ -1,5 +1,3 @@
-import { StatusCodes } from "http-status-codes";
-import { BaseError } from "../errors/error";
 import { transporter } from "../../config/nodemailer";
 import dotenv from "dotenv";
 dotenv.config();
@@ -14,14 +12,6 @@ const mailOptions = {
     text: 'This is the plain text version of the email.',
     html: '<p>This is the HTML version of the email.</p>'
   };
-
-  // transporter.sendMail(mailOptions, (error, info) => {
-  //   if (error) {
-  //     console.error(error);
-  //   } else {
-  //     console.log('Email sent:', info.response);
-  //   }
-  // });
 
 export async function sendEmail(from, subject, html, user, password){
     mailOptions.from = '"REDTRON-APP" ' + from,

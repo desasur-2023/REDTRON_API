@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { CasinoEntity } from "./casino.model";
 import { UserEntity } from "./user.model";
-import { User_Casino } from "../domain/user_casino";
+import { User_Casino, User_CasinoStatus } from "../domain/user_casino";
 import { WithdrawalEntity } from "./withdrawal.model";
 import { LoadEntity } from "./load.model";
 import { PlayerEntity } from "./player.model";
@@ -14,10 +14,16 @@ export class User_Casino_Entity implements User_Casino{
 
     @PrimaryGeneratedColumn("uuid")
     id: string;
-    @Column({name:"debits", type: "decimal", precision: 10, scale: 0, nullable: false, default: 0})
+
+    @Column({name:"debits", type: "decimal", precision: 10, scale: 0, nullable: true})
     debits: number;
-    @Column({name:"credits", type: "decimal", precision: 10, scale: 0, nullable: false, default: 0})
+
+    @Column({name:"status", type: "enum", enum: User_CasinoStatus, default: User_CasinoStatus.ACTIVE})
+    status: User_CasinoStatus;
+
+    @Column({name:"credits", type: "decimal", precision: 10, scale: 0, nullable: true})
     credits: number;
+
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date;
 
@@ -43,5 +49,4 @@ export class User_Casino_Entity implements User_Casino{
     @OneToMany(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.userCasinoId)
     coinsMovements: CoinsMovements[];
 
-   
 }

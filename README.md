@@ -880,3 +880,255 @@ Respuesta en caso de éxito:
 ```
 
 ---
+
+# Coins Movements
+
+---
+
+## POST `/coinsMovements/coinsInflow/:id`
+
+Endpoint encargado de crear un nuevo coinsMovements
+id = userId que debe ser un User Role === "ADMIN"
+
+### Ejemplo ruta
+
+```
+/coinsMovements/coinsInflow/45fc3c3c-5b7c-400f-b352-cb3a80dca63e
+
+```
+
+### Parámetros body
+
+| param    | descripción                          |
+| -------- | ------------------------------------ |
+| userCasinoId  | identificador del userCasino: string |
+| inflow_qty | cantidad de fichas que se le asignan al userCasino: number |            |
+
+### Ejemplo Body
+
+```json
+{
+	"userCasinoId":"d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+  "inflow_qty":500
+}
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+{
+    "error": false,
+    "data": {
+        "id": "f62d67e8-5243-4b82-8ae4-09b87d414150",
+        "inflow_qty": "500",
+        "outflow_qty": "0",
+        "coins_balance": "9000",
+        "createdAt": "2023-07-13T00:42:43.341Z",
+        "user": {
+            "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+            "username": "Hugo Schierano",
+            "role": "ADMIN",
+            "email": "hugoschierano@gmail.com"
+        },
+        "userCasinoId": {
+            "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9"
+        }
+    }
+}
+```
+---
+
+## GET `/coinsMovements?user=id`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un usuario
+
+### Parámetros query
+
+| param | descripción                   |
+| ----- | ----------------------------- |
+| user  | id: identificador del usuario (administrador) que creó el Coins Movement |
+
+### Ejemplo ruta
+
+```
+/coinsMovements?user=45fc3c3c-5b7c-400f-b352-cb3a80dca63e
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+  [
+    {
+        "id": "7acdeded-9ef6-472a-93e5-c2150d789fbe",
+        "inflow_qty": "500",
+        "outflow_qty": "0",
+        "coins_balance": "7000",
+        "createdAt": "2023-07-12T15:11:21.815Z",
+        "user": {
+            "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+            "username": "Hugo Schierano",
+            "role": "ADMIN",
+            "email": "hugoschierano@gmail.com"
+        },
+        "userCasinoId": {
+            "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9"
+        }
+    },
+    {
+        "id": "2f6f8659-f140-4023-8a68-d81022a46643",
+        "inflow_qty": "500",
+        "outflow_qty": "0",
+        "coins_balance": "7500",
+        "createdAt": "2023-07-12T15:15:11.560Z",
+        "user": {
+            "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+            "username": "Hugo Schierano",
+            "role": "ADMIN",
+            "email": "hugoschierano@gmail.com"
+        },
+        "userCasinoId": {
+            "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9"
+        }
+    }
+  ]
+}
+```
+
+---
+
+## GET `/coinsMovements?userCasinoId=id`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un casino
+
+### Parámetros query
+
+| param  | descripción                  |
+| ------ | ---------------------------- |
+| userCasinoId | id: identificador del userCasino al que se le asignó el Coin Movement |
+
+### Ejemplo ruta
+
+```
+/coinsMovements?userCasinoId=d62dc6e2-dd65-4a53-a423-5e57e03899d9
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+  [
+    {
+        "id": "7acdeded-9ef6-472a-93e5-c2150d789fbe",
+        "inflow_qty": "500",
+        "outflow_qty": "0",
+        "coins_balance": "7000",
+        "createdAt": "2023-07-12T15:11:21.815Z",
+        "user": {
+            "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+            "username": "Hugo Schierano",
+            "role": "ADMIN",
+            "email": "hugoschierano@gmail.com"
+        },
+        "userCasinoId": {
+            "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9"
+        }
+    },
+    {
+        "id": "2f6f8659-f140-4023-8a68-d81022a46643",
+        "inflow_qty": "500",
+        "outflow_qty": "0",
+        "coins_balance": "7500",
+        "createdAt": "2023-07-12T15:15:11.560Z",
+        "user": {
+            "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+            "username": "Hugo Schierano",
+            "role": "ADMIN",
+            "email": "hugoschierano@gmail.com"
+        },
+        "userCasinoId": {
+            "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9"
+        }
+    }
+  ]
+}
+```
+
+---
+
+## DELETE `/coinsMovements/id:`
+
+Endpoint encargado de borrar un Coins Movement
+
+### Parámetros query
+
+| param | descripción                   |
+| ----- | ----------------------------- |
+| user  | id: identificador del coinsMovement |
+
+### Ejemplo ruta
+
+```
+/coinsMovements/3d8b5cd4-7f58-4461-8016-68a767b5ccca
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+true 
+```
+
+---
+
+## PUT `/coinsMovements/id:`
+
+Endpoint encargado de editar un Coins Movement. Se puede modificar el User Casino y/o la cantidad de Coins que se le asignan al movimiento.
+
+### Parámetros query
+
+| param | descripción                   |
+| ----- | ----------------------------- |
+| user  | id: identificador del coinsMovement |
+
+### Parámetros body
+
+| param    | descripción            |
+| -------- | ---------------------- |
+| userCasinoId | Id del User Casino    |
+| inflow_qty | Cantidad de Coins que se agregarán |
+
+### Ejemplo Body
+
+```json
+{
+  "userCasinoId":"40c8bab8-35e6-472c-9795-c9c89312173b",
+  "inflow_qty":443
+}
+```
+
+---
+
+### Ejemplo ruta
+
+```
+/coinsMovements/1b6a9d16-5236-4bd6-b603-d00df5e4f44b
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+    "id": "1b6a9d16-5236-4bd6-b603-d00df5e4f44b",
+    "inflow_qty": 442,
+    "outflow_qty": "0",
+    "coins_balance": 3999
+}
+```
+
+---

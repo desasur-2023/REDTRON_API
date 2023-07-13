@@ -15,8 +15,8 @@ export class HistoricDAO implements HistoricRepository {
             this.repository = connection.getRepository(HistoricEntity)
         })
     }
-    async create(item: Historic): Promise<Historic> {
-        return await this.repository.save(item) as Historic;;
+    async create(it: Historic): Promise<Historic> {
+        return await this.repository.save(it) as Historic;;
     }
     async read(id: string): Promise<Historic> {
         return (await this.repository.findOneBy({ id: id })) as Historic;
