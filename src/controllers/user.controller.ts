@@ -55,7 +55,7 @@ const create = async (user: User) => {
     user.password ? password = user.password : user.password = password;
     user.password = await bcryptjs.hash(user.password, salt);
   
-  const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT));
+  const result =  await userDAO.create(user).catch(error => new BaseError("No se pudo registrar el usuario", StatusCodes.CONFLICT, error.message));
   if(result instanceof BaseError) throw result;
   else {
     result.password = '';
@@ -69,7 +69,7 @@ const create = async (user: User) => {
 
 const del = async (id: string) => {
   const userDAO = await new UserDAO();
-  const result =  await userDAO.delete(id).catch(error => new BaseError("No se puede borrar el usuario", StatusCodes.CONFLICT));
+  const result =  await userDAO.delete(id).catch(error => new BaseError("No se puede borrar el usuario", StatusCodes.CONFLICT,  error.message));
   if(result instanceof BaseError) throw result;
   return result;
 };
