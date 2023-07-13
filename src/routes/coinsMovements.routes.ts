@@ -7,7 +7,8 @@ export default function coinsMovementsRouter(): Router {
 
     .get("/", handler.getAll)
     .post("/coinsInflow/:id", handler.createCoinsInflow)
-    .post("/coinsOutflow/:id", handler.createCoinsOutflow)
+    //coins outflow no debe ser una ruta publica. Se creara un coinst outflow a traves de la ruta POST a /load
+    //.post("/coinsOutflow/:id", handler.createCoinsOutflow)
     .delete("/:id", handler.delete)
     .put("/:id", handler.update)
 }

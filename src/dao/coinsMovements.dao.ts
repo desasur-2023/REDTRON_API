@@ -71,7 +71,7 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
     return result.affected ? true : false;
   }
 
-  async findLastInputByUserCasinoId(userCasinoId: string): Promise<CoinsMovements> {
+  async findLastInputByUserCasinoId(userCasinoId: string): Promise<CoinsMovements | null> {
     const lastInput = await this.repository.findOne({
       where: {
         userCasinoId: {
@@ -79,19 +79,20 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
         }
       },
       order: { createdAt: 'DESC' }
-    }).catch(error => new BaseError(`The id: '${userCasinoId}' does not belong to an DAO existing userCasino.`, StatusCodes.CONFLICT, error.message));;
+    });
 
-    if (!lastInput) throw new BaseError('No se encuentra el Movimiento de Fichas', StatusCodes.NOT_FOUND);
-    return lastInput as unknown as CoinsMovementsEntity
+    //if (!lastInput) throw new BaseError('No se encuentra el Movimiento de Fichas', StatusCodes.NOT_FOUND);
+    return lastInput  as CoinsMovementsEntity;
   }
 
-  async search(user?: string, userCasinoId?: string): Promise<CoinsMovements[]> {
-    const coinsMovements = async (searchCoinsMovements: CoinsMovements[]) => {
-      const result = await this.repository
+  async search(userId?: string, casinoId?: string): Promise<CoinsMovements[]> {
+    
+      const query = this.repository
         .createQueryBuilder("coinsMovements")
         .leftJoinAndSelect("coinsMovements.user", "user")
         .leftJoinAndSelect("coinsMovements.userCasinoId", "user_casino")
-        .whereInIds(searchCoinsMovements)
+        .leftJoinAndSelect("user_casino.casino", "casino")
+        .leftJoinAndSelect("user_casino.user", "user_casino_user")
         .select([
           "coinsMovements",
           "user.id",
@@ -99,36 +100,45 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
           "user.email",
           "user.role",
           "user_casino.id",
-        ])
-        .getMany();
-      return result;
-    }
+          "casino.id",
+          "casino.name",
+          "user_casino_user.id",
+          "user_casino_user.username"
+        ]);
+      
+    if(userId) query.andWhere("user_casino_user.id = :userId", { userId })
+    if(casinoId) query.andWhere("casino.id = :casinoId", {casinoId})
+    
+    query.orderBy("coinsMovements.createdAt", "DESC");
 
-    if (user) {
-      const searchCoinsMovements = await this.repository.find({
-        where: {
-          user: {
-            id: user,
-          },
-        },
-        order: { createdAt: 'DESC' },
-      });
-      return coinsMovements(searchCoinsMovements)
-    }
+    return await query.getMany();
+    
 
-    if (userCasinoId) {
-      const searchCoinsMovements = await this.repository.find({
-        where: {
-          userCasinoId: {
-            id: userCasinoId,
-          },
-        },
-        order: { createdAt: 'DESC' },
-      });
-      return coinsMovements(searchCoinsMovements)
-    }
-    const searchCoinsMovements = await this.repository.find();
-    return coinsMovements(searchCoinsMovements)
+    // if (user) {
+    //   const searchCoinsMovements = await this.repository.find({
+    //     where: {
+    //       user: {
+    //         id: user,
+    //       },
+    //     },
+    //     order: { createdAt: 'DESC' },
+    //   });
+    //   return coinsMovements(searchCoinsMovements)
+    // }
+
+    // if (userCasinoId) {
+    //   const searchCoinsMovements = await this.repository.find({
+    //     where: {
+    //       userCasinoId: {
+    //         id: userCasinoId,
+    //       },
+    //     },
+    //     order: { createdAt: 'DESC' },
+    //   });
+    //   return coinsMovements(searchCoinsMovements)
+    // }
+    // const searchCoinsMovements = await this.repository.find();
+    // return coinsMovements(searchCoinsMovements)
   }
 
   async searchDate(query?: Date): Promise<CoinsMovements[]> {

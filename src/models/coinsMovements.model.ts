@@ -35,7 +35,7 @@ export class CoinsMovementsEntity implements CoinsMovements {
     @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
     user: User;
 
-    @ManyToOne(() => HistoricEntity, (historic) => historic.coinsMovements)
+    @ManyToOne(() => HistoricEntity, (historic) => historic.coinsMovements, {nullable : true})
     @JoinColumn({name: 'historic_id', referencedColumnName: 'id'})
     historic: Historic
 
