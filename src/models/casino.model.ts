@@ -1,9 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Casino, CasinoStatus } from "../domain/casino";
 import { User_Casino_Entity } from "./user_casino.model";
-import { PlayerEntity } from "./player.model";
 import { User_Casino } from "../domain/user_casino";
-import { Player } from "../domain/player";
 
 @Entity('casino')
 export class CasinoEntity implements Casino{

@@ -14,12 +14,16 @@ export class User_Casino_Entity implements User_Casino{
 
     @PrimaryGeneratedColumn("uuid")
     id: string;
+
     @Column({name:"debits", type: "decimal", precision: 10, scale: 0, nullable: true})
     debits: number;
+
     @Column({name:"status", type: "enum", enum: User_CasinoStatus, default: User_CasinoStatus.ACTIVE})
     status: User_CasinoStatus;
+
     @Column({name:"credits", type: "decimal", precision: 10, scale: 0, nullable: true})
     credits: number;
+
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date;
 
@@ -45,5 +49,4 @@ export class User_Casino_Entity implements User_Casino{
     @OneToMany(() => CoinsMovementsEntity, (coinsMovements) => coinsMovements.userCasinoId)
     coinsMovements: CoinsMovements[];
 
-   
 }

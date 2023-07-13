@@ -3,8 +3,6 @@ import { response } from "../utils/utils";
 import controller from "../controllers/coinsMovements.controller";
 import { BaseError } from "../utils/errors/error";
 import { StatusCodes } from "http-status-codes";
-import { Casino } from "../domain/casino";
-import { CoinsMovements } from "../domain/coinsMovements";
 
 const createCoinsInflow = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.id;
@@ -22,7 +20,6 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
   const user = req.query.user as string;
   const userCasinoId = req.query.userCasinoId as string;
   const result = await controller.getAll(user, userCasinoId)
-  // if(result instanceof BaseError) return next(result);
   return res.status(StatusCodes.OK).json(result);
 }
 

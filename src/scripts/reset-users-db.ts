@@ -50,11 +50,9 @@ async function resetUserDatabase() {
             user.status, user.percent_agreement, user.total_balance
         ]
       ).catch(error => {throw new BaseError("Conflicto de carga en DB", StatusCodes.CONTINUE, error.message)});
-      //console.log(user, "CREATED!!")
     }
 
-    console.log('Datos de usuarios cargados correctamente');
-    
+ 
   } catch (error) {
     console.error('Error al reiniciar la base de datos de usuarios:', error);
     

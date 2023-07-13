@@ -8,8 +8,6 @@ import { isValidUUID } from "../utils/functions/comprobarUUID";
 import { User_Casino } from "../domain/user_casino";
 
 
-
-
 const create = async (usersId: string[], casinoId: string) => {
   if (!isValidUUID(casinoId)) {
     throw new BaseError('Invalid casinoId format', StatusCodes.BAD_REQUEST);

@@ -1,7 +1,5 @@
 import { Base } from "../utils/common";
 import dotenv from "dotenv";
-import { Casino } from "./casino";
-import { User } from "./user";
 
 dotenv.config();
 
@@ -16,4 +14,4 @@ export enum User_CasinoStatus {
     ACTIVE = 'ACTIVE',
     INACTIVE = 'INACTIVE',
     DISABLED = 'DISABLED'
-  }
+}

@@ -28,6 +28,7 @@ export class UserCasinoDAO implements UserCasinoRepository {
         "user_casino",
         "user.id",
         "user.username",
+        "user.email",
         "casino.id",
         "casino.name"
       ])
