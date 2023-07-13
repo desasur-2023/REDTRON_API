@@ -5,9 +5,9 @@ import controller from "../controllers/userCasino.controller";
 
 
 const create = async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.body.userId;
+    const usersId = req.body.usersId;
     const casinoId = req.body.casinoId;
-    return response(res, StatusCodes.OK, await controller.create(userId, casinoId));
+    return response(res, StatusCodes.OK, await controller.create(usersId, casinoId));
   };
 
   const getAll = async (req: Request, res: Response, next: NextFunction) => {

@@ -5,44 +5,43 @@ import { BaseError } from "../utils/errors/error";
 import { CasinoDAO } from "../dao/casino.dao";
 import { User_Casino_Entity } from "../models/user_casino.model";
 import { isValidUUID } from "../utils/functions/comprobarUUID";
-import { User } from "../domain/user";
-import { Casino } from "../domain/casino";
+import { User_Casino } from "../domain/user_casino";
 
 
 
-const create = async (userId: string, casinoId: string) => {
 
-  if(!isValidUUID(casinoId)) throw new BaseError('Invalid casinoId format', StatusCodes.BAD_REQUEST);
-  
-  if(!isValidUUID(userId)) throw new BaseError('Invalid userid format', StatusCodes.BAD_REQUEST);
-
-  const userCasinoDAO = await new UserCasinoDAO()
-
-  const checkUserCasino = await userCasinoDAO.search(userId, casinoId).catch(error => new BaseError('The ids does not belong to an existing user or casino.', StatusCodes.CONFLICT, error.message));
-  
-  if(Object.keys(checkUserCasino).length !== 0) throw new BaseError('The user has already assigned to this casino', StatusCodes.CONFLICT);
-
-  const userDAO = await new UserDAO();
-  const user = await userDAO.read(userId).catch(error => new BaseError(`The id: '${userId}' does not belong to an existing user.`, StatusCodes.CONFLICT, error.message));
-
-  if (Object.keys(user).length === 0) {
-    throw new BaseError(`The id: '${userId}' does not belong to an existing user.`, StatusCodes.CONFLICT);
+const create = async (usersId: string[], casinoId: string) => {
+  if (!isValidUUID(casinoId)) {
+    throw new BaseError('Invalid casinoId format', StatusCodes.BAD_REQUEST);
   }
 
+  const userCasinoDAO = await new UserCasinoDAO();
   const casinoDAO = await new CasinoDAO();
-  const casino = await casinoDAO.read(casinoId).catch(error => new BaseError(`The id: '${casinoId}' does not belong to an existing casino.`, StatusCodes.CONFLICT, error.message));
+  const userDAO = await new UserDAO();
 
-  if (Object.keys(casino).length === 0) {
-    throw new BaseError(`The id: '${casino}' does not belong to an existing casino.`, StatusCodes.CONFLICT);
+  const casino = await casinoDAO.read(casinoId)
+  if(!casino) throw new BaseError(`The id: '${casinoId}' does not belong to an existing casino.`, StatusCodes.CONFLICT);
+
+  const result: User_Casino[] = [];
+
+  for(let i=0; i< usersId.length; i++) {
+      
+    if (!isValidUUID(usersId[i])) throw new BaseError('Invalid userid format', StatusCodes.BAD_REQUEST);
+      
+    const user = await userDAO.read(usersId[i]);
+    if(!user) throw new BaseError(`The id: '${usersId[i]}' does not belong to an existing user.`, StatusCodes.CONFLICT);
+
+    const checkUserCasino = await userCasinoDAO.search(usersId[i], casinoId);
+    if(checkUserCasino.length !== 0) throw new BaseError('The user has already assigned to this casino', StatusCodes.CONFLICT);    
+  
+    const userCasino = new User_Casino_Entity();
+    userCasino.user = usersId[i];
+    userCasino.casino = casinoId;
+    const subresult = await userCasinoDAO.create(userCasino);
+    result.push(subresult);
   }
-
-  const userCasino = await new User_Casino_Entity();
-  userCasino.user = userId as unknown as User
-  userCasino.casino = casinoId as unknown as Casino
-  userCasino.credits = 0
-  userCasino.debits = 0
-
-  const result = await userCasinoDAO.create(userCasino).catch(error => new BaseError("Failed to create the user_casino.", StatusCodes.CONFLICT));
+  
+  
 
   return result;
 }

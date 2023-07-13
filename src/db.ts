@@ -13,37 +13,37 @@ import { CoinsMovementsEntity } from "./models/coinsMovements.model";
 
 dotenv.config();
 
-const PostgresDataSourceInDevelopmentTrial = new DataSource({
-  type: "postgres",
-  synchronize: true,
-  logging: false,
-  url: process.env.DATABASE_URL, 
-  entities: [UserEntity, CasinoEntity, PlayerEntity, LoadEntity, HistoricEntity,WithdrawalEntity, SettleAcountEntity,User_Casino_Entity, CoinsMovementsEntity],
- });
-
-
-const PostgresDataSourceUnderDevelopment = new DataSource({
-  type: "postgres",
-  synchronize: true,
-  logging: false,
+const configDb = process.env.NODE_DB ? {
+  host: process.env.PG_DEV_HOST,
+  port: Number(process.env.PG_DEV_PORT),
+  username: process.env.PG_DEV_USER,
+  password: process.env.PG_DEV_PASSWORD,
+  database: process.env.PG_DEV_DATABASE,
+} :
+{
   host: process.env.PG_HOST,
   port: Number(process.env.PG_PORT),
   username: process.env.PG_USER,
   password: process.env.PG_PASSWORD,
   database: process.env.PG_DATABASE,
+}
+
+const PostgresDataSource = new DataSource({
+  type: "postgres",
+  synchronize: true,
+  logging: false,
+  ...configDb,
   entities: [UserEntity, CasinoEntity, PlayerEntity, LoadEntity, HistoricEntity, WithdrawalEntity, SettleAcountEntity,User_Casino_Entity, CoinsMovementsEntity],
 });
-
-let PostgresDataSource: DataSource;
-
-process.env.NODE_DB?PostgresDataSource = PostgresDataSourceInDevelopmentTrial : PostgresDataSource = PostgresDataSourceUnderDevelopment
 
 export async function getConnection(): Promise<DataSource> {
   const { isInitialized } = PostgresDataSource;
   if (!isInitialized) {
     return PostgresDataSource.initialize()
       .then((connection) => {
-        logger().info("Connected to Postgres");
+        logger().info(`${process.env.NODE_DB ? "Connected to Postgres Remotly"
+        : "Connected to Postgres Localy"}` 
+        + ` - database name: ${connection.driver.database}`);
         return connection;
       })
       .catch((err) => {

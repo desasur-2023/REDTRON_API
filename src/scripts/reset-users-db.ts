@@ -12,11 +12,11 @@ dotenv.config();
 
 async function resetUserDatabase() {
   const pool = new Pool({
-    user: process.env.PG_USER,
-    host: process.env.PG_HOST,
-    database: process.env.PG_DATABASE,
-    password: process.env.PG_PASSWORD,
-    port: Number(process.env.PG_PORT), // Puerto por defecto de PostgreSQL
+    user: process.env.PG_DEV_USER,
+    host: process.env.PG_DEV_HOST,
+    database: process.env.PG_DEV_DATABASE,
+    password: process.env.PG_DEV_PASSWORD,
+    port: Number(process.env.PG_DEV_PORT), // Puerto por defecto de PostgreSQL
   });
 
   try {
@@ -29,6 +29,7 @@ async function resetUserDatabase() {
     const users : User[] = JSON.parse(jsonData);
 
     // Borrar los datos de la tabla users
+    await client.query('DELETE FROM user_casino')// Borro tabla intermedia antes
     await client.query('DELETE FROM users');
 
     // Creando usuarios random. 20 por defecto

@@ -1,0 +1,26 @@
+[
+    {
+        "name":"Linkbuzz",
+        "imageUrl":"http://dummyimage.com/153x100.png/ff4444/ffffff"
+    },
+
+    {
+        "name":"Oozz",
+        "imageUrl":"http://dummyimage.com/165x100.png/ff4444/ffffff"
+    },
+
+    {
+        "name":"Kaymbo",
+        "imageUrl":"http://dummyimage.com/216x100.png/5fa2dd/ffffff"
+    },
+
+    {
+        "name":"Aibox",
+        "imageUrl":"http://dummyimage.com/203x100.png/ff4444/ffffff"
+    },
+
+    {
+        "name":"Zooveo",
+        "imageUrl":"http://dummyimage.com/178x100.png/cc0000/ffffff"
+    }
+]

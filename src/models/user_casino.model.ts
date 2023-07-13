@@ -4,34 +4,32 @@ import { UserEntity } from "./user.model";
 import { User_Casino, User_CasinoStatus } from "../domain/user_casino";
 import { WithdrawalEntity } from "./withdrawal.model";
 import { LoadEntity } from "./load.model";
-import { User } from "../domain/user";
 import { PlayerEntity } from "./player.model";
 import { Player } from "../domain/player";
 import { CoinsMovementsEntity } from "./coinsMovements.model";
 import { CoinsMovements } from "../domain/coinsMovements";
-import { Casino } from "../domain/casino";
 
 @Entity({name: "user_casino"})
 export class User_Casino_Entity implements User_Casino{
 
     @PrimaryGeneratedColumn("uuid")
-    public id: string;
+    id: string;
     @Column({name:"debits", type: "decimal", precision: 10, scale: 0, nullable: true})
-    public debits: number;
+    debits: number;
     @Column({name:"status", type: "enum", enum: User_CasinoStatus, default: User_CasinoStatus.ACTIVE})
     status: User_CasinoStatus;
     @Column({name:"credits", type: "decimal", precision: 10, scale: 0, nullable: true})
-    public credits: number;
+    credits: number;
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
-    public createdAt: Date;
+    createdAt: Date;
 
-    @ManyToOne(()=>UserEntity, (users) => users.user_casino)
-    @JoinColumn({name: 'users_id', referencedColumnName: 'id'})
-    public user: User;
+    @ManyToOne(()=>UserEntity, (user) => user.user_casino)
+    @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
+    user: string;
 
     @ManyToOne(()=>CasinoEntity, (casino) => casino.user_casino)
     @JoinColumn({name: 'casino_id', referencedColumnName: 'id'})
-    casino: Casino;
+    casino: string;
 
     //Relacion un user_casino tiene muchos withdrawal y withdrawal tiene un solo user_casino
     @OneToMany(() => WithdrawalEntity, (withdrawal)=> withdrawal.user_casino)

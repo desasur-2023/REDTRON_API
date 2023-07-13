@@ -24,6 +24,6 @@ export class CasinoEntity implements Casino{
     createdAt: Date;
 
     @OneToMany(() => User_Casino_Entity, user_casino => user_casino.casino)
-    public user_casino: User_Casino[];
+    user_casino: User_Casino[];
     
 }
