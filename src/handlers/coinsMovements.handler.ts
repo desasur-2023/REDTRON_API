@@ -18,9 +18,14 @@ const createCoinsOutflow = async (req: Request, res: Response, next: NextFunctio
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   const {userId, casinoId } = req.query
-  // agregar busquedas por fecha de movimiento inicio y final
   // agregar busquedas por rangos de montos
   return response(res, StatusCodes.OK,await controller.getAll(userId as string, casinoId as string));
+}
+
+const getByDate = async (req: Request, res: Response, next: NextFunction) => {
+  const { date } = req.query
+  // agregar busquedas por rangos de montos
+  return response(res, StatusCodes.OK,await controller.getByDate(date));
 }
 
 const findOneById = async (req: Request, res: Response, next: NextFunction) => {
@@ -40,4 +45,4 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 
-export default { createCoinsInflow, createCoinsOutflow, getAll, findOneById, delete: deleteCoinsMovement, update }
+export default { createCoinsInflow, createCoinsOutflow, getAll, getByDate, findOneById, delete: deleteCoinsMovement, update }

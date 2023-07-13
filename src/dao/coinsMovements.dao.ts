@@ -50,18 +50,18 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
   }
   async update(id: string, item: CoinsMovements): Promise<CoinsMovements> {
     const existingCoinsMovements = await this.repository.findOneBy({ id: id });
-    if(!existingCoinsMovements) throw new BaseError('No se encuentra el Coins Movement', StatusCodes.NOT_FOUND);    
-    if (item === null || Object.keys(item).length === 0) throw new BaseError( "No se proporcionó un objeto para actualizar.", StatusCodes.BAD_REQUEST);
-  
+    if (!existingCoinsMovements) throw new BaseError('No se encuentra el Coins Movement', StatusCodes.NOT_FOUND);
+    if (item === null || Object.keys(item).length === 0) throw new BaseError("No se proporcionó un objeto para actualizar.", StatusCodes.BAD_REQUEST);
+
     const prevCoinsMovements = new CoinsMovementsEntity();
-    prevCoinsMovements.id = existingCoinsMovements.id; 
+    prevCoinsMovements.id = existingCoinsMovements.id;
     prevCoinsMovements.user = existingCoinsMovements.user;
     prevCoinsMovements.userCasinoId = existingCoinsMovements.userCasinoId
     prevCoinsMovements.historic = existingCoinsMovements.historic;
     prevCoinsMovements.inflow_qty = existingCoinsMovements.inflow_qty;
     prevCoinsMovements.outflow_qty = existingCoinsMovements.outflow_qty;
     prevCoinsMovements.coins_balance = Math.floor(existingCoinsMovements.coins_balance) - existingCoinsMovements.inflow_qty + Math.floor(item.inflow_qty)
-    
+
     const updatedCoinsMovements = Object.assign({}, prevCoinsMovements, item);
     return (await this.repository.save(updatedCoinsMovements)) as CoinsMovements;
   }
@@ -82,37 +82,45 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
     });
 
     //if (!lastInput) throw new BaseError('No se encuentra el Movimiento de Fichas', StatusCodes.NOT_FOUND);
-    return lastInput  as CoinsMovementsEntity;
+    return lastInput as CoinsMovementsEntity;
   }
 
-  async search(userId?: string, casinoId?: string): Promise<CoinsMovements[]> {
-    
-      const query = this.repository
-        .createQueryBuilder("coinsMovements")
-        .leftJoinAndSelect("coinsMovements.user", "user")
-        .leftJoinAndSelect("coinsMovements.userCasinoId", "user_casino")
-        .leftJoinAndSelect("user_casino.casino", "casino")
-        .leftJoinAndSelect("user_casino.user", "user_casino_user")
-        .select([
-          "coinsMovements",
-          "user.id",
-          "user.username",
-          "user.email",
-          "user.role",
-          "user_casino.id",
-          "casino.id",
-          "casino.name",
-          "user_casino_user.id",
-          "user_casino_user.username"
-        ]);
-      
-    if(userId) query.andWhere("user_casino_user.id = :userId", { userId })
-    if(casinoId) query.andWhere("casino.id = :casinoId", {casinoId})
+  async search(userId?: string, casinoId?: string, date?: Date): Promise<CoinsMovements[]> {
+
+    const query = this.repository
+      .createQueryBuilder("coinsMovements")
+      .leftJoinAndSelect("coinsMovements.user", "user")
+      .leftJoinAndSelect("coinsMovements.userCasinoId", "user_casino")
+      .leftJoinAndSelect("user_casino.casino", "casino")
+      .leftJoinAndSelect("user_casino.user", "user_casino_user")
+      .select([
+        "coinsMovements",
+        "user.id",
+        "user.username",
+        "user.email",
+        "user.role",
+        "user_casino.id",
+        "casino.id",
+        "casino.name",
+        "user_casino_user.id",
+        "user_casino_user.username"
+      ]);
+
+    if (userId) query.andWhere("user_casino_user.id = :userId", { userId })
+    if (casinoId) query.andWhere("casino.id = :casinoId", { casinoId })
+    if (date) {
+      const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+      const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
+      query.andWhere('coinsMovements.createdAt BETWEEN :startDate AND :endDate', {
+        startDate,
+        endDate,
+      })
+    }
     
     query.orderBy("coinsMovements.createdAt", "DESC");
 
     return await query.getMany();
-    
+
 
     // if (user) {
     //   const searchCoinsMovements = await this.repository.find({
@@ -141,15 +149,16 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
     // return coinsMovements(searchCoinsMovements)
   }
 
-  async searchDate(query?: Date): Promise<CoinsMovements[]> {
-    if (!query) {
-      return (await this.repository.find()) as CoinsMovements[];
-    }
+  async searchDate(date?: Date): Promise<CoinsMovements[]> {
+    // if (!query) {
+    //   return (await this.repository.find()) as CoinsMovements[];
+    // }
 
-    const startDate = new Date(query.getFullYear(), query.getMonth(), query.getDate(), 0, 0, 0);
-    const endDate = new Date(query.getFullYear(), query.getMonth(), query.getDate(), 23, 59, 59);
+    // const startDate = new Date(query.getFullYear(), query.getMonth(), query.getDate(), 0, 0, 0);
+    // const endDate = new Date(query.getFullYear(), query.getMonth(), query.getDate(), 23, 59, 59);
 
-    return (await this.repository.find({ where: { createdAt: Between(startDate, endDate) } })) as CoinsMovements[];
+    // return (await this.repository.find({ where: { createdAt: Between(startDate, endDate) }, order: { createdAt: 'DESC' } })) as CoinsMovements[];
+    throw new Error("Method not implemented.");
   }
 
 }

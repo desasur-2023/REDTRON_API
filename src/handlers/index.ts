@@ -34,6 +34,7 @@ export const coinsMovementsHandler = {
     createCoinsInflow: catchedAsync(coinsMovementsH.createCoinsInflow),
     createCoinsOutflow: catchedAsync(coinsMovementsH.createCoinsOutflow),
     getAll: catchedAsync(coinsMovementsH.getAll),
+    getByDate: catchedAsync(coinsMovementsH.getByDate),
     findById: catchedAsync(coinsMovementsH.findOneById),
     update: catchedAsync(coinsMovementsH.update),
     delete: catchedAsync(coinsMovementsH.delete),

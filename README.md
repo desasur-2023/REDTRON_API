@@ -1132,3 +1132,262 @@ Respuesta en caso de éxito:
 ```
 
 ---
+
+## GET `/coinsMovements/search/?`
+
+Endpoint encargado de traer todos los user_casino que esten relacionados al id de un casino
+
+### Parámetros query
+
+| param  | descripción                  |
+| ------ | ---------------------------- |
+| ? | Fecha desde y (opcional) fecha hasta las que se desea ver los Coins Movement segun su fecha cratedAt |
+
+### Ejemplo ruta
+
+```
+/coinsMovements/search/?2023-07-10&2023-07-12
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+  "error": false,
+    "data": [
+        {
+            "id": "3ca01904-384d-43c2-8ec9-8d4145e2f538",
+            "inflow_qty": "500",
+            "outflow_qty": "0",
+            "coins_balance": "9500",
+            "createdAt": "2023-07-13T10:55:09.029Z",
+            "user": {
+                "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+                "username": "Hugo Schierano",
+                "role": "ADMIN",
+                "email": "hugoschierano@gmail.com"
+            },
+            "userCasinoId": {
+                "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+                "casino": {
+                    "id": "cb74b548-4e94-484e-8f75-c9b2058bf7ef",
+                    "name": "Zeus"
+                },
+                "user": {
+                    "id": "8699b95d-f316-49b0-867b-6cdbe0521306",
+                    "username": "Carlos Garces"
+                }
+            }
+        },
+        {
+            "id": "f62d67e8-5243-4b82-8ae4-09b87d414150",
+            "inflow_qty": "500",
+            "outflow_qty": "0",
+            "coins_balance": "9000",
+            "createdAt": "2023-07-13T00:42:43.341Z",
+            "user": {
+                "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+                "username": "Hugo Schierano",
+                "role": "ADMIN",
+                "email": "hugoschierano@gmail.com"
+            },
+            "userCasinoId": {
+                "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+                "casino": {
+                    "id": "cb74b548-4e94-484e-8f75-c9b2058bf7ef",
+                    "name": "Zeus"
+                },
+                "user": {
+                    "id": "8699b95d-f316-49b0-867b-6cdbe0521306",
+                    "username": "Carlos Garces"
+                }
+            }
+        }
+    ]
+}
+```
+
+### Ejemplo ruta
+
+```
+/coinsMovements/search/?2023-07-12
+
+En este caso solo se envía fecha desde
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+    "error": false,
+    "data": [
+        {
+            "id": "3ca01904-384d-43c2-8ec9-8d4145e2f538",
+            "inflow_qty": "500",
+            "outflow_qty": "0",
+            "coins_balance": "9500",
+            "createdAt": "2023-07-13T10:55:09.029Z",
+            "user": {
+                "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+                "username": "Hugo Schierano",
+                "role": "ADMIN",
+                "email": "hugoschierano@gmail.com"
+            },
+            "userCasinoId": {
+                "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+                "casino": {
+                    "id": "cb74b548-4e94-484e-8f75-c9b2058bf7ef",
+                    "name": "Zeus"
+                },
+                "user": {
+                    "id": "8699b95d-f316-49b0-867b-6cdbe0521306",
+                    "username": "Carlos Garces"
+                }
+            }
+        },
+        {
+            "id": "f62d67e8-5243-4b82-8ae4-09b87d414150",
+            "inflow_qty": "500",
+            "outflow_qty": "0",
+            "coins_balance": "9000",
+            "createdAt": "2023-07-13T00:42:43.341Z",
+            "user": {
+                "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+                "username": "Hugo Schierano",
+                "role": "ADMIN",
+                "email": "hugoschierano@gmail.com"
+            },
+            "userCasinoId": {
+                "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+                "casino": {
+                    "id": "cb74b548-4e94-484e-8f75-c9b2058bf7ef",
+                    "name": "Zeus"
+                },
+                "user": {
+                    "id": "8699b95d-f316-49b0-867b-6cdbe0521306",
+                    "username": "Carlos Garces"
+                }
+            }
+        },
+        {
+            "id": "bac7e10f-d354-4a71-84dc-128fa30eac94",
+            "inflow_qty": "500",
+            "outflow_qty": "0",
+            "coins_balance": "8500",
+            "createdAt": "2023-07-12T23:50:13.582Z",
+            "user": {
+                "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+                "username": "Hugo Schierano",
+                "role": "ADMIN",
+                "email": "hugoschierano@gmail.com"
+            },
+            "userCasinoId": {
+                "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+                "casino": {
+                    "id": "cb74b548-4e94-484e-8f75-c9b2058bf7ef",
+                    "name": "Zeus"
+                },
+                "user": {
+                    "id": "8699b95d-f316-49b0-867b-6cdbe0521306",
+                    "username": "Carlos Garces"
+                }
+            }
+        }
+    ]
+}
+```
+
+### Ejemplo ruta
+
+```
+/coinsMovements/search/
+
+En este caso no se envían fechas por query y trae todos los movimientos
+
+```
+
+Respuesta en caso de éxito:
+
+```json
+{
+    "error": false,
+    "data": [
+        {
+            "id": "3ca01904-384d-43c2-8ec9-8d4145e2f538",
+            "inflow_qty": "500",
+            "outflow_qty": "0",
+            "coins_balance": "9500",
+            "createdAt": "2023-07-13T10:55:09.029Z",
+            "user": {
+                "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+                "username": "Hugo Schierano",
+                "role": "ADMIN",
+                "email": "hugoschierano@gmail.com"
+            },
+            "userCasinoId": {
+                "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+                "casino": {
+                    "id": "cb74b548-4e94-484e-8f75-c9b2058bf7ef",
+                    "name": "Zeus"
+                },
+                "user": {
+                    "id": "8699b95d-f316-49b0-867b-6cdbe0521306",
+                    "username": "Carlos Garces"
+                }
+            }
+        },
+        {
+            "id": "f62d67e8-5243-4b82-8ae4-09b87d414150",
+            "inflow_qty": "500",
+            "outflow_qty": "0",
+            "coins_balance": "9000",
+            "createdAt": "2023-07-13T00:42:43.341Z",
+            "user": {
+                "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+                "username": "Hugo Schierano",
+                "role": "ADMIN",
+                "email": "hugoschierano@gmail.com"
+            },
+            "userCasinoId": {
+                "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+                "casino": {
+                    "id": "cb74b548-4e94-484e-8f75-c9b2058bf7ef",
+                    "name": "Zeus"
+                },
+                "user": {
+                    "id": "8699b95d-f316-49b0-867b-6cdbe0521306",
+                    "username": "Carlos Garces"
+                }
+            }
+        },
+        {
+            "id": "bac7e10f-d354-4a71-84dc-128fa30eac94",
+            "inflow_qty": "500",
+            "outflow_qty": "0",
+            "coins_balance": "8500",
+            "createdAt": "2023-07-12T23:50:13.582Z",
+            "user": {
+                "id": "45fc3c3c-5b7c-400f-b352-cb3a80dca63e",
+                "username": "Hugo Schierano",
+                "role": "ADMIN",
+                "email": "hugoschierano@gmail.com"
+            },
+            "userCasinoId": {
+                "id": "d62dc6e2-dd65-4a53-a423-5e57e03899d9",
+                "casino": {
+                    "id": "cb74b548-4e94-484e-8f75-c9b2058bf7ef",
+                    "name": "Zeus"
+                },
+                "user": {
+                    "id": "8699b95d-f316-49b0-867b-6cdbe0521306",
+                    "username": "Carlos Garces"
+                }
+            }
+        }
+    ]
+}
+```
+
+---

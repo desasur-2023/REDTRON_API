@@ -108,6 +108,11 @@ const getAll = async (userId?: string, casinoId?: string) => {
     return (await coinsMovementsDAO.search(userId, casinoId).catch((error: Error) => new BaseError("No se pudo buscar los movimientos de fichas", StatusCodes.CONFLICT, error.message)));
 }
 
+const getByDate = async (date) => {
+    const coinsMovementsDAO = await new CoinsMovementsDAO();
+    return (await coinsMovementsDAO.search(date).catch((error: Error) => new BaseError("No se pudo buscar los movimientos de fichas", StatusCodes.CONFLICT, error.message)));
+}
+
 const findOneById = async (id: string) => {
     const coinsMovementsDAO = await new CoinsMovementsDAO();
     return (await coinsMovementsDAO.read(id).catch((error: Error) => new BaseError("No se pudo encontrar el movimiento de fichas", StatusCodes.CONFLICT, error.message)));
@@ -125,4 +130,4 @@ const update = async (id: string, item: CoinsMovements) => {
 }
 
 
-export default { createCoinsInflow, createCoinsOutflow, getAll, findOneById, deleteCoinsMovement, update }
+export default { createCoinsInflow, createCoinsOutflow, getAll, getByDate, findOneById, deleteCoinsMovement, update }
