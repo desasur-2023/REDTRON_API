@@ -28,7 +28,7 @@ router.use("/auth", authRouter());
 
 
 //Antes del resto de las rutas se debe pasar por authorize
-// router.use(authorize);
+router.use(authorize);
 
 //Resto de las rutas autorizadas
 router.use("/users",usersRouter());
