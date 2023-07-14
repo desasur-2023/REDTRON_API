@@ -32,4 +32,6 @@ const create = async (player: { userCasinoId: User_Casino["id"]; nickname: Playe
     }
   };
 
-export default { create };
+  const get = () => {}
+
+export default { create, get };
