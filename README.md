@@ -1391,3 +1391,61 @@ Respuesta en caso de éxito:
 ```
 
 ---
+
+# Player
+
+---
+
+## POST `/players`
+
+Endpoint encargado de crear un nuevo Player
+
+### Parámetros body
+
+| param    | descripción                          |
+| -------- | ------------------------------------ |
+| nickname  | nombre del nuevo player: string |
+| userCasinoId | identificador del userCasino donde va a estar asociado: string |            |
+
+### Ejemplo Body
+
+```json
+{
+	"nickname": "JonyAibox",
+	"userCasinoId": "17c09e86-1d14-4416-b91c-c77b33885d0d"
+}
+```
+
+---
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": {
+		"nickname": "JonyAibox",
+		"user_casino": {
+			"id": "17c09e86-1d14-4416-b91c-c77b33885d0d",
+			"debits": "0",
+			"status": "ACTIVE",
+			"credits": "0",
+			"createdAt": "2023-07-08T04:53:31.556Z",
+			"user": {
+				"id": "140f8fc5-2ae9-428d-b869-4e468334cd4c",
+				"username": "jdunks0",
+				"email": "pcrammy0@bluehost.com"
+			},
+			"casino": {
+				"id": "31621ad0-8d38-48eb-b8ef-608111168fa3",
+				"name": "Aibox"
+			}
+		},
+		"debits_profits": null,
+		"id": "07c3be3a-48b5-4526-b395-285327f1d4ad",
+		"status": "ACTIVE",
+		"createdAt": "2023-07-14T15:20:26.692Z"
+	}
+}
+```
+---

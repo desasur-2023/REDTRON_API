@@ -4,6 +4,7 @@ import userH from "./user.handler"
 import authH from "./auth.handler"
 import userCasinoH from "./userCasino.handler"
 import coinsMovementsH from "./coinsMovements.handler"
+import playerH from "./player.handler"
 
 export const casinoHandler = {
     getAll: catchedAsync(casinoH.getAll),
@@ -40,4 +41,7 @@ export const coinsMovementsHandler = {
     delete: catchedAsync(coinsMovementsH.delete),
 }
 
+export const playersHandler = {
+    create: catchedAsync(playerH.create),
+}
 

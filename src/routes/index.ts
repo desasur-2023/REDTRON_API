@@ -5,6 +5,7 @@ import authRouter from "./auth.routes"
 import userCasinoRouter from "./userCasino.routes"
 import { authorize } from "../middlewares/auth.middleware";
 import coinsMovementsRouter from "./coinsMovements.routes";
+import playerRouter from "./player.routes";
 import fs from 'fs';
 import path from 'path';
 import {marked} from 'marked'
@@ -35,6 +36,8 @@ router.use("/users",usersRouter());
 router.use("/casino", casinoRouter());
 router.use("/userCasino", userCasinoRouter());
 router.use("/coinsMovements", coinsMovementsRouter());
+router.use("/players", playerRouter());
+
 
 export default router;
 

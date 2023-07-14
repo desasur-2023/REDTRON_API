@@ -67,6 +67,49 @@ const create = async (user: User) => {
   return result;
 };
 
+/* Probar si es mejor este manejo de error de la columna duplicada.
+const create = async (user: User) => {
+  const userDAO = await new UserDAO();
+
+  if (user.password === undefined) user.password = "Redtron2023"
+
+  const cifrado = process.env.SALT
+  if (cifrado === undefined) {
+    throw new BaseError("La variable de entorno SALT no está definida", StatusCodes.CONFLICT);
+  }
+  const saltRounds = parseInt(cifrado)
+  const salt = await bcryptjs.genSalt(saltRounds);
+
+  let password = 'Redtron2023';
+
+  user.password ? password = user.password : user.password = password;
+  user.password = await bcryptjs.hash(user.password, salt);
+
+  try {
+    const result = await userDAO.create(user)
+    if (result instanceof BaseError) throw result;
+    else {
+      result.password = '';
+      const email = await sendEmail(from, 'Cajero creado con éxito', bienvenida, result, password)
+        .catch(error => new BaseError("No se puede enviar el mail", StatusCodes.CONFLICT, error.message));
+      if (email instanceof BaseError) throw email;
+    }
+  
+    return result;
+  } catch (error) {
+    //Se busca mandar un mensaje más exacto que especifique la columna duplicada, para que desde el Font puedan
+    //capturar el error y especificarle al usuario que dato exacto es el que está ingresando mal. Y no el mensaje
+    //genérico de la columna duplicada...
+    if (error.code === "23505") {
+      const duplicatedColumn = error.detail.match(/\((.*?)\)/)[1];
+      throw new BaseError(`La columna ${duplicatedColumn} está duplicada. Por favor, elige otro valor.`, StatusCodes.BAD_REQUEST);
+    } else {
+      throw error;
+    }
+  }
+};
+*/
+
 const del = async (id: string) => {
   const userDAO = await new UserDAO();
   const result = await userDAO.delete(id).catch(error => new BaseError("No se puede borrar el usuario", StatusCodes.CONFLICT));
