@@ -34,14 +34,17 @@ export class PlayerDAO implements PlayerRepository{
         const result =  await this.repository.delete({id: id});
         return result.affected ? true : false;
     }
-    async search(name?: string, userCasinoId?: string): Promise<Player[]>{
+    async search(name?: string, userCasinoId?: string, userId?: string, user?: string, casino?: string): Promise<Player[]>{
           const queryBuilder  = this.repository
           .createQueryBuilder("player")
           .leftJoinAndSelect("player.user_casino", "userCasino")
           .leftJoinAndSelect("userCasino.casino", "casino")
+          .leftJoinAndSelect("userCasino.user", "user")
           .select([
             "player",
             "userCasino.id",
+            "user.username",
+            "user.email",
             "casino.id",
             "casino.name"
           ])
@@ -51,7 +54,23 @@ export class PlayerDAO implements PlayerRepository{
           }
 
           if (name) {
-            queryBuilder.andWhere("player.nickname = :name", { name });
+            queryBuilder.andWhere("player.nickname ILike :name", { name: `%${name}%` });
+          }
+
+          if (userId) {
+            queryBuilder.andWhere("user.id = :userId", { userId });
+          }
+
+          if (userId) {
+            queryBuilder.andWhere("user.id = :userId", { userId });
+          }
+
+          if (user) {
+            queryBuilder.andWhere("user.username ILike :user", { user: `%${user}%` });
+          }
+
+          if (casino) {
+            queryBuilder.andWhere("casino.name ILike :casino", { casino: `%${casino}%` });
           }
           
           const result = await queryBuilder.getMany();

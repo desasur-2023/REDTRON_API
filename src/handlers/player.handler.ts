@@ -9,8 +9,8 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   };
 
 const get = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, userCasinoId} = req.query;
-  return response(res, StatusCodes.OK, await controller.get(name as string, userCasinoId as string));
+  const { name, userCasinoId, userId, user, casino} = req.query;
+  return response(res, StatusCodes.OK, await controller.get(name as string, userCasinoId as string, userId as string, user as string, casino as string));
 }
 
   export default { create, get};
