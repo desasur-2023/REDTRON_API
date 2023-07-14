@@ -1449,3 +1449,186 @@ Respuesta en caso de éxito:
 }
 ```
 ---
+
+## GET `/players`
+
+Endpoint encargado de traer todos los players creados en la base de datos
+
+
+Respuesta en caso de éxito:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "37edc33b-1b8e-4811-a75f-73fe0bbb8285",
+			"nickname": "HugoZooveo",
+			"status": "ACTIVE",
+			"createdAt": "2023-07-14T22:49:47.844Z",
+			"user_casino": {
+				"id": "c14ff7cd-9220-462d-84e0-445cb946e8cd",
+				"casino": {
+					"id": "dd4cb3c7-2455-47c4-bccc-6ee5ae5612fc",
+					"name": "Zooveo"
+				},
+				"user": {
+					"username": "rcoodeb",
+					"email": "kskinleyb@ihg.com"
+				}
+			}
+		},
+		{
+			"id": "a9ff6b4d-5e5a-4292-a609-d26b7af47b57",
+			"nickname": "JonyZooveo",
+			"status": "ACTIVE",
+			"createdAt": "2023-07-14T22:50:07.966Z",
+			"user_casino": {
+				"id": "c14ff7cd-9220-462d-84e0-445cb946e8cd",
+				"casino": {
+					"id": "dd4cb3c7-2455-47c4-bccc-6ee5ae5612fc",
+					"name": "Zooveo"
+				},
+				"user": {
+					"username": "rcoodeb",
+					"email": "kskinleyb@ihg.com"
+				}
+			}
+		},
+    --------------------------------------------------------
+    		{
+			"id": "6a532d55-068e-4157-9ebd-f2a85797cc28",
+			"nickname": "DayanaZooveo",
+			"status": "ACTIVE",
+			"createdAt": "2023-07-14T22:52:22.736Z",
+			"user_casino": {
+				"id": "c14ff7cd-9220-462d-84e0-445cb946e8cd",
+				"casino": {
+					"id": "dd4cb3c7-2455-47c4-bccc-6ee5ae5612fc",
+					"name": "Zooveo"
+				},
+				"user": {
+					"username": "rcoodeb",
+					"email": "kskinleyb@ihg.com"
+				}
+			}
+		},
+		{
+			"id": "4329d25f-6e09-488d-8263-3ece02dc8c7d",
+			"nickname": "JoseZooveo",
+			"status": "ACTIVE",
+			"createdAt": "2023-07-14T22:52:30.888Z",
+			"user_casino": {
+				"id": "c14ff7cd-9220-462d-84e0-445cb946e8cd",
+				"casino": {
+					"id": "dd4cb3c7-2455-47c4-bccc-6ee5ae5612fc",
+					"name": "Zooveo"
+				},
+				"user": {
+					"username": "rcoodeb",
+					"email": "kskinleyb@ihg.com"
+				}
+			}
+		}
+	]
+}
+```
+
+---
+
+## GET `/players?query`
+
+Endpoint encargado de traer todos los players que coincidan con los siguientes filtros posibles pasados por query:
+
+### Parámetros query
+
+| param  | descripción                  |
+| ------ | ---------------------------- |
+| name | nombre del player que se quiere buscar(es indistinto de mayusculas o minisculas y relaliza busquedas parciales.) |
+| userCasinoId | id: identificador del userCasino al que esta asociado el player|
+| userId | id: identificador del usuario(Cajero) que creo el player |
+| user | username: identificador del usuario(Cajero) que creo el player |
+| casino | name: identificador del casino al que esta asociado el player |
+
+### Ejemplo rutas:
+
+```
+userCasinoId
+
+/players?userCasinoId=17c09e86-1d14-4416-b91c-c77b33885d0d
+
+```
+
+```
+name
+
+/players?name=JonyZooveo
+
+```
+
+```
+userId
+
+/players?userId=140f8fc5-2ae9-428d-b869-4e468334cd4c
+
+```
+
+```
+user
+
+/players?user=rcoodeb
+
+```
+
+```
+casino
+
+/players?casino=Zooveo
+
+```
+
+Respuesta en caso de éxito en busqueda por casino:
+
+```json
+{
+	"error": false,
+	"data": [
+		{
+			"id": "37edc33b-1b8e-4811-a75f-73fe0bbb8285",
+			"nickname": "HugoZooveo",
+			"status": "ACTIVE",
+			"createdAt": "2023-07-14T22:49:47.844Z",
+			"user_casino": {
+				"id": "c14ff7cd-9220-462d-84e0-445cb946e8cd",
+				"casino": {
+					"id": "dd4cb3c7-2455-47c4-bccc-6ee5ae5612fc",
+					"name": "Zooveo"
+				},
+				"user": {
+					"username": "rcoodeb",
+					"email": "kskinleyb@ihg.com"
+				}
+			}
+		},
+    		{
+			"id": "4329d25f-6e09-488d-8263-3ece02dc8c7d",
+			"nickname": "JoseZooveo",
+			"status": "ACTIVE",
+			"createdAt": "2023-07-14T22:52:30.888Z",
+			"user_casino": {
+				"id": "c14ff7cd-9220-462d-84e0-445cb946e8cd",
+				"casino": {
+					"id": "dd4cb3c7-2455-47c4-bccc-6ee5ae5612fc",
+					"name": "Zooveo"
+				},
+				"user": {
+					"username": "rcoodeb",
+					"email": "kskinleyb@ihg.com"
+				}
+			}
+		}
+	]
+}
+```
+
+---
