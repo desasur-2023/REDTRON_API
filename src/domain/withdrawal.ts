@@ -7,6 +7,7 @@ export interface Withdrawal extends Base {
     credits: number
     status: WithdrawalStatus
     trasfer_url: string
+    time: Date
 }
 
 export enum WithdrawalStatus {

@@ -17,8 +17,6 @@ export class PlayerEntity implements Player {
     nickname: string;
     @Column({name:"status", type: "enum", enum: PlayerStatus, default: PlayerStatus.ACTIVE})
     status: PlayerStatus;
-    @Column({ name: "debits_profits", type: "decimal", precision: 10, scale: 2, nullable: true})
-    debits_profits: number;
     @Column({name: "created_at", type: "timestamp", nullable: false, default: () => "now()",})
     createdAt: Date; 
 
