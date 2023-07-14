@@ -32,6 +32,10 @@ const create = async (player: { userCasinoId: User_Casino["id"]; nickname: Playe
     }
   };
 
-  const get = () => {}
+  const get = async (name: string | undefined, userCasinoId: string | undefined) => {
+    const playerDAO = await new PlayerDAO();
+    const result = await playerDAO.search(name, userCasinoId)
+    return result
+  }
 
 export default { create, get };

@@ -43,5 +43,6 @@ export const coinsMovementsHandler = {
 
 export const playersHandler = {
     create: catchedAsync(playerH.create),
+    get: catchedAsync(playerH.get),
 }
 

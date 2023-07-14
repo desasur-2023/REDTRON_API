@@ -34,10 +34,25 @@ export class PlayerDAO implements PlayerRepository{
         const result =  await this.repository.delete({id: id});
         return result.affected ? true : false;
     }
-    async search(query?: string, userCasinoId?: string): Promise<Player[]>{
+    async search(name?: string, userCasinoId?: string): Promise<Player[]>{
           const queryBuilder  = this.repository
           .createQueryBuilder("player")
-          .leftJoinAndSelect("palyer.user_casino", "userCasino")
+          .leftJoinAndSelect("player.user_casino", "userCasino")
+          .leftJoinAndSelect("userCasino.casino", "casino")
+          .select([
+            "player",
+            "userCasino.id",
+            "casino.id",
+            "casino.name"
+          ])
+
+          if (userCasinoId) {
+            queryBuilder.andWhere("userCasino.id = :userCasinoId", { userCasinoId });
+          }
+
+          if (name) {
+            queryBuilder.andWhere("player.nickname = :name", { name });
+          }
           
           const result = await queryBuilder.getMany();
 
