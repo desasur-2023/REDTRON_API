@@ -150,12 +150,12 @@ export class CoinsMovementsDAO implements CoinsMovementsRepository {
   }
 
   async searchDate(date?: Date): Promise<CoinsMovements[]> {
-    // if (!query) {
+    // if (!date) {
     //   return (await this.repository.find()) as CoinsMovements[];
     // }
 
-    // const startDate = new Date(query.getFullYear(), query.getMonth(), query.getDate(), 0, 0, 0);
-    // const endDate = new Date(query.getFullYear(), query.getMonth(), query.getDate(), 23, 59, 59);
+    // const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+    // const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
 
     // return (await this.repository.find({ where: { createdAt: Between(startDate, endDate) }, order: { createdAt: 'DESC' } })) as CoinsMovements[];
     throw new Error("Method not implemented.");
