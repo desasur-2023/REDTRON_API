@@ -15,7 +15,7 @@ export class WithdrawalEntity implements Withdrawal {
     credits: number;
     @Column({name:"status", type: "enum", enum: WithdrawalStatus, default: WithdrawalStatus.PENDING})
     status: WithdrawalStatus;
-    @Column({name: "time", type: "timestamp", nullable: false, default: () => "now()",})
+    @Column({name: "time", type: "timestamp", nullable: true})
     time: Date;
     @Column({ name:"trasfer_url", type: "varchar", length: 200, nullable: false})
     trasfer_url: string;
