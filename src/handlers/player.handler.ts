@@ -13,4 +13,15 @@ const get = async (req: Request, res: Response, next: NextFunction) => {
   return response(res, StatusCodes.OK, await controller.get(name as string, userCasinoId as string, userId as string, user as string, casino as string));
 }
 
-  export default { create, get};
+const update = async (req: Request, res: Response, next: NextFunction) => {
+  const playerId = req.params.playerId;
+  return response(res, StatusCodes.OK, await controller.update(playerId as string, req.body));
+};
+
+const logicalDeletion = async (req: Request, res: Response, next: NextFunction) => {
+  const playerId = req.params.playerId;
+  return response(res, StatusCodes.OK, await controller.logicalDeletion(playerId));
+};
+
+
+export default { create, get, update, logicalDeletion};

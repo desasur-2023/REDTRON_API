@@ -44,5 +44,7 @@ export const coinsMovementsHandler = {
 export const playersHandler = {
     create: catchedAsync(playerH.create),
     get: catchedAsync(playerH.get),
+    update: catchedAsync(playerH.update),
+    logicalDeletion: catchedAsync(playerH.logicalDeletion),
 }
 

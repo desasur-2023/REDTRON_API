@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { PlayerDAO } from "../dao/player.dao";
 import { UserCasinoDAO } from "../dao/userCasino.dao";
-import { Player } from "../domain/player";
+import { Player, PlayerStatus } from "../domain/player";
 import { User_Casino } from "../domain/user_casino";
 import { BaseError } from "../utils/errors/error";
 import { PlayerEntity } from "../models/player.model";
@@ -38,4 +38,31 @@ const create = async (player: { userCasinoId: User_Casino["id"]; nickname: Playe
     return result
   }
 
-export default { create, get };
+  const update = async (playerId: PlayerEntity["id"], item: Player) => {
+    const playerDAO = await new PlayerDAO();
+    const player = playerDAO.update(playerId, item).catch((error: Error) => new BaseError("No se puede modificar el player", StatusCodes.CONFLICT, error.message));
+    return player
+  }
+
+  const logicalDeletion = async (playerId: PlayerEntity["id"]) => {
+    const playerDAO = await new PlayerDAO();
+    try {
+      const player = await playerDAO.read(playerId);
+      if (!player){
+        throw new BaseError("Jugador no encontrado", StatusCodes.BAD_REQUEST);
+      }
+      let newStatus: PlayerStatus
+      player.status === PlayerStatus.ACTIVE ? newStatus = PlayerStatus.DISABLED : newStatus = PlayerStatus.ACTIVE;
+      const item = {
+        status: newStatus
+      }
+      const result = await playerDAO.update(playerId, item as Player)
+      return result;
+
+    } catch (error) {
+      throw error;
+    }
+   
+  }
+
+export default { create, get, update, logicalDeletion};
